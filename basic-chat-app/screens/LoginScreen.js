@@ -6,7 +6,8 @@ export default function App() {
   return (
     <View style={styles.container}>
         <Text style={styles.logo}>Basic&nbsp; Chat App</Text>
-        <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="white"></TextInput>
+        <TextInput style={styles.loginInput} placeholder={'Username'} placeholderTextColor="white"></TextInput>
+        <TextInput style={styles.loginInput} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="white"></TextInput>
     </View>
   );
 }
@@ -24,12 +25,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center'
   },
-  input: {
+  loginInput: {
       borderRadius: 10,
       borderWidth: 1,
       backgroundColor: '#D6D6D6',
       borderColor: '#E2E2E2',
       padding: 15,
-      width: 350
+      width: 350,
+      marginBottom: 5
   }
 });

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native';
 
 import Logo from '../components/Logo';
+import AppButton from '../components/AppButton';
 
 export default class SignUpScreen extends Component {
     render() {
@@ -17,12 +18,8 @@ export default class SignUpScreen extends Component {
                         <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={[styles.button, styles.buttonPrimary]}>
-                            <Text>Sign Up</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.buttonSecondary]} onPress={() => navigate('Login')}>
-                            <Text>Back</Text>
-                        </TouchableOpacity>
+                        <AppButton type={"primary"}>Sign Up</AppButton>
+                        <AppButton type={"secondary"} onPress={() => navigate('Login')}>Back</AppButton>
                     </View>
                 </View>
             </SafeAreaView>
@@ -52,21 +49,5 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginBottom: 15
-    },
-    button: {
-        padding: 15,
-        borderRadius: 10,
-        fontSize: 20,
-        width: 350,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 5
-    },
-    buttonPrimary: {
-        backgroundColor: '#E2E2E2'
-    },
-    buttonSecondary: {
-        backgroundColor: '#D6D6D6'
     }
 });

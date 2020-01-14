@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, Text, TouchableOpacity, View, SafeAreaView, Dimensions } from 'react-native';
+import { StyleSheet, Image, Text, TouchableOpacity, View, SafeAreaView, ScrollView } from 'react-native';
 
 export default class HomeScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                     <TouchableOpacity style={styles.item}>
                         <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
                         <View style={styles.textContainer}>
@@ -14,7 +14,70 @@ export default class HomeScreen extends Component {
                             <Text>Hello World</Text>
                         </View>
                     </TouchableOpacity>
-                </View>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.item}>
+                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
+                            <Text>Hello World</Text>
+                        </View>
+                    </TouchableOpacity>
+                </ScrollView>
             </SafeAreaView>
         );
     }

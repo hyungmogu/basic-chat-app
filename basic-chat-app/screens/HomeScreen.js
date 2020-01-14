@@ -31,7 +31,9 @@ const styles = StyleSheet.create({
     item: {
         display: 'flex',
         flexDirection: 'row',
-        padding: 15
+        padding: 15,
+        borderBottomColor: '#EAEAEA',
+        borderBottomWidth: 1
     },
     userImage: {
         width: 60,

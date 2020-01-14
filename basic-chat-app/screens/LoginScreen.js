@@ -16,7 +16,7 @@ export default class LoginScreen extends Component {
                         <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <AppButton type={"primary"}>Login</AppButton>
+                        <AppButton type={"primary"} onPress={() => navigate('Home')}>Login</AppButton>
                         <AppButton type={"secondary"} onPress={() => navigate('SignUp')}>Sign Up</AppButton>
                     </View>
                 </View>

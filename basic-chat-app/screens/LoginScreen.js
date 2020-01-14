@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,  } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
 export default function App() {
   return (
@@ -9,6 +8,14 @@ export default function App() {
         <View style={styles.inputContainer}>
             <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="white"></TextInput>
             <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="white"></TextInput>
+        </View>
+        <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button}>
+                <Text>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button}>
+                <Text>Sign Up</Text>
+            </TouchableOpacity>
         </View>
     </View>
   );
@@ -31,10 +38,13 @@ const styles = StyleSheet.create({
   input: {
       borderRadius: 10,
       borderWidth: 1,
-      backgroundColor: '#D6D6D6',
+      backgroundColor: '#E2E2E2',
       borderColor: '#E2E2E2',
       padding: 15,
       width: 350,
       marginBottom: 5
+  },
+  inputContainer: {
+      marginBottom: 20
   }
 });

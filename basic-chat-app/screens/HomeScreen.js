@@ -9,8 +9,8 @@ export default class HomeScreen extends Component {
                 <View style={styles.container}>
                     <TouchableOpacity style={styles.item}>
                         <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View>
-                            <Text>James</Text>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.name}>James</Text>
                             <Text>Hello World</Text>
                         </View>
                     </TouchableOpacity>
@@ -38,5 +38,14 @@ const styles = StyleSheet.create({
         height: 60,
         borderRadius: 200,
         marginRight: 10
+    },
+    textContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    name: {
+        fontWeight: 'bold',
+        marginBottom: 5
     }
 });

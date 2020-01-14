@@ -6,14 +6,14 @@ export default function App() {
     <View style={styles.container}>
         <Text style={styles.logo}>Basic{"\n"} Chat App</Text>
         <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="white"></TextInput>
-            <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="white"></TextInput>
+            <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="black"></TextInput>
+            <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
         </View>
         <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={[styles.button, styles.buttonPrimary]}>
                 <Text>Login</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={[styles.button, styles.buttonSecondary]}>
                 <Text>Sign Up</Text>
             </TouchableOpacity>
         </View>
@@ -45,6 +45,22 @@ const styles = StyleSheet.create({
       marginBottom: 5
   },
   inputContainer: {
-      marginBottom: 20
+      marginBottom: 15
+  },
+  button: {
+      padding: 15,
+      borderRadius: 10,
+      fontSize: 20,
+      width: 350,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 5
+  },
+  buttonPrimary: {
+      backgroundColor: '#E2E2E2'
+  },
+  buttonSecondary: {
+      backgroundColor: '#D6D6D6'
   }
 });

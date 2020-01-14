@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, dd SafeAreaView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Dimensions } from 'react-native';
 
-export default class ChatMenuScreen extends Component {
+export default class HomeScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (

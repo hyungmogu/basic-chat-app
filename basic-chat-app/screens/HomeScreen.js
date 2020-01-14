@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, SafeAreaView, ScrollView } from 'react-native';
+
+import { Ionicons } from '@expo/vector-icons';
 
 import ChatMenuItem from '../components/ChatMenuItem';
 
@@ -18,6 +20,9 @@ export default class HomeScreen extends Component {
                         />
                     )}
                 </ScrollView>
+                <TouchableOpacity style={{position: 'fixed', display: 'flex', justifyContent: 'center', borderWidth: 1, borderColor: 'black', borderRadius: 200, alignItems: 'center', bottom: 0, right: 0,  width: 75, height: 75}}>
+                    <Ionicons name="ios-add" size={40}/>
+                </TouchableOpacity>
             </SafeAreaView>
         );
     }

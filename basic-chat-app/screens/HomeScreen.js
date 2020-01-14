@@ -1,82 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, Text, TouchableOpacity, View, SafeAreaView, ScrollView } from 'react-native';
 
+import ChatMenuItem from '../components/ChatMenuItem';
+
 export default class HomeScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <ScrollView style={styles.container}>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.item}>
-                        <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
-                        <View style={styles.textContainer}>
-                            <Text style={styles.name}>James</Text>
-                            <Text>Hello World</Text>
-                        </View>
-                    </TouchableOpacity>
+                    { [...Array(20).keys()].map(index =>
+                        <ChatMenuItem
+                            key={index}
+                            name={'James'}
+                            latestMessage={'Hello World'}
+                            image={'http://via.placeholder.com/150x150'}
+                            onPress={() => {}}
+                        />
+                    )
+                    }
                 </ScrollView>
             </SafeAreaView>
         );
@@ -90,27 +32,5 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1
-    },
-    item: {
-        display: 'flex',
-        flexDirection: 'row',
-        padding: 15,
-        borderBottomColor: '#EAEAEA',
-        borderBottomWidth: 1
-    },
-    userImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 200,
-        marginRight: 10
-    },
-    textContainer: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center'
-    },
-    name: {
-        fontWeight: 'bold',
-        marginBottom: 5
     }
 });

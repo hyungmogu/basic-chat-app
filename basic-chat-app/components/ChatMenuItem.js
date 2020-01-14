@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text , TouchableOpacity} from 'react-native';
+import { StyleSheet, Text , TouchableOpacity, Image, View } from 'react-native';
 
 class ChatMenuItem extends Component {
     render() {
         const {
-            type
+            onPress,
+            image,
+            name,
+            latestMessage
         } = this.props;
 
         return (
-            <TouchableOpacity style={styles.item}>
-                <Image source={{ uri: "http://via.placeholder.com/150x150"}} style={styles.userImage} />
+            <TouchableOpacity style={styles.item} onPress={onPress}>
+                <Image source={{uri:image}} style={styles.userImage} />
                 <View style={styles.textContainer}>
-                    <Text style={styles.name}>James</Text>
-                    <Text>Hello World</Text>
+                    <Text style={styles.name}>{name}</Text>
+                    <Text>{latestMessage}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -20,21 +23,27 @@ class ChatMenuItem extends Component {
 }
 
 const styles = StyleSheet.create({
-    button: {
-        padding: 15,
-        borderRadius: 10,
-        fontSize: 20,
-        width: 350,
+    item: {
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        flexDirection: 'row',
+        padding: 15,
+        borderBottomColor: '#EAEAEA',
+        borderBottomWidth: 1
+    },
+    userImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 200,
+        marginRight: 10
+    },
+    textContainer: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center'
+    },
+    name: {
+        fontWeight: 'bold',
         marginBottom: 5
-    },
-    primary: {
-        backgroundColor: '#E2E2E2'
-    },
-    secondary: {
-        backgroundColor: '#D6D6D6'
     }
 });
 

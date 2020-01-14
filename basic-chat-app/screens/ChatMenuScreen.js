@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, dd SafeAreaView, Dimensions } from 'react-native';
 
-import Logo from '../components/Logo';
-import AppButton from '../components/AppButton';
-
-export default class LoginScreen extends Component {
+export default class ChatMenuScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (

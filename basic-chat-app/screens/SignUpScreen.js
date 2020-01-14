@@ -1,26 +1,29 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-        <Text style={styles.logo}>Basic{"\n"} Chat App</Text>
-        <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder={'Name'} placeholderTextColor="black"></TextInput>
-            <TextInput style={styles.input} placeholder={'Email'} placeholderTextColor="black"></TextInput>
-            <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
-            <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
-        </View>
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, styles.buttonPrimary]}>
-                <Text>Sign Up</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.buttonSecondary]}>
-                <Text>Back</Text>
-            </TouchableOpacity>
-        </View>
-    </View>
-  );
+export default class SignUpScreen extends Component {
+    render() {
+        const {navigate} = this.props.navigation;
+        return (
+            <View style={styles.container}>
+                <Text style={styles.logo}>Basic{"\n"} Chat App</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input} placeholder={'Name'} placeholderTextColor="black"></TextInput>
+                    <TextInput style={styles.input} placeholder={'Email'} placeholderTextColor="black"></TextInput>
+                    <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
+                    <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={[styles.button, styles.buttonPrimary]}>
+                        <Text>Sign Up</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.button, styles.buttonSecondary]} onPress={() => navigate('Login')}>
+                        <Text>Back</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({

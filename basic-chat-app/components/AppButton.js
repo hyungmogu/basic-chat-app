@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StyleSheet, Text , TouchableOpacity} from 'react-native';
 
 class AppButton extends Component {
-
     render() {
         const {
             type

@@ -12,7 +12,7 @@ const MainAppNavigation = createStackNavigator({
         screen: HomeScreen,
         navigationOptions: {
             headerShown: true,
-            headerLeft: false,
+            headerLeft: () => false,
             title: 'User Name Goes Here'
         }
     }

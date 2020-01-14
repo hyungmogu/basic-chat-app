@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 
+import Logo from '../components/Logo';
+
 export default class LoginScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
-                    <Text style={styles.logo}>Basic{"\n"} Chat App</Text>
+                    <Logo/>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="black"></TextInput>
                         <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
@@ -36,13 +38,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: Dimensions.get('window').height / 6,
         alignItems: 'center'
-    },
-    logo: {
-        width: 250,
-        fontSize: 45,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 30
     },
     input: {
         borderRadius: 10,

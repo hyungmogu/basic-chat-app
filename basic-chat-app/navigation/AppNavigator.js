@@ -8,7 +8,14 @@ import HomeScreen from '../screens/HomeScreen';
 const MainAppNavigation = createStackNavigator({
     Login: {screen: LoginScreen},
     SignUp: {screen: SignUpScreen},
-    Home: {screen: HomeScreen}
+    Home: {
+        screen: HomeScreen,
+        navigationOptions: {
+            headerShown: true,
+            headerLeft: false,
+            title: 'User Name Goes Here'
+        }
+    }
 },
 {
     initialRouteName: 'Login',

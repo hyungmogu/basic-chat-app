@@ -24,17 +24,5 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         marginTop: Dimensions.get('window').height / 6,
         alignItems: 'center'
-    },
-    input: {
-        borderRadius: 10,
-        borderWidth: 1,
-        backgroundColor: '#E2E2E2',
-        borderColor: '#E2E2E2',
-        padding: 15,
-        width: 350,
-        marginBottom: 5
-    },
-    inputContainer: {
-        marginBottom: 15
     }
 });

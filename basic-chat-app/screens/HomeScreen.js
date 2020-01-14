@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, Text, TouchableOpacity, View, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import ChatMenuItem from '../components/ChatMenuItem';
 
 export default class HomeScreen extends Component {
     render() {
-        const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <ScrollView style={styles.container}>
@@ -17,8 +16,7 @@ export default class HomeScreen extends Component {
                             image={'http://via.placeholder.com/150x150'}
                             onPress={() => {}}
                         />
-                    )
-                    }
+                    )}
                 </ScrollView>
             </SafeAreaView>
         );

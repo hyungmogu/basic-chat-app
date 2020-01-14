@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-        <Text style={styles.logo}>Basic{"\n"} Chat App</Text>
-        <View style={styles.inputContainer}>
-            <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="black"></TextInput>
-            <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
-        </View>
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.button, styles.buttonPrimary]}>
-                <Text>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={[styles.button, styles.buttonSecondary]}>
-                <Text>Sign Up</Text>
-            </TouchableOpacity>
-        </View>
-    </View>
-  );
+export default class LoginScreen extends Component {
+    render() {
+        const {navigate} = this.props.navigation;
+        return (
+            <View style={styles.container}>
+                <Text style={styles.logo}>Basic{"\n"} Chat App</Text>
+                <View style={styles.inputContainer}>
+                    <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="black"></TextInput>
+                    <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={[styles.button, styles.buttonPrimary]}>
+                        <Text>Login</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.button, styles.buttonSecondary]} onPress={() => navigate('SignUp')}>
+                        <Text>Sign Up</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({

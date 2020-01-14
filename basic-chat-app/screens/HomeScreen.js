@@ -9,6 +9,9 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
+                <TouchableOpacity style={{position: 'absolute', zIndex: '1', backgroundColor: '#E2E2E2', display: 'flex', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#E2E2E2', borderRadius: 200, alignSelf: 'flex-end', bottom: 40, right: 20,  width: 75, height: 75}}>
+                    <Ionicons name="ios-add" size={50}/>
+                </TouchableOpacity>
                 <ScrollView style={styles.container}>
                     { [...Array(20).keys()].map(index =>
                         <ChatMenuItem
@@ -20,9 +23,6 @@ export default class HomeScreen extends Component {
                         />
                     )}
                 </ScrollView>
-                <TouchableOpacity style={{position: 'fixed', display: 'flex', justifyContent: 'center', borderWidth: 1, borderColor: 'black', borderRadius: 200, alignItems: 'center', bottom: 0, right: 0,  width: 75, height: 75}}>
-                    <Ionicons name="ios-add" size={40}/>
-                </TouchableOpacity>
             </SafeAreaView>
         );
     }

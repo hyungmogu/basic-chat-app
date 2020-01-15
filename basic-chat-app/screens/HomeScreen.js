@@ -16,7 +16,7 @@ export default class HomeScreen extends Component {
                             key={index}
                             name={'James'}
                             latestMessage={'Hello World'}
-                            image={'http://via.placeholder.com/150x150'}
+                            image={'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
                             onPress={() => {}}
                         />
                     )}

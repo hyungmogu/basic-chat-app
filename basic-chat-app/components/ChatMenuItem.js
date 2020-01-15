@@ -12,7 +12,7 @@ class ChatMenuItem extends Component {
 
         return (
             <TouchableOpacity style={styles.item} onPress={onPress}>
-                <Image source={{uri:image}} style={styles.userImage} />
+                <Image source={{uri: image }} style={styles.userImage} />
                 <View style={styles.textContainer}>
                     <Text style={styles.name}>{name}</Text>
                     <Text>{latestMessage}</Text>
@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1
     },
     userImage: {
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         borderRadius: 200,
         marginRight: 10
     },

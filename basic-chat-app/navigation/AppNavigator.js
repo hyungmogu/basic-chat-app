@@ -9,12 +9,14 @@ import LoginScreen from '../screens/LoginScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import AddNewChatScreen from '../screens/AddNewChatScreen';
+import UserScreen from '../screens/UserScreen';
 
 import UserName from '../components/UserName';
 
 const MainAppNavigation = createStackNavigator({
     Login: {screen: LoginScreen},
     SignUp: {screen: SignUpScreen},
+    User: {screen: UserScreen},
     Home: {
         screen: HomeScreen,
         navigationOptions: {

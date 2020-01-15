@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView } from 'react-native';
-
-import AddNewButton from '../components/AddNewButton';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 
 export default class UserScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <AddNewButton onPress={() => navigate('AddNewChat')}/>
                 <View style={styles.container}>
 
                 </View>

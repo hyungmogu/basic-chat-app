@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-const UserName = () => {
-    return (
-        <TouchableOpacity style={styles.item}>
-            <Text style={styles.text}>User Name Goes Here</Text>
-        </TouchableOpacity>
-    );
+import { withNavigation } from 'react-navigation';
+
+class UserName extends Component {
+    render() {
+        const {navigate} = this.props.navigation;
+        return (
+            <TouchableOpacity style={styles.item} onPress={() => navigate('User')}>
+                <Text style={styles.text}>User Name Goes Here</Text>
+            </TouchableOpacity>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -15,4 +20,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default UserName;
+export default withNavigation(UserName);

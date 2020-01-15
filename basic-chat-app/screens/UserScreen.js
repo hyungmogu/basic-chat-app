@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'stretch',
         alignItems: 'center',
-        justifyContent: 'center'
+        marginTop: 20
     },
     userImage: {
         width: Platform.OS === 'ios' ? 190 : 160,

@@ -7,6 +7,8 @@ export default class UserScreen extends Component {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
+                    <Image source={{uri: 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg' }} style={styles.userImage} />
+
                 </View>
             </SafeAreaView>
         );
@@ -19,12 +21,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
     container: {
-        flex: 1
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     userImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 200,
-        marginRight: 10
+        width: Platform.OS === 'ios' ? 190 : 160,
+        height: Platform.OS === 'ios' ? 190 : 160,
+        borderRadius: 200
     },
 });

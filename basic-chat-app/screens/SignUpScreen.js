@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, SafeAr
 
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
+import AppInput from '../components/AppInput';
 
 export default class SignUpScreen extends Component {
     render() {
@@ -12,10 +13,10 @@ export default class SignUpScreen extends Component {
                 <View style={styles.container}>
                     <Logo/>
                     <View style={styles.inputContainer}>
-                        <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Name'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Email'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
+                        <AppInput placeholder={'Name'}/>
+                        <AppInput placeholder={'Email'}/>
+                        <AppInput placeholder={'Password'}/>
+                        <AppInput placeholder={'Password Confirm'}/>
                     </View>
                     <View style={styles.buttonContainer}>
                         <AppButton type={"primary"}>Sign Up</AppButton>
@@ -50,7 +51,8 @@ const styles = StyleSheet.create({
         width: 350
     },
     inputContainer: {
-        marginBottom: 15
+        marginBottom: 15,
+        alignSelf: 'stretch'
     },
     buttonContainer: {
         alignSelf: 'stretch',

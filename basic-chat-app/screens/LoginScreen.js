@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginBottom: 15,
-        alignSelf: 'stretch',
-        alignItems: 'center'
+        alignSelf: 'stretch'
     }
 });

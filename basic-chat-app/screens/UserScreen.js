@@ -31,13 +31,18 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        display: 'flex',
+        padding: 15
+    },
+    bodyContainer: {
+        flex: 1,
+        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center'
     },
     userImage: {
         width: Platform.OS === 'ios' ? 190 : 160,
         height: Platform.OS === 'ios' ? 190 : 160,
-        borderRadius: 200
+        borderRadius: 200,
+        marginBottom: 20
     },
 });

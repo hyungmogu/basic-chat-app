@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, View, Text } from 'react-native';
+import { StyleSheet, SafeAreaView, View } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';

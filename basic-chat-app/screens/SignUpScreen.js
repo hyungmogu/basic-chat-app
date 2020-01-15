@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Dimensions, SafeAreaView } from 'react-native';
+import { StyleSheet, View, Dimensions, SafeAreaView } from 'react-native';
 
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';

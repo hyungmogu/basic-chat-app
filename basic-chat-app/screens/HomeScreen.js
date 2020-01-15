@@ -17,7 +17,7 @@ export default class HomeScreen extends Component {
                             name={'James'}
                             latestMessage={'Hello World'}
                             image={'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
-                            onPress={() => {}}
+                            onPress={() => navigate('Chat')}
                         />
                     )}
                 </ScrollView>

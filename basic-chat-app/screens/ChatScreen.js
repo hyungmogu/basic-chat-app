@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, TextInput, SafeAreaView, KeyboardAvoidingView, View } from 'react-native';
 
 export default class ChatScreen extends Component {
     render() {
@@ -7,7 +7,16 @@ export default class ChatScreen extends Component {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <KeyboardAvoidingView style={styles.container} behavior = "padding" enabled>
+                    <View style={styles.chatContainer}>
 
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <TextInput
+                            multiline={true}
+                            numberOfLines={5}
+                            placeholder={"Message"}
+                        />
+                    </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
         );

@@ -10,6 +10,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import AddNewChatScreen from '../screens/AddNewChatScreen';
 import UserScreen from '../screens/UserScreen';
+import ChatScreen from '../screens/ChatScreen';
 
 import UserName from '../components/UserName';
 
@@ -37,6 +38,9 @@ const MainAppNavigation = createStackNavigator({
             headerShown: true,
             title: 'Add New Chat'
         }
+    },
+    Chat: {
+        screen: ChatScreen
     }
 },
 {

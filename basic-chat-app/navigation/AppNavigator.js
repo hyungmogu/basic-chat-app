@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Platform } from 'react-native';
 
 import {createAppContainer} from 'react-navigation';
@@ -8,6 +10,8 @@ import SignUpScreen from '../screens/SignUpScreen';
 import HomeScreen from '../screens/HomeScreen';
 import AddNewChatScreen from '../screens/AddNewChatScreen';
 
+import UserName from '../components/UserName';
+
 const MainAppNavigation = createStackNavigator({
     Login: {screen: LoginScreen},
     SignUp: {screen: SignUpScreen},
@@ -16,6 +20,7 @@ const MainAppNavigation = createStackNavigator({
         navigationOptions: {
             headerShown: true,
             headerLeft: () => false,
+            headerTitle: () => <UserName/>,
             title: 'User Name Goes Here'
         }
     },

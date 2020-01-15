@@ -29,10 +29,11 @@ const styles = StyleSheet.create({
         borderColor: '#E2E2E2',
         borderRadius: 200,
         alignSelf: 'flex-end',
-        bottom: 40,
-        right: 20,
-        width: 75,
-        height: 75
+        bottom: 0,
+        right: 0,
+        margin: 20,
+        width: 60,
+        height: 60
     }
 });
 

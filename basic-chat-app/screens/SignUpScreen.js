@@ -17,8 +17,8 @@ export default class SignUpScreen extends Component {
                     <View style={styles.inputContainer}>
                         <AppInput placeholder={'Name'}/>
                         <AppInput placeholder={'Email'}/>
-                        <AppInput placeholder={'Password'}/>
-                        <AppInput placeholder={'Password Confirm'}/>
+                        <AppInput placeholder={'Password'} secureTextEntry={true}/>
+                        <AppInput placeholder={'Password Confirm'} secureTextEntry={true}/>
                     </View>
                     <View style={styles.buttonContainer}>
                         <AppButton type={"primary"}>Sign Up</AppButton>

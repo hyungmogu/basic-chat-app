@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Image } from 'react-native';
 
 export default class UserScreen extends Component {
     render() {
@@ -7,7 +7,6 @@ export default class UserScreen extends Component {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
-
                 </View>
             </SafeAreaView>
         );
@@ -21,5 +20,11 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1
-    }
+    },
+    userImage: {
+        width: 50,
+        height: 50,
+        borderRadius: 200,
+        marginRight: 10
+    },
 });

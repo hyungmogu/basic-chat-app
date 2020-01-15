@@ -16,14 +16,19 @@ import UserName from '../components/UserName';
 const MainAppNavigation = createStackNavigator({
     Login: {screen: LoginScreen},
     SignUp: {screen: SignUpScreen},
-    User: {screen: UserScreen},
+    User: {
+        screen: UserScreen,
+        navigationOptions: {
+            headerShown: true,
+            title: 'Profile'
+        }
+    },
     Home: {
         screen: HomeScreen,
         navigationOptions: {
             headerShown: true,
             headerLeft: () => false,
-            headerTitle: () => <UserName/>,
-            title: 'User Name Goes Here'
+            headerTitle: () => <UserName/>
         }
     },
     AddNewChat: {

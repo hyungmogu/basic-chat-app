@@ -10,8 +10,8 @@ export default class UserScreen extends Component {
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
                     <View style={styles.bodyContainer}>
-                        <Image source={{uri: 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg' }} style={styles.userImage} />
-                        <Text>User Name Goes Here</Text>
+                        <Image style={styles.userImage} source={{uri: 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg' }}/>
+                        <Text style={styles.name}>James</Text>
                         <AppButton>Change Profile Picture</AppButton>
                         <AppButton>Change Name</AppButton>
                     </View>
@@ -43,6 +43,10 @@ const styles = StyleSheet.create({
         width: Platform.OS === 'ios' ? 190 : 160,
         height: Platform.OS === 'ios' ? 190 : 160,
         borderRadius: 200,
-        marginBottom: 20
+        marginBottom: Platform.OS === 'ios' ? 20 : 15
     },
+    name: {
+        marginBottom: 25,
+        fontWeight: 'bold'
+    }
 });

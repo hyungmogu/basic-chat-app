@@ -16,8 +16,8 @@ export default class LoginScreen extends Component {
                         <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <AppButton type={"primary"} onPress={() => navigate('Home')}>Login</AppButton>
-                        <AppButton type={"secondary"} onPress={() => navigate('SignUp')}>Sign Up</AppButton>
+                        <AppButton login={true} type={"primary"} onPress={() => navigate('Home')}>Login</AppButton>
+                        <AppButton login={true} type={"secondary"} onPress={() => navigate('SignUp')}>Sign Up</AppButton>
                     </View>
                 </View>
             </SafeAreaView>
@@ -28,7 +28,7 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
     safeViewContainer: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     container: {
         flex: 1,
@@ -46,6 +46,10 @@ const styles = StyleSheet.create({
     },
     inputLogin: {
         width: 350
+    },
+    buttonContainer: {
+        alignSelf: 'stretch',
+        alignItems: 'center'
     },
     inputContainer: {
         marginBottom: 15

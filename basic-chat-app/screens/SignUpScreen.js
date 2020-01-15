@@ -18,8 +18,8 @@ export default class SignUpScreen extends Component {
                         <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <AppButton type={"primary"}>Sign Up</AppButton>
-                        <AppButton type={"secondary"} onPress={() => navigate('Login')}>Back</AppButton>
+                        <AppButton login={true} type={"primary"}>Sign Up</AppButton>
+                        <AppButton login={true} type={"secondary"} onPress={() => navigate('Login')}>Back</AppButton>
                     </View>
                 </View>
             </SafeAreaView>
@@ -51,5 +51,9 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         marginBottom: 15
+    },
+    buttonContainer: {
+        alignSelf: 'stretch',
+        alignItems: 'center'
     }
 });

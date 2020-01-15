@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { Platform, StyleSheet, TextInput } from 'react-native';
 
 
 class AppInput extends Component {
     render() {
         const {
             login,
-            placeholder
+            placeholder,
+            secureTextEntry
         } = this.props;
 
         return (
-            <TextInput style={ login ? [styles.input, styles.inputLogin] : styles.input} placeholder={placeholder} placeholderTextColor="black"></TextInput>
+            <TextInput style={ login ? [styles.input, styles.inputLogin] : styles.input} secureTextEntry={secureTextEntry} placeholder={placeholder} placeholderTextColor="black"></TextInput>
         );
     }
 }
@@ -21,11 +22,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         backgroundColor: '#E2E2E2',
         borderColor: '#E2E2E2',
-        padding: 15,
+        padding: Platform.OS === 'ios' ? 15 : 10,
         marginBottom: 5
-    },
-    inputLogin: {
-        width: 350
     }
 });
 

@@ -11,7 +11,7 @@ export default class AddNewChatScreen extends Component {
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
                     <AppInput placeholder={'Email'}/>
-                    <AppButton type={"primary"}>Start New Chat</AppButton>
+                    <AppButton type={"secondary"}>Start New Chat</AppButton>
                 </View>
             </SafeAreaView>
         );

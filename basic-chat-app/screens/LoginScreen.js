@@ -37,10 +37,10 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
+        justifyContent: 'center',
         paddingHorizontal: 20
     },
     logoContainer: {
-        marginTop: Dimensions.get('window').height / 6
     },
     inputContainer: {
         marginBottom: 15,

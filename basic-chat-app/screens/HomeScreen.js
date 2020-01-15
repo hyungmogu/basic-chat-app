@@ -9,7 +9,7 @@ export default class HomeScreen extends Component {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <AddNewButton/>
+                <AddNewButton onPress={() => navigate('AddNewChat')}/>
                 <ScrollView style={styles.container}>
                     { [...Array(20).keys()].map(index =>
                         <ChatMenuItem

@@ -11,7 +11,9 @@ export default class LoginScreen extends Component {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
-                    <Logo/>
+                    <View style={styles.logoContainer}>
+                        <Logo/>
+                    </View>
                     <View style={styles.inputContainer}>
                         <AppInput placeholder={'Email'}/>
                         <AppInput secureTextEntry={true} placeholder={'Password'}/>
@@ -34,26 +36,18 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: Dimensions.get('window').height / 6,
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal: 20
     },
-    input: {
-        borderRadius: 10,
-        borderWidth: 1,
-        backgroundColor: '#E2E2E2',
-        borderColor: '#E2E2E2',
-        padding: 15,
-        marginBottom: 5
-    },
-    inputLogin: {
-        width: 350
-    },
-    buttonContainer: {
-        alignSelf: 'stretch',
-        alignItems: 'center'
+    logoContainer: {
+        marginTop: Dimensions.get('window').height / 6
     },
     inputContainer: {
         marginBottom: 15,
         alignSelf: 'stretch'
+    },
+    buttonContainer: {
+        alignSelf: 'stretch',
+        alignItems: 'center'
     }
 });

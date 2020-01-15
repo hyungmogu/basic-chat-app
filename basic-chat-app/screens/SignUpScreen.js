@@ -11,7 +11,9 @@ export default class SignUpScreen extends Component {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
-                    <Logo/>
+                    <View style={styles.logoContainer}>
+                        <Logo/>
+                    </View>
                     <View style={styles.inputContainer}>
                         <AppInput placeholder={'Name'}/>
                         <AppInput placeholder={'Email'}/>
@@ -31,24 +33,16 @@ export default class SignUpScreen extends Component {
 const styles = StyleSheet.create({
     safeViewContainer: {
         flex: 1,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        marginTop: Dimensions.get('window').height / 6,
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingHorizontal: 20
     },
-    input: {
-        borderRadius: 10,
-        borderWidth: 1,
-        backgroundColor: '#E2E2E2',
-        borderColor: '#E2E2E2',
-        padding: 15,
-        marginBottom: 5
-    },
-    inputLogin: {
-        width: 350
+    logoContainer: {
+        marginTop: Dimensions.get('window').height / 6
     },
     inputContainer: {
         marginBottom: 15,

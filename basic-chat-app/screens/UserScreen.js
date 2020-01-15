@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Image, Text } from 'react-native';
+
+import AppButton from '../components/AppButton';
 
 export default class UserScreen extends Component {
     render() {
@@ -7,8 +9,15 @@ export default class UserScreen extends Component {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
-                    <Image source={{uri: 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg' }} style={styles.userImage} />
-
+                    <View style={styles.bodyContainer}>
+                        <Image source={{uri: 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg' }} style={styles.userImage} />
+                        <Text>User Name Goes Here</Text>
+                        <AppButton>Change Profile Picture</AppButton>
+                        <AppButton>Change Name</AppButton>
+                    </View>
+                    <View style={styles.footerContainer}>
+                        <AppButton type={'secondary'} onPress={() => navigate('Login')}>Logout</AppButton>
+                    </View>
                 </View>
             </SafeAreaView>
         );

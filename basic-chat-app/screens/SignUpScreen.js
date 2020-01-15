@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Dimensions, SafeAreaView } from 'react-native';
+import { StyleSheet, View, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
@@ -10,7 +10,7 @@ export default class SignUpScreen extends Component {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <View style={styles.container}>
+                <KeyboardAvoidingView style={styles.container} behavior = "padding" enabled>
                     <View style={styles.logoContainer}>
                         <Logo/>
                     </View>
@@ -24,7 +24,7 @@ export default class SignUpScreen extends Component {
                         <AppButton type={"primary"}>Sign Up</AppButton>
                         <AppButton type={"secondary"} onPress={() => navigate('Login')}>Back</AppButton>
                     </View>
-                </View>
+                </KeyboardAvoidingView>
             </SafeAreaView>
         );
     }

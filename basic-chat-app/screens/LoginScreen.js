@@ -12,8 +12,8 @@ export default class LoginScreen extends Component {
                 <View style={styles.container}>
                     <Logo/>
                     <View style={styles.inputContainer}>
-                        <TextInput style={styles.input} placeholder={'Username'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
+                        <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Username'} placeholderTextColor="black"></TextInput>
+                        <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
                     </View>
                     <View style={styles.buttonContainer}>
                         <AppButton type={"primary"} onPress={() => navigate('Home')}>Login</AppButton>
@@ -42,8 +42,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#E2E2E2',
         borderColor: '#E2E2E2',
         padding: 15,
-        width: 350,
         marginBottom: 5
+    },
+    inputLogin: {
+        width: 350
     },
     inputContainer: {
         marginBottom: 15

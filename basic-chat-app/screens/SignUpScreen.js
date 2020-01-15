@@ -14,8 +14,8 @@ export default class SignUpScreen extends Component {
                     <View style={styles.inputContainer}>
                         <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Name'} placeholderTextColor="black"></TextInput>
                         <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Email'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
+                        <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
+                        <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
                     </View>
                     <View style={styles.buttonContainer}>
                         <AppButton type={"primary"}>Sign Up</AppButton>
@@ -44,8 +44,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#E2E2E2',
         borderColor: '#E2E2E2',
         padding: 15,
-        width: 350,
         marginBottom: 5
+    },
+    inputLogin: {
+        width: 350
     },
     inputContainer: {
         marginBottom: 15

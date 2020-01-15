@@ -21,7 +21,6 @@ const MainAppNavigation = createStackNavigator({
         screen: AddNewChatScreen,
         navigationOptions: {
             headerShown: true,
-            headerLeft: () => false,
             title: 'Add New Chat'
         }
     }

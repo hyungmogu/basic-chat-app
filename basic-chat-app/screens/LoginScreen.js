@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 
+import AppInput from '../components/AppInput';
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
 
@@ -12,12 +13,12 @@ export default class LoginScreen extends Component {
                 <View style={styles.container}>
                     <Logo/>
                     <View style={styles.inputContainer}>
-                        <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Username'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={[styles.input, styles.inputLogin]} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
+                        <AppInput placeholder={'Email'}/>
+                        <AppInput secureTextEntry={true} placeholder={'Password'}/>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <AppButton login={true} type={"primary"} onPress={() => navigate('Home')}>Login</AppButton>
-                        <AppButton login={true} type={"secondary"} onPress={() => navigate('SignUp')}>Sign Up</AppButton>
+                        <AppButton type={"primary"} onPress={() => navigate('Home')}>Login</AppButton>
+                        <AppButton type={"secondary"} onPress={() => navigate('SignUp')}>Sign Up</AppButton>
                     </View>
                 </View>
             </SafeAreaView>
@@ -52,6 +53,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     inputContainer: {
-        marginBottom: 15
+        marginBottom: 15,
+        alignSelf: 'stretch',
+        alignItems: 'center'
     }
 });

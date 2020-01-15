@@ -18,11 +18,13 @@ class AppInput extends Component {
 
 const styles = StyleSheet.create({
     input: {
+        alignSelf: 'stretch',
         borderRadius: 10,
         borderWidth: 1,
         backgroundColor: '#E2E2E2',
         borderColor: '#E2E2E2',
-        padding: Platform.OS === 'ios' ? 15 : 10,
+        paddingVertical: Platform.OS === 'ios' ? 15 : 10,
+        paddingHorizontal: 15,
         marginBottom: 5
     }
 });

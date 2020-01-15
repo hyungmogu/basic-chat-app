@@ -9,7 +9,7 @@ class AppButton extends Component {
         } = this.props;
 
         return (
-            <TouchableOpacity style={ login ? [styles.button, styles[type], styles.buttonLogin] : [styles.button, styles[type]]} onPress={this.props.onPress}>
+            <TouchableOpacity style={[styles.button, styles[type]]} onPress={this.props.onPress}>
                 <Text>{this.props.children}</Text>
             </TouchableOpacity>
         );
@@ -18,16 +18,13 @@ class AppButton extends Component {
 
 const styles = StyleSheet.create({
     button: {
+        alignSelf: 'stretch',
         padding: 15,
         borderRadius: 10,
-        fontSize: 20,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 5
-    },
-    buttonLogin: {
-        width: 350
     },
     primary: {
         backgroundColor: '#E2E2E2'

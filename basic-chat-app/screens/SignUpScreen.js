@@ -12,8 +12,8 @@ export default class SignUpScreen extends Component {
                 <View style={styles.container}>
                     <Logo/>
                     <View style={styles.inputContainer}>
-                        <TextInput style={styles.input} placeholder={'Name'} placeholderTextColor="black"></TextInput>
-                        <TextInput style={styles.input} placeholder={'Email'} placeholderTextColor="black"></TextInput>
+                        <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Name'} placeholderTextColor="black"></TextInput>
+                        <TextInput style={[styles.input, styles.inputLogin]} placeholder={'Email'} placeholderTextColor="black"></TextInput>
                         <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password'} placeholderTextColor="black"></TextInput>
                         <TextInput style={styles.input} secureTextEntry={true} placeholder={'Password Confirm'} placeholderTextColor="black"></TextInput>
                     </View>

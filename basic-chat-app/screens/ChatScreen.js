@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
     },
     chatContainer: {
         flex: 1,
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        padding: 10
     },
     chatBoxContainer: {
 

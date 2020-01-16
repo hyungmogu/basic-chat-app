@@ -11,7 +11,7 @@ export default class ChatScreen extends Component {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <KeyboardAvoidingView style={styles.container} behavior = "padding" enabled>
+                <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
                     <View style={styles.chatContainer}>
 
                     </View>

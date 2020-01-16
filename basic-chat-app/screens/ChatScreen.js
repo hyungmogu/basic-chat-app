@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, SafeAreaView, KeyboardAvoidingView, View, Platform } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, View, ScrollView } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
@@ -12,12 +12,37 @@ export default class ChatScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
+        let messages = [
+            {
+                id: 1,
+                email: 'james@gmail.com',
+                name: 'James Yu',
+                text: 'Hello there!',
+                timestamp: 1579196191
+            },
+            {
+                id: 2,
+                email: 'john@gmail.com',
+                name: 'John Doe',
+                text: 'Hey',
+                timestamp: 1579196322
+            }
+        ];
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
-                    <View style={styles.chatContainer}>
+                    <ScrollView style={styles.chatContainer}>
+                        {
+                            messages.map(message =>
+                                <View key={message.id}>
+                                    <Text>{message.text}</Text>
+                                </View>
+                            )
+                        }
+                        <View>
 
-                    </View>
+                        </View>
+                    </ScrollView>
                     <View style={styles.inputContainer}>
                         <AppTextArea
                             placeholder={'Message'}

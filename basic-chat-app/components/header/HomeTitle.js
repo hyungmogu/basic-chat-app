@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import { withNavigation } from 'react-navigation';
 
-class UserName extends Component {
+class HomeTitle extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default withNavigation(UserName);
+export default withNavigation(HomeTitle);

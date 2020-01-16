@@ -29,7 +29,25 @@ export default class ChatScreen extends Component {
             }
         ];
 
-        this.setState({ messages });
+        let chatter = {
+            id: 1,
+            name: 'John Doe',
+            email: 'james@gmail.com'
+        }
+
+        let chattee = {
+            id: 2,
+            name: 'James Yu',
+            email: 'james@gmail.com'
+        };
+
+        this.setState({
+            chatter: chatter,
+            chattee: chattee,
+            messages: messages
+        });
+
+        this.props.navigation.setParams({ chatter: chatter, chattee: chattee });
     }
 
     handleToggleDateTime = (messages, index) => {

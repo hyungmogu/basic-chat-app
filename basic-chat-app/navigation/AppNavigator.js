@@ -12,7 +12,8 @@ import AddNewChatScreen from '../screens/AddNewChatScreen';
 import UserScreen from '../screens/UserScreen';
 import ChatScreen from '../screens/ChatScreen';
 
-import UserName from '../components/UserName';
+import HomeTitle from '../components/header/HomeTitle';
+import ChatTitle from '../components/header/ChatTitle';
 
 const MainAppNavigation = createStackNavigator({
     Login: {screen: LoginScreen},
@@ -29,7 +30,7 @@ const MainAppNavigation = createStackNavigator({
         navigationOptions: {
             headerShown: true,
             headerLeft: () => false,
-            headerTitle: () => <UserName/>
+            headerTitle: () => <HomeTitle/>
         }
     },
     AddNewChat: {
@@ -43,7 +44,7 @@ const MainAppNavigation = createStackNavigator({
         screen: ChatScreen,
         navigationOptions: {
             headerShown: true,
-            title: 'Chat'
+            headerTitle: () => <ChatTitle/>
         }
     }
 },

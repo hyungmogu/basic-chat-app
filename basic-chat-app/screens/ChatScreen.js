@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, TextInput, SafeAreaView, KeyboardAvoidingView, View, Platform } from 'react-native';
 
+import AppButton from '../components/AppButton';
+import AppTextArea from '../components/AppTextArea';
+
 export default class ChatScreen extends Component {
     state = {
         text: '',
@@ -16,15 +19,14 @@ export default class ChatScreen extends Component {
 
                     </View>
                     <View style={styles.inputContainer}>
-                        <TextInput
-                            style={styles.input}
-                            multiline={true}
-                            numberOfLines={1}
-                            placeholder={"Message"}
+                        <AppTextArea
+                            placeholder={'Message'}
                             onChangeText={(text) => {
                                 this.setState({ text })
                             }}
+                            style={{margin:10}}
                         />
+                        <AppButton type={'secondary'}>Submit</AppButton>
                     </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
@@ -48,17 +50,6 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         borderTopWidth: 1,
-        borderTopColor: '#EAEAEA',
-        padding: 10
-    },
-    input: {
-        backgroundColor: '#E2E2E2',
-        borderColor: '#E2E2E2',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingTop: Platform.OS === 'ios' ? 15 : 10,
-        paddingBottom: Platform.OS === 'ios' ? 15 : 10,
-        paddingHorizontal: 20,
-        maxHeight: Platform.OS === 'ios' ? 200 : 100
+        borderTopColor: '#EAEAEA'
     }
 });

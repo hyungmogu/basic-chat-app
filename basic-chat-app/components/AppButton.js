@@ -5,11 +5,11 @@ class AppButton extends Component {
     render() {
         const {
             type,
-            login
+            style
         } = this.props;
 
         return (
-            <TouchableOpacity style={[styles.button, styles[type]]} onPress={this.props.onPress}>
+            <TouchableOpacity style={[styles.button, styles[type], style]} onPress={this.props.onPress}>
                 <Text>{this.props.children}</Text>
             </TouchableOpacity>
         );
@@ -23,8 +23,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 5
+        alignItems: 'center'
     },
     primary: {
         backgroundColor: '#E2E2E2'

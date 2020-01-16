@@ -24,7 +24,7 @@ export default class ChatScreen extends Component {
                             onChangeText={(text) => {
                                 this.setState({ text })
                             }}
-                            style={{margin:10}}
+                            style={{flex: 1, marginRight: 10}}
                         />
                         <AppButton type={'secondary'}>Submit</AppButton>
                     </View>
@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         borderTopWidth: 1,
-        borderTopColor: '#EAEAEA'
+        borderTopColor: '#EAEAEA',
+        flexDirection: 'row',
+        padding: 10
     }
 });

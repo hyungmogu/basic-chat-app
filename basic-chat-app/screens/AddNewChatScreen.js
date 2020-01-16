@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, View } from 'react-native';
+import { StyleSheet, SafeAreaView, View, Alert } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
 
 export default class AddNewChatScreen extends Component {
+
     render() {
         const {navigate} = this.props.navigation;
+
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>

@@ -31,8 +31,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 20
+        alignSelf: 'stretch',
+        justifyContent: 'center'
+    },
+    inputContainer: {
+        borderTopWidth: 1,
+        borderTopColor: '#EAEAEA',
+        padding: 20
     }
 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
@@ -12,6 +12,7 @@ export default class ChatScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
+        let userEmail = 'john@gmail.com';
         let messages = [
             {
                 id: 1,
@@ -31,11 +32,13 @@ export default class ChatScreen extends Component {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
-                    <ScrollView style={styles.chatContainer}>
+                    <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
                         {
                             messages.map(message =>
-                                <View key={message.id}>
-                                    <Text>{message.text}</Text>
+                                <View key={message.id} style={styles.chatBoxContainer}>
+                                    <View style={[styles.chatbox, userEmail === message.email ? styles.chatter : styles.chattee]}>
+                                        <Text>{message.text}</Text>
+                                    </View>
                                 </View>
                             )
                         }
@@ -71,7 +74,30 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     chatContainer: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'flex-end'
+    },
+    chatBoxContainer: {
+
+    },
+    chatbox: {
+        padding: 10,
+        borderWidth: 1,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
+        maxWidth: Platform.OS === 'ios' ? 210 : 180
+    },
+    chatter: {
+        borderBottomLeftRadius: 10,
+        alignSelf: 'flex-end',
+        backgroundColor: '#D6D6D6',
+        borderColor: '#D6D6D6'
+    },
+    chattee: {
+        borderBottomRightRadius: 10,
+        alignSelf: 'flex-start',
+        backgroundColor: '#E2E2E2',
+        borderColor: '#E2E2E2'
     },
     inputContainer: {
         borderTopWidth: 1,

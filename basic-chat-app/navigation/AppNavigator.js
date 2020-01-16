@@ -40,7 +40,11 @@ const MainAppNavigation = createStackNavigator({
         }
     },
     Chat: {
-        screen: ChatScreen
+        screen: ChatScreen,
+        navigationOptions: {
+            headerShown: true,
+            title: 'Chat'
+        }
     }
 },
 {

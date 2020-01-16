@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, TextInput, SafeAreaView, KeyboardAvoidingView, View } from 'react-native';
+import { StyleSheet, TextInput, SafeAreaView, KeyboardAvoidingView, View, Platform } from 'react-native';
 
 export default class ChatScreen extends Component {
+    state = {
+        text: '',
+        height: 0
+    };
+
     render() {
         const {navigate} = this.props.navigation;
         return (
@@ -14,8 +19,11 @@ export default class ChatScreen extends Component {
                         <TextInput
                             style={styles.input}
                             multiline={true}
-                            numberOfLines={5}
+                            numberOfLines={1}
                             placeholder={"Message"}
+                            onChangeText={(text) => {
+                                this.setState({ text })
+                            }}
                         />
                     </View>
                 </KeyboardAvoidingView>
@@ -50,6 +58,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingTop: Platform.OS === 'ios' ? 15 : 10,
         paddingBottom: Platform.OS === 'ios' ? 15 : 10,
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
+        maxHeight: Platform.OS === 'ios' ? 200 : 100
     }
 });

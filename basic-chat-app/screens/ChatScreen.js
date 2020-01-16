@@ -137,6 +137,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#E2E2E2',
         borderColor: '#E2E2E2'
     },
+    dateTime: {
+        padding: 5
+    },
     inputContainer: {
         borderTopWidth: 1,
         borderTopColor: '#EAEAEA',

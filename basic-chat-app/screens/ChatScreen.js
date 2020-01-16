@@ -12,6 +12,7 @@ export default class ChatScreen extends Component {
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput
+                            style={styles.input}
                             multiline={true}
                             numberOfLines={5}
                             placeholder={"Message"}
@@ -34,9 +35,21 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         justifyContent: 'center'
     },
+    chatContainer: {
+        flex: 1
+    },
     inputContainer: {
         borderTopWidth: 1,
         borderTopColor: '#EAEAEA',
-        padding: 20
+        padding: 10
+    },
+    input: {
+        backgroundColor: '#E2E2E2',
+        borderColor: '#E2E2E2',
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingTop: Platform.OS === 'ios' ? 15 : 10,
+        paddingBottom: Platform.OS === 'ios' ? 15 : 10,
+        paddingHorizontal: 20
     }
 });

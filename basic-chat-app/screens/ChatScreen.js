@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';

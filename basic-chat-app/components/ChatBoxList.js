@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text , TouchableOpacity, Image, View } from 'react-native';
+import { StyleSheet, Text , TouchableOpacity, View } from 'react-native';
 
 class ChatBoxList extends Component {
 
@@ -15,8 +15,7 @@ class ChatBoxList extends Component {
     render() {
         const {
             messages,
-            toggleDateTime,
-            getDateTime
+            toggleDateTime
         } = this.props;
 
         let user = {

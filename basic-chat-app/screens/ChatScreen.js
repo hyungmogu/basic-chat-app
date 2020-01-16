@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform } from 'react-native';
+import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, TouchableOpacity } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
@@ -9,6 +9,24 @@ export default class ChatScreen extends Component {
         text: '',
         height: 0
     };
+
+    toggleDateTime(message) {
+        if (message.showDateTime === undefined) {
+            message.showDateTime = false;
+        }
+
+        message.showDateTime = message.showDateTime ? false : true;
+    }
+
+    getDateTime(unixTimestamp) {
+
+        let date = new Date(unixTimestamp * 1000);
+        let options = {
+            hour: "2-digit", minute: "2-digit"
+        };
+
+        return date.toLocaleTimeString("en-us", options);
+    }
 
     render() {
         const {navigate} = this.props.navigation;
@@ -35,10 +53,14 @@ export default class ChatScreen extends Component {
                     <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
                         {
                             messages.map(message =>
-                                <View key={message.id} style={styles.chatBoxContainer}>
-                                    <View style={[styles.chatbox, userEmail === message.email ? styles.chatter : styles.chattee]}>
+                                <View key={message.id} style={[styles.chatBoxContainer, userEmail === message.email ? styles.chatterBoxContainer : styles.chatteeBoxContainer]}>
+                                    <TouchableOpacity
+                                        style={[styles.chatbox, userEmail === message.email ? styles.chatter : styles.chattee]}
+                                        onPress={this.toggleDateTime(message)}
+                                    >
                                         <Text>{message.text}</Text>
-                                    </View>
+                                    </TouchableOpacity>
+                                    <Text style={[styles.dateTime]}>{this.getDateTime(message.timestamp)}</Text>
                                 </View>
                             )
                         }
@@ -79,24 +101,29 @@ const styles = StyleSheet.create({
         padding: 10
     },
     chatBoxContainer: {
-
+        maxWidth: Platform.OS === 'ios' ? 210 : 180
+    },
+    chatterBoxContainer: {
+        alignSelf: 'flex-end',
+        alignItems: 'flex-end'
+    },
+    chatteeBoxContainer: {
+        alignSelf: 'flex-start',
+        alignItems: 'flex-start'
     },
     chatbox: {
         padding: 10,
         borderWidth: 1,
         borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        maxWidth: Platform.OS === 'ios' ? 210 : 180
+        borderTopRightRadius: 10
     },
     chatter: {
         borderBottomLeftRadius: 10,
-        alignSelf: 'flex-end',
         backgroundColor: '#D6D6D6',
         borderColor: '#D6D6D6'
     },
     chattee: {
         borderBottomRightRadius: 10,
-        alignSelf: 'flex-start',
         backgroundColor: '#E2E2E2',
         borderColor: '#E2E2E2'
     },

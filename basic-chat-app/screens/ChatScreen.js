@@ -7,30 +7,11 @@ import AppTextArea from '../components/AppTextArea';
 export default class ChatScreen extends Component {
     state = {
         text: '',
-        height: 0
+        height: 0,
+        messages: []
     };
 
-    toggleDateTime(message) {
-        if (message.showDateTime === undefined) {
-            message.showDateTime = false;
-        }
-
-        message.showDateTime = message.showDateTime ? false : true;
-    }
-
-    getDateTime(unixTimestamp) {
-
-        let date = new Date(unixTimestamp * 1000);
-        let options = {
-            hour: "2-digit", minute: "2-digit"
-        };
-
-        return date.toLocaleTimeString("en-us", options);
-    }
-
-    render() {
-        const {navigate} = this.props.navigation;
-        let userEmail = 'john@gmail.com';
+    componentDidMount() {
         let messages = [
             {
                 id: 1,
@@ -47,20 +28,49 @@ export default class ChatScreen extends Component {
                 timestamp: 1579196322
             }
         ];
+
+        this.setState({ messages });
+    }
+
+    toggleDateTime(messages, index) {
+        if (messages[index].showDateTime === undefined) {
+            messages[index].showDateTime = false;
+        }
+
+        messages[index].showDateTime = messages[index].showDateTime ? false : true;
+
+        this.setState({messages});
+    }
+
+    getDateTime(unixTimestamp) {
+
+        let date = new Date(unixTimestamp * 1000);
+        let options = {
+            hour: "2-digit", minute: "2-digit"
+        };
+
+        return date.toLocaleTimeString("en-us", options);
+    }
+
+    render() {
+        const {navigate} = this.props.navigation;
+        let userEmail = 'john@gmail.com';
+        let messages = this.state.messages;
+
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
                     <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
                         {
-                            messages.map(message =>
+                            messages.map((message, index) =>
                                 <View key={message.id} style={[styles.chatBoxContainer, userEmail === message.email ? styles.chatterBoxContainer : styles.chatteeBoxContainer]}>
                                     <TouchableOpacity
                                         style={[styles.chatbox, userEmail === message.email ? styles.chatter : styles.chattee]}
-                                        onPress={this.toggleDateTime(message)}
+                                        onPress={ () => this.toggleDateTime(messages, index)}
                                     >
                                         <Text>{message.text}</Text>
                                     </TouchableOpacity>
-                                    <Text style={[styles.dateTime]}>{this.getDateTime(message.timestamp)}</Text>
+                                    { message.showDateTime ? <Text style={[styles.dateTime]}>{this.getDateTime(message.timestamp)}</Text> : null }
                                 </View>
                             )
                         }

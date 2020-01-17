@@ -87,18 +87,12 @@ export default class ChatScreen extends Component {
     handleSubmit = () => {
         this.setState( prevState => {
 
-            console.warn({
-                name: prevState.chatter.name,
-                email: prevState.chatter.email,
-                text: prevState.text,
-                timestamp: Date.now() * 1000,
-            });
             return {
                 messages: [...prevState.messages, {
                     name: prevState.chatter.name,
                     email: prevState.chatter.email,
                     text: prevState.text,
-                    timestamp: Date.now() * 1000,
+                    timestamp: Math.round(new Date().getTime()/1000),
                 }],
                 text: ''
             }

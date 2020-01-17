@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView } from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
@@ -63,23 +63,23 @@ export default class ChatScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <KeyboardAvoidingView style={styles.container} behavior="height" enabled>
-                    <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
-                        <ChatBoxList
-                            messages={this.state.messages}
-                            toggleDateTime={this.handleToggleDateTime}
-                        />
-                    </ScrollView>
-                    <View style={styles.inputContainer}>
-                        <AppTextArea
-                            placeholder={'Message'}
-                            onChangeText={(text) => {
-                                this.setState({ text })
-                            }}
-                            style={{flex: 1, marginRight: 10}}
-                        />
-                        <AppButton type={'secondary'}>Submit</AppButton>
-                    </View>
+                <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 80} behavior="height" enabled>
+                        <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
+                            <ChatBoxList
+                                messages={this.state.messages}
+                                toggleDateTime={this.handleToggleDateTime}
+                            />
+                        </ScrollView>
+                        <View style={styles.inputContainer}>
+                            <AppTextArea
+                                placeholder={'Message'}
+                                onChangeText={(text) => {
+                                    this.setState({ text })
+                                }}
+                                style={{flex: 1, marginRight: 10}}
+                            />
+                            <AppButton type={'secondary'}>Submit</AppButton>
+                        </View>
                 </KeyboardAvoidingView>
             </SafeAreaView>
         );

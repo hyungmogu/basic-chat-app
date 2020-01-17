@@ -15,8 +15,6 @@ class ChatBoxList extends Component {
             hours = 12;
         }
 
-        console.warn(`${hours}:${minutes} ${ampm}`);
-
         return `${hours}:${minutes} ${ampm}`;
     }
 

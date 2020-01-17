@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform,Text } from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, EdgeInsetsPropType } from 'react-native';
+
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
@@ -62,28 +64,42 @@ export default class ChatScreen extends Component {
         this.setState({messages});
     }
 
+    handleGetKeyboardOffset = (event) => {
+        if (this.state.inputHeight) {
+            return;
+        }
+
+        this.setState({
+            inputHeight: Platform.OS === 'ios' ? event.nativeEvent.layout.height : event.nativeEvent.layout.height + 10
+        })
+    }
+
     render() {
         return (
-            <SafeAreaView style={styles.safeViewContainer}>
-                <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? this.state.height + 50 : this.state.height + 10} behavior={"height"} enabled>
-                        <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
-                            <ChatBoxList
-                                messages={this.state.messages}
-                                toggleDateTime={this.handleToggleDateTime}
-                            />
-                        </ScrollView>
-                        <View style={styles.inputContainer} onLayout={(event) => this.setState({height: event.nativeEvent.layout.height})}>
-                            <AppTextArea
-                                placeholder={'Message'}
-                                onChangeText={(text) => {
-                                    this.setState({ text })
-                                }}
-                                style={{flex: 1, marginRight: 10}}
-                            />
-                            <AppButton type={'secondary'}>Submit</AppButton>
-                        </View>
-                </KeyboardAvoidingView>
-            </SafeAreaView>
+            <SafeAreaConsumer>
+                { insets =>
+                    <SafeAreaView style={styles.safeViewContainer}>
+                        <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={this.state.inputHeight + insets.bottom} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} enabled>
+                            <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
+                                <ChatBoxList
+                                    messages={this.state.messages}
+                                    toggleDateTime={this.handleToggleDateTime}
+                                />
+                            </ScrollView>
+                            <View style={styles.inputContainer} onLayout={(event) => {this.handleGetKeyboardOffset(event)}}>
+                                <AppTextArea
+                                    placeholder={'Message'}
+                                    onChangeText={(text) => {
+                                        this.setState({ text })
+                                    }}
+                                    style={{flex: 1, marginRight: 10}}
+                                />
+                                <AppButton type={'secondary'}>Submit</AppButton>
+                            </View>
+                        </KeyboardAvoidingView>
+                    </SafeAreaView>
+                }
+            </SafeAreaConsumer>
         );
     }
 }

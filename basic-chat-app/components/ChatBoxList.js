@@ -33,7 +33,7 @@ class ChatBoxList extends Component {
             <React.Fragment>
                 {
                     messages.map((message, index) =>
-                        <View key={message.id} style={[styles.chatBoxContainer, user.email === message.email ? styles.chatterBoxContainer : styles.chatteeBoxContainer]}>
+                        <View key={index} style={[styles.chatBoxContainer, user.email === message.email ? styles.chatterBoxContainer : styles.chatteeBoxContainer]}>
                             <TouchableOpacity
                                 style={[styles.chatbox, user.email === message.email ? styles.chatter : styles.chattee]}
                                 onPress={() => toggleDateTime(messages, index)}

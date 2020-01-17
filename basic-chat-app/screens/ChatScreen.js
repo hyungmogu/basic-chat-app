@@ -43,7 +43,7 @@ export default class ChatScreen extends Component {
         let chatter = {
             id: 1,
             name: 'John Doe',
-            email: 'james@gmail.com'
+            email: 'john@gmail.com'
         }
 
         let chattee = {
@@ -84,6 +84,27 @@ export default class ChatScreen extends Component {
         })
     }
 
+    handleSubmit = () => {
+        this.setState( prevState => {
+
+            console.warn({
+                name: prevState.chatter.name,
+                email: prevState.chatter.email,
+                text: prevState.text,
+                timestamp: Date.now() * 1000,
+            });
+            return {
+                messages: [...prevState.messages, {
+                    name: prevState.chatter.name,
+                    email: prevState.chatter.email,
+                    text: prevState.text,
+                    timestamp: Date.now() * 1000,
+                }],
+                text: ''
+            }
+        })
+    }
+
     render() {
         return (
             <SafeAreaConsumer>
@@ -115,7 +136,7 @@ export default class ChatScreen extends Component {
                                     }}
                                     style={{flex: 1, marginRight: 10}}
                                 />
-                                <AppButton type={'secondary'}>Submit</AppButton>
+                                <AppButton type={'secondary'} onPress={this.handleSubmit}>Submit</AppButton>
                             </View>
                         </KeyboardAvoidingView>
                     </SafeAreaView>

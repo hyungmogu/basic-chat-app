@@ -5,7 +5,8 @@ import {
     KeyboardAvoidingView,
     View,
     ScrollView,
-    Platform
+    Platform,
+    TextInput
 } from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
@@ -88,19 +89,19 @@ export default class ChatScreen extends Component {
 
     handleSubmit = () => {
 
-        console.warn(this._inputElement.current.value);
-        this.setState( prevState => {
+        console.log(this._inputElement);
+        // this.setState( prevState => {
 
-            return {
-                messages: [...prevState.messages, {
-                    name: prevState.chatter.name,
-                    email: prevState.chatter.email,
-                    text: prevState.text,
-                    timestamp: Math.round(new Date().getTime()/1000),
-                }],
-                text: ''
-            }
-        })
+        //     return {
+        //         messages: [...prevState.messages, {
+        //             name: prevState.chatter.name,
+        //             email: prevState.chatter.email,
+        //             text: prevState.text,
+        //             timestamp: Math.round(new Date().getTime()/1000),
+        //         }],
+        //         text: ''
+        //     }
+        // })
     }
 
     render() {
@@ -127,12 +128,20 @@ export default class ChatScreen extends Component {
                                 style={styles.inputContainer}
                                 onLayout={(event) => {this.handleMeasureInputHeight(event)}}
                             >
+                                {/* <TextInput
+                                    placeholder={'Message2'}
+                                    ref={ref => {this._inputElement = ref}}
+                                    onChangeText={(text) => {
+                                        this.setState({ text })
+                                    }}
+                                /> */}
                                 <AppTextArea
                                     placeholder={'Message'}
                                     onChangeText={(text) => {
                                         this.setState({ text })
                                     }}
-                                    ref={this._inputElement}
+                                    forwardRef={this._inputElement}
+                                    value={val => console.warn(val)}
                                     style={{flex: 1, marginRight: 10}}
                                 />
                                 <AppButton type={'secondary'} onPress={this.handleSubmit}>Submit</AppButton>

@@ -8,7 +8,8 @@ class AppInput extends Component {
         const {
             login,
             placeholder,
-            secureTextEntry
+            secureTextEntry,
+            forwardRef
         } = this.props;
 
         return (
@@ -17,7 +18,7 @@ class AppInput extends Component {
                 secureTextEntry={secureTextEntry}
                 placeholder={placeholder}
                 placeholderTextColor="black"
-                ref={this.props.innerRef}
+                ref={forwardRef}
             ></TextInput>
         );
     }
@@ -36,4 +37,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default React.forwardRef((props, ref) => <AppInput innerRef={ref} {...props}/>);
+export default AppInput;

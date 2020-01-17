@@ -3,6 +3,7 @@ import { Platform, StyleSheet, TextInput } from 'react-native';
 
 
 class AppInput extends Component {
+
     render() {
         const {
             login,
@@ -11,7 +12,13 @@ class AppInput extends Component {
         } = this.props;
 
         return (
-            <TextInput style={ login ? [styles.input, styles.inputLogin] : styles.input} secureTextEntry={secureTextEntry} placeholder={placeholder} placeholderTextColor="black"></TextInput>
+            <TextInput
+                style={ login ? [styles.input, styles.inputLogin] : styles.input}
+                secureTextEntry={secureTextEntry}
+                placeholder={placeholder}
+                placeholderTextColor="black"
+                ref={this.props.innerRef}
+            ></TextInput>
         );
     }
 }
@@ -29,4 +36,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AppInput;
+export default React.forwardRef((props, ref) => <AppInput innerRef={ref} {...props}/>);

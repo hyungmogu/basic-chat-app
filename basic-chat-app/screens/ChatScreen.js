@@ -22,6 +22,8 @@ export default class ChatScreen extends Component {
         messages: []
     };
 
+    _inputElement = React.createRef();
+
     componentDidMount() {
         let messages = [
             {
@@ -85,6 +87,8 @@ export default class ChatScreen extends Component {
     }
 
     handleSubmit = () => {
+
+        console.warn(this._inputElement.current.value);
         this.setState( prevState => {
 
             return {
@@ -128,6 +132,7 @@ export default class ChatScreen extends Component {
                                     onChangeText={(text) => {
                                         this.setState({ text })
                                     }}
+                                    ref={this._inputElement}
                                     style={{flex: 1, marginRight: 10}}
                                 />
                                 <AppButton type={'secondary'} onPress={this.handleSubmit}>Submit</AppButton>

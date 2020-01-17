@@ -51,7 +51,8 @@ class ChatBoxList extends Component {
 
 const styles = StyleSheet.create({
     chatBoxContainer: {
-        maxWidth: Platform.OS === 'ios' ? 210 : 180
+        maxWidth: Platform.OS === 'ios' ? 210 : 180,
+        marginBottom: 10
     },
     chatterBoxContainer: {
         alignSelf: 'flex-end',

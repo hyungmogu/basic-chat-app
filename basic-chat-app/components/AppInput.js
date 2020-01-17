@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, TextInput } from 'react-native';
 
-
 class AppInput extends Component {
-
     render() {
         const {
             login,

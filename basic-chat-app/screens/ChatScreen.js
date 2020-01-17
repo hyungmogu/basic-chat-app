@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-    StyleSheet,
-    SafeAreaView,
-    KeyboardAvoidingView,
-    View,
-    ScrollView,
-    Platform,
-    TextInput
-} from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, TextInput } from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 

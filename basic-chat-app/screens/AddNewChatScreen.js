@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, View, Alert } from 'react-native';
+import { StyleSheet, SafeAreaView, View } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
@@ -13,7 +13,12 @@ export default class AddNewChatScreen extends Component {
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
                     <AppInput placeholder={'Email'}/>
-                    <AppButton type={"secondary"} onPress={() => navigate('Chat')}>Start New Chat</AppButton>
+                    <AppButton
+                        type={"secondary"}
+                        onPress={() => navigate('Chat')}
+                    >
+                        Start New Chat
+                    </AppButton>
                 </View>
             </SafeAreaView>
         );

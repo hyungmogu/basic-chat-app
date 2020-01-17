@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, EdgeInsetsPropType } from 'react-native';
+import {
+    StyleSheet,
+    SafeAreaView,
+    KeyboardAvoidingView,
+    View,
+    ScrollView,
+    Platform
+} from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
@@ -9,11 +16,11 @@ import ChatBoxList from '../components/ChatBoxList';
 
 export default class ChatScreen extends Component {
     state = {
+        chatter: null,
+        chattee: null,
         text: '',
         messages: []
     };
-
-    _inputContainerHeight = 0;
 
     componentDidMount() {
         let messages = [
@@ -51,7 +58,10 @@ export default class ChatScreen extends Component {
             messages: messages
         });
 
-        this.props.navigation.setParams({ chatter: chatter, chattee: chattee });
+        this.props.navigation.setParams({
+            chatter: chatter,
+            chattee: chattee
+        });
     }
 
     handleToggleDateTime = (messages, index) => {
@@ -64,13 +74,13 @@ export default class ChatScreen extends Component {
         this.setState({messages});
     }
 
-    handleGetKeyboardOffset = (event) => {
+    handleMeasureInputHeight = (event) => {
         if (this.state.inputHeight) {
             return;
         }
 
         this.setState({
-            inputHeight: Platform.OS === 'ios' ? event.nativeEvent.layout.height : event.nativeEvent.layout.height + 10
+            inputHeight: event.nativeEvent.layout.height
         })
     }
 
@@ -79,14 +89,25 @@ export default class ChatScreen extends Component {
             <SafeAreaConsumer>
                 { insets =>
                     <SafeAreaView style={styles.safeViewContainer}>
-                        <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={this.state.inputHeight + insets.bottom} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} enabled>
-                            <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
+                        <KeyboardAvoidingView
+                            style={styles.container}
+                            keyboardVerticalOffset={this.state.inputHeight + (Platform.OS === 'ios' ? insets.bottom : 10)}
+                            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                            enabled
+                        >
+                            <ScrollView
+                                style={{flex: 1}}
+                                contentContainerStyle={styles.chatContainer}
+                            >
                                 <ChatBoxList
                                     messages={this.state.messages}
                                     toggleDateTime={this.handleToggleDateTime}
                                 />
                             </ScrollView>
-                            <View style={styles.inputContainer} onLayout={(event) => {this.handleGetKeyboardOffset(event)}}>
+                            <View
+                                style={styles.inputContainer}
+                                onLayout={(event) => {this.handleMeasureInputHeight(event)}}
+                            >
                                 <AppTextArea
                                     placeholder={'Message'}
                                     onChangeText={(text) => {

@@ -4,12 +4,20 @@ import { StyleSheet, Text , TouchableOpacity, View } from 'react-native';
 class ChatBoxList extends Component {
 
     handleGetDateTime = (unixTimestamp) => {
-        let date = new Date(unixTimestamp * 1000);
-        let options = {
-            hour: "2-digit", minute: "2-digit"
-        };
+        let dateTime = new Date(unixTimestamp * 1000);
+        let hours = dateTime.getHours();
+        let ampm = (hours >= 12) ? "PM" : "AM";
+        let minutes = dateTime.getMinutes();
 
-        return date.toLocaleTimeString("en-us", options);
+        if (hours > 12) {
+            hours -= 12;
+        } else if (hours === 0) {
+            hours = 12;
+        }
+
+        console.warn(`${hours}:${minutes} ${ampm}`);
+
+        return `${hours}:${minutes} ${ampm}`;
     }
 
     render() {

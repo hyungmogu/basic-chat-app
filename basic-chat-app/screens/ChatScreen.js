@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform } from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform,Text } from 'react-native';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
@@ -10,6 +10,8 @@ export default class ChatScreen extends Component {
         text: '',
         messages: []
     };
+
+    _inputContainerHeight = 0;
 
     componentDidMount() {
         let messages = [
@@ -63,14 +65,14 @@ export default class ChatScreen extends Component {
     render() {
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? 120 : 80} behavior="height" enabled>
+                <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={Platform.OS === 'ios' ? this.state.height + 50 : this.state.height + 10} behavior={"height"} enabled>
                         <ScrollView style={{flex: 1}} contentContainerStyle={styles.chatContainer}>
                             <ChatBoxList
                                 messages={this.state.messages}
                                 toggleDateTime={this.handleToggleDateTime}
                             />
                         </ScrollView>
-                        <View style={styles.inputContainer}>
+                        <View style={styles.inputContainer} onLayout={(event) => this.setState({height: event.nativeEvent.layout.height})}>
                             <AppTextArea
                                 placeholder={'Message'}
                                 onChangeText={(text) => {

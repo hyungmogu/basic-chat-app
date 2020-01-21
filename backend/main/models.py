@@ -15,7 +15,8 @@ class Chat(models.Model):
     chat_room = models.ForeignKey('ChatRoom')
 
     def __str__(self):
-        return self. "{} {}: {}".format(timestamp, user, text)
+        datetime = self.timestamp.strftime('%Y-%m-%d %H:%M')
+        return "{} {}: {}".format(self.timestamp, self.user.name, text)
 
 
 

@@ -5,26 +5,20 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
-from accounts.serializer import LoginSerializer
+from accounts.serializer import UserSerializer
 
 
 class Login(APIView):
     def post(self, request, format=None):
 
         # 1. Parse data from request
-        serializer = LoginSerializer(data=request.data)
+        email = request.data['email']
+        password = request.data['password']
 
-        # 2. validate serialized data
-        # return error if not valid
-        serializer.is_valid(raise_exception=True)
-
-        email = serializer.validated_data['email']
-        password = serializer.validated_data['password']
-
-        # 3. use django.contrib.auth to authenticate
+        # 2. use django.contrib.auth to authenticate
         user = authenticate(email=email, password=password)
 
-        # 4. if not successful, return response with error
+        # 3. if not successful, return response with error
         if not user:
             error = {
                 'error': 'User does not exist / Password is incorrect'
@@ -32,15 +26,11 @@ class Login(APIView):
 
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
-        # 5. if successful, return response with user info
+        # 4. if successful, return response with user info
 
-        response = {
-            'temp': True
-        }
+        user_serializer = UserSerializer(user)
 
-        print(user)
-
-        return Response(response)
+        return Response(user_serializer.data)
 
 class Logout(APIView):
     def post(self, request, format=None):

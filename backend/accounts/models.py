@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
 
         user = self.model(
             email=self.normalize_email(email),
-            username=username)
+            name=name)
         user.set_password(password)
         user.save()
 

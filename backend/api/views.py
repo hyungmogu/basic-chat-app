@@ -4,14 +4,14 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 
 
-from accounts.serializer import UserSerializer
+from accounts.serializer import LoginSerializer
 
 
 class Login(APIView):
     def post(self, request, format=None):
 
         # 1. Parse data from request
-        serializer = UserSerializer(data=request.data)
+        serializer = LoginSerializer(data=request.data)
 
         # 2. validate serialized data
         # return error if not valid
@@ -31,11 +31,13 @@ class Login(APIView):
 
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
-        # 5. if successful, return response with success message
+        # 5. if successful, return response with user info
 
         response = {
             'temp': True
         }
+
+        print(user)
 
         return Response(response)
 

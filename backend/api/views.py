@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model, login, authenticate
 
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -26,7 +27,7 @@ class Login(APIView):
         # 4. if not successful, return response with error
         if not user:
             error = {
-                'detail': 'User does not exist / Password is incorrect'
+                'error': 'User does not exist / Password is incorrect'
             }
 
             return Response(error, status=status.HTTP_400_BAD_REQUEST)

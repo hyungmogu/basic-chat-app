@@ -5,13 +5,17 @@ from . import models
 
 
 class LoginSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField()
-    password = serializers.CharField(max_length=255)
-
     class Meta:
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+        fields=(
+            'email',
+            'password',
+        )
+
+        model = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):

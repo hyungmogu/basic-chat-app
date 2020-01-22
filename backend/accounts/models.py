@@ -13,7 +13,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     # objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['email', 'name']
 
     def __str__(self):
         return "{}".format(self.email)

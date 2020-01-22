@@ -135,3 +135,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     )
 }
+
+# Auth model
+
+AUTH_USER_MODEL = 'accounts.User'

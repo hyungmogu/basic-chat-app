@@ -1,7 +1,7 @@
+from django.contrib.auth import get_user_model
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
-from accounts.models import AccountsModel
 
 
 class Login(APIView):
@@ -15,4 +15,9 @@ class Login(APIView):
 
         # 4. if successful, return response with success message
 
-        return Response (serializer.data)
+        pass
+
+class Logout(APIView):
+    def post(self, request, format=None):
+
+        pass

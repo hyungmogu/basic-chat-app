@@ -34,12 +34,13 @@ class Login(APIView):
 
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
-        token = Token.objects.create(user=user)
+        token, created = Token.objects.get_or_create(user=user)
         user_serializer = UserSerializer(user)
 
-        print(user_serializer.data)
+        res_data = user_serializer.data
+        res_data['auth_token'] = token.key
 
-        return Response(user_serializer.data)
+        return Response(res_data)
 
 
 class Logout(APIView):

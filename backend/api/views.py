@@ -7,6 +7,17 @@ from rest_framework.response import Response
 from accounts.serializer import UserSerializer
 
 
+class SignUp(APIView):
+    def post(self, request, format=None):
+
+        serializer = UserSerializer(data=request.data)
+
+        serializer.is_valid(raise_exception=True)
+
+        serializer.save()
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 class Login(APIView):
     def post(self, request, format=None):
         email = request.data['email']
@@ -24,6 +35,7 @@ class Login(APIView):
         user_serializer = UserSerializer(user)
 
         return Response(user_serializer.data)
+
 
 class Logout(APIView):
     def get(self, request, format=None):

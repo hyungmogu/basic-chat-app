@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework.test import APIClient
@@ -69,6 +70,7 @@ class TestLoginPOSTRequest(LoginTest):
 class LogoutTest(TestCase):
     def setUp(self):
         self.client = APIClient()
+        self.factory = RequestFactory()
         self.user = get_user_model()
         self.resp_register = self.client.post(
             reverse('api:signup'),
@@ -80,23 +82,31 @@ class LogoutTest(TestCase):
             },
             format='json'
         )
+        self.client.login(email="test@gmail.com", password="A!jTes@12")
 
-        self.resp_login = self.client.post(
-            reverse('api:login'),
-            {
-                "email": "test@gmail.com",
-                "password": "A!jTes@12",
-            },
-            format='json'
-        )
+    def test_return_request_with_user_test(self):
+        expected = "test@gmail.com"
 
-    def test_return_user_with_false_for_is_authenticated(self):
 
-        expected = False
+        request = self.factory.get(reverse('api:logout'))
 
-        user = self.user.objects.get(pk=1)
-        self.client.get(reverse('api:logout'))
+        request.user = self.user.objects.get(pk=1)
 
-        result = user.is_authenticated
+        result = request.user.email
 
         self.assertEqual(expected, result)
+
+    # def test_return_user_with_false_for_is_authenticated(self):
+
+    #     expected = False
+
+    #     user = self.user.objects.get(pk=1)
+
+    #     self.client.login(email="test@gmail.com", password="A!jTes@12")
+    #     self.client.get(reverse('api:logout'))
+
+    #     self.client.logout()
+    #     result = user.is_authenticated
+
+
+    #     self.assertEqual(expected, result)

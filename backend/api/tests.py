@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
@@ -68,27 +69,6 @@ class TestSignUpPOSTRequest(SignUpTest):
 
         self.assertEqual(expected, result)
 
-"""
-/api/v1/login (POST)
-"""
-class LogoutTest(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.factory = RequestFactory()
-        self.user = get_user_model()
-        self.resp_register = self.client.post(
-            reverse('api:signup'),
-            {
-                'email': 'test@gmail.com',
-                'name': 'Test Hello',
-                'password': 'A!jTes@12',
-                'password2': 'A!jTes@12'
-            },
-            format='json'
-        )
-
-
-
 
 """
 /api/v1/logout (GET)
@@ -98,18 +78,13 @@ class LogoutTest(TestCase):
         self.client = APIClient()
         self.factory = RequestFactory()
         self.User = get_user_model()
-        self.resp_register = self.client.post(
-            reverse('api:signup'),
-            {
-                'email': 'test@gmail.com',
-                'name': 'Test Hello',
-                'password': 'A!jTes@12',
-                'password2': 'A!jTes@12'
-            },
-            format='json'
+        self.user = self.User.objects.create_user(
+            email='test@gmail.com',
+            name='Test Hello',
+            password='A!jTes@12'
         )
 
-        request = self.factory.post(reverse('api:login'),
+        res = self.client.post(reverse('api:login'),
             {
                 'email': 'test@gmail.com',
                 'password': 'A!jTes@12'
@@ -117,31 +92,13 @@ class LogoutTest(TestCase):
             format='json'
         )
 
-        self.client.login(email='test@gmail.com', password='A!jTes@12')
-
-        user = self.User.objects.get(pk=1)
-        token, created = Token.objects.get_or_create(user=user)
-
-        self.auth_token = token.key
-
-    def test_return_request_with_user_test(self):
-        expected = 'test@gmail.com'
-
-        request = self.factory.get(reverse('api:logout'))
-
-        request.user = self.user.objects.get(pk=1)
-
-        result = request.user.email
-
-        self.assertEqual(expected, result)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
 
-    def test_return_user_with_false_for_is_authenticated(self):
+class TestLogOutGETRequest(LogoutTest):
+    def test_return_user_with_auth_token_removed(self):
 
-        expected = False
+        res = self.client.get(reverse('api:logout'))
 
-        request = self.factory.get(reverse('api:logout'), auth_token=self.auth_token)
-
-        result = self.user.objects.get(pk=1).is_authenticated
-
-        self.assertEqual(expected, result)
+        with self.assertRaises(ObjectDoesNotExist):
+            self.User.objects.get(pk=1).auth_token

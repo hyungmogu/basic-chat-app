@@ -96,6 +96,13 @@ class LogoutTest(TestCase):
 
 
 class TestLogOutGETRequest(LogoutTest):
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
+
+        res = self.client.get(reverse('api:logout'))
+
+        self.assertEqual(res.status_code, expected)
+
     def test_return_user_with_auth_token_removed(self):
 
         res = self.client.get(reverse('api:logout'))

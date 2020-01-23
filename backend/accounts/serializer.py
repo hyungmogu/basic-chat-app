@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from . import models
 
 class UserSerializer(serializers.ModelSerializer):
+    password2 = serializers.CharField(max_length=255)
+
     class Meta:
 
         extra_kwargs = {
@@ -16,4 +18,13 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'name',
             'profile_picture',
+            'password',
+            'password2',
         )
+
+    def validate(self, data):
+
+        if data['password'] != data['password2']:
+            raise serializers.ValidationError('Two passwords must match')
+
+        return data

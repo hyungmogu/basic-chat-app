@@ -33,6 +33,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     name = models.CharField(max_length=100)
     profile_picture = models.URLField(blank=True, null=True)
+    password2 = models.CharField(max_length=255, blank=True, null=True)
 
     objects = UserManager()
 

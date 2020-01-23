@@ -18,6 +18,7 @@ class SignUp(APIView):
 
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 class Login(APIView):
     def post(self, request, format=None):
         email = request.data['email']

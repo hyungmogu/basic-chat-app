@@ -7,6 +7,7 @@ from rest_framework.test import APIClient
 # API TESTS
 # -----------
 
+
 """
 /api/v1/login (POST)
 """
@@ -35,7 +36,7 @@ class TestLoginPOSTRequest(LoginTest):
         self.assertEqual(expected, result)
 
     def test_return_user_with_matching_email(self):
-        expected = 'Test Hello'
+        expected = 'test@gmail.com'
 
         user = self.user.objects.get(pk=1)
 
@@ -58,5 +59,44 @@ class TestLoginPOSTRequest(LoginTest):
         user = self.user.objects.get(pk=1)
 
         result = user.password
+
+        self.assertEqual(expected, result)
+
+
+"""
+/api/v1/logout (POST)
+"""
+class LogoutTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = get_user_model()
+        self.resp_register = self.client.post(
+            reverse('api:signup'),
+            {
+                "email": "test@gmail.com",
+                "name": "Test Hello",
+                "password": "A!jTes@12",
+                "password2": "A!jTes@12"
+            },
+            format='json'
+        )
+
+        self.resp_login = self.client.post(
+            reverse('api:login'),
+            {
+                "email": "test@gmail.com",
+                "password": "A!jTes@12",
+            },
+            format='json'
+        )
+
+    def test_return_user_with_false_for_is_authenticated(self):
+
+        expected = False
+
+        user = self.user.objects.get(pk=1)
+        self.client.get(reverse('api:logout'))
+
+        result = user.is_authenticated
 
         self.assertEqual(expected, result)

@@ -10,5 +10,10 @@ class UserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
 
-        model = get_user_model()
-        fields = '__all__'
+        model=get_user_model()
+        fields=(
+            'last_login',
+            'email',
+            'name',
+            'profile_picture',
+        )

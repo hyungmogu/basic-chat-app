@@ -1,9 +1,8 @@
-from django.contrib.auth import get_user_model, login, authenticate
+from django.contrib.auth import get_user_model, login, authenticate, logout
 
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 
 from accounts.serializer import UserSerializer
 
@@ -27,6 +26,15 @@ class Login(APIView):
         return Response(user_serializer.data)
 
 class Logout(APIView):
-    def post(self, request, format=None):
+    def get(self, request, format=None):
 
-        pass
+        if not request.user.is_authenticated:
+            error = {
+                'error': 'User already logged out'
+            }
+
+            return Response(error, status=status.HTTP_400_BAD_REQUEST)
+
+        logout(request)
+
+        return Response()

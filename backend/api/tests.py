@@ -4,6 +4,9 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework.test import APIClient
 
+
+from .views import Logout
+
 # -----------
 # API TESTS
 # -----------
@@ -96,17 +99,16 @@ class LogoutTest(TestCase):
 
         self.assertEqual(expected, result)
 
-    # def test_return_user_with_false_for_is_authenticated(self):
 
-    #     expected = False
+    def test_return_user_with_false_for_is_authenticated(self):
 
-    #     user = self.user.objects.get(pk=1)
+        expected = False
 
-    #     self.client.login(email="test@gmail.com", password="A!jTes@12")
-    #     self.client.get(reverse('api:logout'))
+        request = self.factory.get(reverse('api:logout'))
+        self.client.login(email='test@gmail.com', password='A!jTes@12')
 
-    #     self.client.logout()
-    #     result = user.is_authenticated
+        response = Logout.as_view()(request)
 
+        result = self.user.objects.get(pk=1).is_authenticated
 
-    #     self.assertEqual(expected, result)
+        self.assertEqual(expected, result)

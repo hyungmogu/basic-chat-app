@@ -2,10 +2,12 @@ from django.test import TestCase
 from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+
 from rest_framework.test import APIClient
+from rest_framework.authtoken.models import Token
 
 
-from .views import Logout
+from .views import Login
 
 # -----------
 # API TESTS
@@ -13,25 +15,25 @@ from .views import Logout
 
 
 """
-/api/v1/login (POST)
+/api/v1/signup (POST)
 """
-class LoginTest(TestCase):
+class SignUpTest(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = get_user_model()
         self.resp_register = self.client.post(
             reverse('api:signup'),
             {
-                "email": "test@gmail.com",
-                "name": "Test Hello",
-                "password": "A!jTes@12",
-                "password2": "A!jTes@12"
+                'email': 'test@gmail.com',
+                'name': 'Test Hello',
+                'password': 'A!jTes@12',
+                'password2': 'A!jTes@12'
             },
             format='json'
         )
 
 
-class TestLoginPOSTRequest(LoginTest):
+class TestSignUpPOSTRequest(SignUpTest):
     def test_return_user_with_length_1(self):
         expected = 1
 
@@ -66,9 +68,8 @@ class TestLoginPOSTRequest(LoginTest):
 
         self.assertEqual(expected, result)
 
-
 """
-/api/v1/logout (POST)
+/api/v1/login (POST)
 """
 class LogoutTest(TestCase):
     def setUp(self):
@@ -78,18 +79,53 @@ class LogoutTest(TestCase):
         self.resp_register = self.client.post(
             reverse('api:signup'),
             {
-                "email": "test@gmail.com",
-                "name": "Test Hello",
-                "password": "A!jTes@12",
-                "password2": "A!jTes@12"
+                'email': 'test@gmail.com',
+                'name': 'Test Hello',
+                'password': 'A!jTes@12',
+                'password2': 'A!jTes@12'
             },
             format='json'
         )
-        self.client.login(email="test@gmail.com", password="A!jTes@12")
+
+
+
+
+"""
+/api/v1/logout (GET)
+"""
+class LogoutTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.resp_register = self.client.post(
+            reverse('api:signup'),
+            {
+                'email': 'test@gmail.com',
+                'name': 'Test Hello',
+                'password': 'A!jTes@12',
+                'password2': 'A!jTes@12'
+            },
+            format='json'
+        )
+
+        request = self.factory.post(reverse('api:login'),
+            {
+                'email': 'test@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+
+        self.client.login(email='test@gmail.com', password='A!jTes@12')
+
+        user = self.User.objects.get(pk=1)
+        token, created = Token.objects.get_or_create(user=user)
+
+        self.auth_token = token.key
 
     def test_return_request_with_user_test(self):
-        expected = "test@gmail.com"
-
+        expected = 'test@gmail.com'
 
         request = self.factory.get(reverse('api:logout'))
 
@@ -104,10 +140,7 @@ class LogoutTest(TestCase):
 
         expected = False
 
-        request = self.factory.get(reverse('api:logout'))
-        self.client.login(email='test@gmail.com', password='A!jTes@12')
-
-        response = Logout.as_view()(request)
+        request = self.factory.get(reverse('api:logout'), auth_token=self.auth_token)
 
         result = self.user.objects.get(pk=1).is_authenticated
 

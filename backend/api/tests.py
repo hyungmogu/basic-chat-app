@@ -34,12 +34,21 @@ class TestLoginPOSTRequest(LoginTest):
 
         self.assertEqual(expected, result)
 
-    def test_return_user_with_matching_name(self):
-        expected = 'test@gmail.com'
+    def test_return_user_with_matching_email(self):
+        expected = 'Test Hello'
 
         user = self.user.objects.get(pk=1)
 
         result = user.email
+
+        self.assertEqual(expected, result)
+
+    def test_return_user_with_matching_name(self):
+        expected = 'Test Hello'
+
+        user = self.user.objects.get(pk=1)
+
+        result = user.name
 
         self.assertEqual(expected, result)
 

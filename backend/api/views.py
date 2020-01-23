@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model, login, authenticate, logout
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -29,11 +30,13 @@ class Login(APIView):
 
         if not user:
             error = {
-                'error': 'User does not exist / Password is incorrect'
+                'detail': 'User does not exist / Password is incorrect'
             }
 
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
+
+        login(request, user)
         token, created = Token.objects.get_or_create(user=user)
         user_serializer = UserSerializer(user)
 
@@ -46,13 +49,14 @@ class Login(APIView):
 class Logout(APIView):
     def get(self, request, format=None):
 
-        if not request.user.is_authenticated:
+        try:
+            request.user.auth_token.delete()
+        except (AttributeError, ObjectDoesNotExist):
             error = {
-                'error': 'User already logged out'
+                'detail': 'User already logged out'
             }
 
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
         logout(request)
-
-        return Response()
+        return Response(status=status.HTTP_200_OK)

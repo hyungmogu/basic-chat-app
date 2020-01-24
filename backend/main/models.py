@@ -3,7 +3,6 @@ from django.conf import settings
 
 class Chat(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
-    last_chatbox = models.ForeignKey('ChatBox', null=True, on_delete=models.SET_NULL)
 
 class ChatBox(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, blank=True)

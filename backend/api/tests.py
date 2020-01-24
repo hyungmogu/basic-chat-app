@@ -35,6 +35,13 @@ class SignUpTest(TestCase):
 
 
 class TestSignUpPOSTRequest(SignUpTest):
+    def test_return_status_code_201_if_successful(self):
+        expected = 201
+
+        result = self.resp_register.status_code
+
+        self.assertEqual(expected, result)
+
     def test_return_user_with_length_1(self):
         expected = 1
 
@@ -101,7 +108,9 @@ class TestLogOutGETRequest(LogoutTest):
 
         res = self.client.get(reverse('api:logout'))
 
-        self.assertEqual(res.status_code, expected)
+        result = res.status_code
+
+        self.assertEqual(expected, result)
 
     def test_return_user_with_auth_token_removed(self):
 

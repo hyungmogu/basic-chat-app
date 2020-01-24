@@ -1,12 +1,14 @@
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
 
-from rest_framework import status
+from rest_framework import status, permissions
+from rest_framework.generics import ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from accounts.serializer import UserSerializer
+from main.models import Chat
 
 
 class SignUp(APIView):
@@ -61,3 +63,8 @@ class Logout(APIView):
 
         logout(request)
         return Response(status=status.HTTP_200_OK)
+
+
+# class Chats(ListAPIView):
+#     queryset = models.ChatRooms
+#     def get()

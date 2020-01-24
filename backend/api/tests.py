@@ -9,6 +9,33 @@ from rest_framework.authtoken.models import Token
 
 
 from .views import Login, LogOut
+from main.models import Chat
+
+# -----------
+# MODEL TESTS
+# -----------
+
+class ChatModelTest(TestCase):
+
+    def setUp(self):
+        User = get_user_model()
+
+        self.user1 = User.objects.create_user(
+            email='user1@gmail.com',
+            name='User1',
+            password='A!jTes@12'
+        )
+        self.user2 = User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
+
+        self.chat = Chat()
+        self.chat.save()
+
+        self.chat.add(self.user1, self.user2)
+
 
 # -----------
 # API TESTS

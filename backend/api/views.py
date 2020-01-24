@@ -90,6 +90,10 @@ class Chats(APIView):
         # 4. return fetched data
         return Response(res_data)
 
+    def post(self, request, format=None):
+
+        pass
+
 
 
 

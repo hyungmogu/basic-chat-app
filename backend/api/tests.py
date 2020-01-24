@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.test import TestCase
 from django.test.client import RequestFactory
 from django.contrib.auth import get_user_model
@@ -50,9 +51,13 @@ class ChatModelTest(TestCase):
 
         self.assertEqual(expected, result)
 
-    def test_return_1_object_on_query_by_email(self):
+    def test_return_object_with_query_count_of_1_when_filtered_by_2_users(self):
 
-        pass
+        expected = 1
+
+        result = Chat.objects.filter(users__email=self.user1.email).filter(users__email=self.user2.email).count()
+
+        self.assertEqual(expected, result)
 
 
 # -----------

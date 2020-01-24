@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -8,10 +9,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
-from accounts.serializer import UserSerializer
-from main.serializer import ChatSerializer
+from accounts.serializers import UserSerializer
+from main.serializers import ChatSerializer
 
 from main.models import Chat
+
 
 
 class SignUp(APIView):
@@ -89,15 +91,45 @@ class Chats(APIView):
         return Response(res_data)
 
     def post(self, request, format=None):
+        email_user = request.user.email
+        email_recipient = request.data['email']
+
+        User = get_user_model()
 
         # 1. if target user is himself/herself return status code 400 with error
+        if email == request.user.email:
+            res_data = {
+                'detail': 'Please select different user'
+            }
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        # 2. find user by the matching email
+        try:
+            # 2. find user by the matching email
+            user_recipient = User.objects.get(email=email_recipient)
+        except (ObjectDoesNotExist):
+            # 3. if target recipient doesnt exist, return 404 item not found
+            res_data = {
+                'detail': 'User not found'
+            }
 
-        # 3. if target recipient doesnt exist, return 404 item not found
+            return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        # 4. if chatroom already exists, return status code 400 with error
+        chat = Chat.objects.filter(Q(users__email=email_user)&Q(users__email=email_recipient))
 
-        # 5. if chatroom doesn't exist, create a chatroom, save
+        #4. if chat already exists, return status code 400 with error
+        if chat:
+            res_data = {
+                'detail': 'Chat already exists'
+            }
 
-        # 6. return created chatroom id to user with status code 201
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+
+
+        #5. if chat doesn't exist, create a chatroom, save
+        chat_new = Chat()
+        chat_new.save()
+        chat_new.users.add(request.user, user_recipient)
+        res_data = chat_new.pk
+
+        #6. return created chat pk to user with status code 201
+        return Response(res_data, status=status.HTTP_201_CREATED)

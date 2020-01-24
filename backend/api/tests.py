@@ -7,8 +7,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 
-
-from .views import Login, LogOut
 from main.models import Chat
 
 # -----------

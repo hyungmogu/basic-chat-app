@@ -10,6 +10,8 @@ from rest_framework.authtoken.models import Token
 from accounts.serializer import UserSerializer
 from main.serializer import ChatSerializer
 
+from main.models import Chat
+
 
 class SignUp(APIView):
     def post(self, request, format=None):
@@ -65,6 +67,17 @@ class Logout(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class GetAllChats(ListAPIView):
-    serializer_class = ChatSerializer
+class Chats(APIView):
+    def get(self, request, format=None):
+        # NOTE: make sure user is logged in
+
+        # 1. if user does not have chats. if not, return empty list []
+
+        # 2. if user has chats, filter chats by id, and return matching objects
+
+        # 3. serializer fetched object
+
+        # 4. return fetched data
+
+
 

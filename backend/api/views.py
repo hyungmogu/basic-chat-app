@@ -53,8 +53,6 @@ class Login(APIView):
 
 
 class Logout(APIView):
-
-
     def get(self, request, format=None):
 
         try:
@@ -92,8 +90,14 @@ class Chats(APIView):
 
     def post(self, request, format=None):
 
-        pass
+        # 1. if target user is himself/herself return status code 400 with error
 
+        # 2. find user by the matching email
 
+        # 3. if target recipient doesnt exist, return 404 item not found
 
+        # 4. if chatroom already exists, return status code 400 with error
 
+        # 5. if chatroom doesn't exist, create a chatroom, save
+
+        # 6. return created chatroom id to user with status code 201

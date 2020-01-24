@@ -30,11 +30,31 @@ class ChatModelTest(TestCase):
             name='User2',
             password='A!jTes@12'
         )
+        self.user3 = User.objects.create_user(
+            email='user3@gmail.com',
+            name='User3',
+            password='A!jTes@12'
+        )
 
-        self.chat = Chat()
-        self.chat.save()
+        self.chat1 = Chat()
+        self.chat2 = Chat()
 
-        self.chat.add(self.user1, self.user2)
+        self.chat1.save()
+        self.chat2.save()
+
+        self.chat1.users.add(self.user1, self.user2)
+        self.chat2.users.add(self.user1, self.user3)
+
+    def test_return_all_objects_with_query_count_of_2(self):
+        expected = 2
+
+        result = Chat.objects.all().count()
+
+        self.assertEqual(expected, result)
+
+    def test_return_1_object_on_query_by_email(self):
+
+        pass
 
 
 # -----------

@@ -66,5 +66,5 @@ class Logout(APIView):
 
 
 # class Chats(ListAPIView):
-#     queryset = models.ChatRooms
+#     queryset = models.Chat.objects.
 #     def get()

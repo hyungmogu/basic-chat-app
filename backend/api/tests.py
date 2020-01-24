@@ -78,6 +78,37 @@ class TestSignUpPOSTRequest(SignUpTest):
 
 
 """
+/api/v1/login (POST)
+"""
+class LoginTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.user = self.User.objects.create_user(
+            email='test@gmail.com',
+            name='Test Hello',
+            password='A!jTes@12'
+        )
+
+        self.response = self.client.post(reverse('api:login'),
+            {
+                'email': 'test@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+
+class TestLoginPOSTRequest(LoginTest):
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
+
+        result = self.response.status_code
+
+        self.assertEqual(expected, result)
+
+
+"""
 /api/v1/logout (GET)
 """
 class LogoutTest(TestCase):

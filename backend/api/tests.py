@@ -8,7 +8,7 @@ from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 
 
-from .views import Login
+from .views import Login, LogOut
 
 # -----------
 # API TESTS
@@ -106,6 +106,12 @@ class TestLoginPOSTRequest(LoginTest):
         result = self.response.status_code
 
         self.assertEqual(expected, result)
+
+    def test_return_user_containing_auth_token_if_successful(self):
+
+        result = self.User.objects.get(pk=1)
+
+        self.assertIsNotNone(result.auth_token)
 
 
 """

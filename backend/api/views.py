@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from accounts.serializer import UserSerializer
-from main.models import Chat
+from main.serializer import ChatSerializer
 
 
 class SignUp(APIView):
@@ -65,6 +65,6 @@ class Logout(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-# class Chats(ListAPIView):
-#     queryset = models.Chat.objects.
-#     def get()
+class GetAllChats(ListAPIView):
+    serializer_class = ChatSerializer
+

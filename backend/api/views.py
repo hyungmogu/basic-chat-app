@@ -75,13 +75,21 @@ class Chats(APIView):
     def get(self, request, format=None):
         # NOTE: make sure user is logged in
 
-        # 1. if user does not have chats. if not, return empty list []
-
-        # 2. if user has chats, filter chats by id, and return matching objects
+        try:
+            # 1. if user has chats, filter chats by id, and return matching objects
+            chats = request.user.chats.all()
+        except(FieldDoesNotExist, EmptyResultSet):
+            # 2. if user does not have chats. if not, return empty list []
+            res_data = []
+            return Response(res_data)
 
         # 3. serializer fetched object
+        chats_serializer = ChatSerializer(chats, many=True)
+        res_data = chats_serializer.data
 
         # 4. return fetched data
+        return Response(res_data)
+
 
 
 

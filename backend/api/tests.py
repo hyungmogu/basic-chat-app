@@ -373,6 +373,18 @@ class TestChatsPOSTRequest(ChatsTest):
             'email': 'user1@gmail.com'
         })
 
-        result = res.data
+        result = res.data['detail']
 
         self.assertEqual(expected, result)
+
+    def test_return_error_if_user_email_doesnt_exist(self):
+        expected = 'User not found'
+
+        res = self.client.post(reverse('api:chats'), {
+            'email': 'thisuserdoesntexist@gmail.com'
+        })
+
+        result = res.data['detail']
+
+        self.assertEqual(expected, result)
+

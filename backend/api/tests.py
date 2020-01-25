@@ -69,8 +69,21 @@ class UserModelTest(TestCase):
             password='A!jTes@12'
         )
 
-    def test_return_all_objects_with_query_count_of_1(self):
-        expected = 1
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
+
+        self.user1.save()
+
+        chat1 = Chat()
+        chat2 = Chat()
+
+        self.user1.chats.add(chat1, chat2)
+
+    def test_return_objects_with_query_count_of_2_if_all_queried(self):
+        expected = 2
 
         result = self.User.objects.all().count()
 
@@ -80,6 +93,18 @@ class UserModelTest(TestCase):
 
         with self.assertRaises(ObjectDoesNotExist):
             result = self.User.objects.get(email='user2@gmail.com')
+
+    def test_return_objects_with_query_count_of_2_if_chat_is_nonempty_and_all_chat_queried(self):
+        expected = 2
+
+        result = self.user1.chats.all().count()
+
+        self.assertEqual(expected, result)
+
+    def test_return_error_if_chat_is_empty_and_all_chat_queried(self):
+
+        with self.assertRaises(AttributeError):
+            result = self.user2.chats.all()
 
 # -----------
 # API TESTS

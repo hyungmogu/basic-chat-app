@@ -142,6 +142,8 @@ class Chats(APIView):
         chat_new.save()
         chat_new.users.add(user, user_recipient)
 
+        user.add(chat_new)
+
         return chat_new
 
     def get_user(self, email):

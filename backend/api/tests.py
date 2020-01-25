@@ -274,19 +274,39 @@ class ChatsTest(TestCase):
         self.client = APIClient()
         self.factory = RequestFactory()
         self.User = get_user_model()
-        self.user = self.User.objects.create_user(
-            email='test@gmail.com',
-            name='Test Hello',
+        self.user1 = self.User.objects.create_user(
+            email='user1@gmail.com',
+            name='User1',
             password='A!jTes@12'
         )
 
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
+
+
         res = self.client.post(reverse('api:login'),
             {
-                'email': 'test@gmail.com',
+                'email': 'user1@gmail.com',
                 'password': 'A!jTes@12'
             },
             format='json'
         )
 
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+
+
+class TestChatsPOSTRequest(ChatsTest):
+    def test_return_status_code_201_if_successful(self):
+        expected = 201
+
+        res = self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        result = res.status_code
+
+        self.assertEqual(expected, result)
 

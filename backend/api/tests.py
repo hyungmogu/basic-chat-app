@@ -75,15 +75,24 @@ class UserModelTest(TestCase):
             password='A!jTes@12'
         )
 
-        self.user1.save()
+        self.user3 = self.User.objects.create_user(
+            email='user3@gmail.com',
+            name='User3',
+            password='A!jTes@12'
+        )
 
         chat1 = Chat()
+        chat1.save()
+        chat1.users.add(self.user1, self.user2)
+
         chat2 = Chat()
+        chat2.save()
+        chat2.users.add(self.user1, self.user3)
 
         self.user1.chats.add(chat1, chat2)
 
-    def test_return_objects_with_query_count_of_2_if_all_queried(self):
-        expected = 2
+    def test_return_objects_with_query_count_of_3_if_all_queried(self):
+        expected = 3
 
         result = self.User.objects.all().count()
 
@@ -92,7 +101,7 @@ class UserModelTest(TestCase):
     def test_return_error_if_user_not_found(self):
 
         with self.assertRaises(ObjectDoesNotExist):
-            result = self.User.objects.get(email='user2@gmail.com')
+            result = self.User.objects.get(email='user4@gmail.com')
 
     def test_return_objects_with_query_count_of_2_if_chat_is_nonempty_and_all_chat_queried(self):
         expected = 2

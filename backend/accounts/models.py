@@ -36,7 +36,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100)
     profile_picture = models.URLField(blank=True, null=True)
     password2 = models.CharField(max_length=255, blank=True, null=True)
-    chats = models.ManyToManyField(Chat, blank=True, null=True)
+    chats = models.ManyToManyField(Chat, blank=True)
 
     objects = UserManager()
 

@@ -110,10 +110,12 @@ class UserModelTest(TestCase):
 
         self.assertEqual(expected, result)
 
-    def test_return_error_if_chat_is_empty_and_all_chat_queried(self):
+    def test_return_objects_with_query_count_of_0_if_chat_is_empty_and_all_chat_queried(self):
+        expected = 0
 
-        with self.assertRaises(AttributeError):
-            result = self.user2.chats.all()
+        result = self.user2.chats.all().count()
+
+        self.assertEqual(expected, result)
 
 # -----------
 # API TESTS

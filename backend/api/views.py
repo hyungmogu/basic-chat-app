@@ -85,8 +85,6 @@ class Chats(APIView):
         email_user = request.user.email
         email_recipient = request.data['email']
 
-        User = get_user_model()
-
         if email_recipient == request.user.email:
             res_data = {
                 'detail': 'Please select different user'
@@ -128,16 +126,18 @@ class Chats(APIView):
         chat_new.save()
         chat_new.users.add(user, user_recipient)
 
-        user.add(chat_new)
+        user.chats.add(chat_new)
 
         return chat_new
 
     def get_user(self, email):
+        User = get_user_model()
+
         user_exists = True
         user = None
 
         try:
-            user = User.objects.get(email=email_recipient)
+            user = User.objects.get(email=email)
         except (ObjectDoesNotExist):
             user_exists = False
 

@@ -262,3 +262,31 @@ class TestLogOutGETRequest(LogoutTest):
 
         with self.assertRaises(ObjectDoesNotExist):
             self.User.objects.get(pk=1).auth_token
+
+
+
+"""
+/api/v1/chats (POST)
+"""
+
+class ChatsTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.user = self.User.objects.create_user(
+            email='test@gmail.com',
+            name='Test Hello',
+            password='A!jTes@12'
+        )
+
+        res = self.client.post(reverse('api:login'),
+            {
+                'email': 'test@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+

@@ -97,17 +97,14 @@ class Chats(APIView):
         User = get_user_model()
 
         # 1. if target user is himself/herself return status code 400 with error
-        if email == request.user.email:
+        if email_recipient == request.user.email:
             res_data = {
                 'detail': 'Please select different user'
             }
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            # 2. find user by the matching email
-            user_recipient = User.objects.get(email=email_recipient)
-        except (ObjectDoesNotExist):
-            # 3. if target recipient doesnt exist, return 404 item not found
+        user_exists, user_recipient = self.get_user(email_recipient)
+        if not user_exists:
             res_data = {
                 'detail': 'User not found'
             }
@@ -147,3 +144,13 @@ class Chats(APIView):
 
         return chat_new
 
+    def get_user(self, email):
+        user_exists = True
+        user = None
+
+        try:
+            user = User.objects.get(email=email_recipient)
+        except (ObjectDoesNotExist):
+            user_exists = False
+
+        return user_exists, user

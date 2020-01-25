@@ -15,7 +15,6 @@ from main.models import Chat
 # -----------
 
 class ChatModelTest(TestCase):
-
     def setUp(self):
         User = get_user_model()
 
@@ -58,6 +57,17 @@ class ChatModelTest(TestCase):
         result = Chat.objects.filter(users__email=self.user1.email).filter(users__email=self.user2.email).count()
 
         self.assertEqual(expected, result)
+
+
+class UserModelTest(TestCase):
+    def setUp(self):
+        User = get_user_model()
+
+        self.user1 = User.objects.create_user(
+            email='user1@gmail.com',
+            name='User1',
+            password='A!jTes@12'
+        )
 
 
 # -----------

@@ -61,14 +61,25 @@ class ChatModelTest(TestCase):
 
 class UserModelTest(TestCase):
     def setUp(self):
-        User = get_user_model()
+        self.User = get_user_model()
 
-        self.user1 = User.objects.create_user(
+        self.user1 = self.User.objects.create_user(
             email='user1@gmail.com',
             name='User1',
             password='A!jTes@12'
         )
 
+    def test_return_all_objects_with_query_count_of_1(self):
+        expected = 1
+
+        result = self.User.objects.all().count()
+
+        self.assertEqual(expected, result)
+
+    def test_return_error_if_user_not_found(self):
+
+        with self.assertRaises(ObjectDoesNotExist):
+            result = self.User.objects.get(email='user2@gmail.com')
 
 # -----------
 # API TESTS

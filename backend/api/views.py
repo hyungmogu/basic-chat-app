@@ -124,9 +124,7 @@ class Chats(APIView):
 
 
         #5. if chat doesn't exist, create a chatroom, save
-        chat_new = Chat()
-        chat_new.save()
-        chat_new.users.add(request.user, user_recipient)
+        chat_new = self.create_chat(request.user, user_recipient)
         res_data = chat_new.pk
 
         #6. return created chat pk to user with status code 201
@@ -141,4 +139,11 @@ class Chats(APIView):
             return False
 
         return True
+
+    def create_chat(self, user, user_recipient):
+        chat_new = Chat()
+        chat_new.save()
+        chat_new.users.add(user, user_recipient)
+
+        return chat_new
 

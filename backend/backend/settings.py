@@ -149,6 +149,6 @@ AUTH_USER_MODEL = 'accounts.User'
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=foo,bar',
+    # '--with-coverage',
+    # '--cover-package=foo,bar',
 ]

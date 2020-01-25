@@ -310,3 +310,13 @@ class TestChatsPOSTRequest(ChatsTest):
 
         self.assertEqual(expected, result)
 
+
+    def test_return_objects_with_query_count_of_1_if_successful(self):
+        expected = 1
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+        result = Chat.objects.all().count()
+
+        self.assertEqual(expected, result)

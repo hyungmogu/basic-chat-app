@@ -412,3 +412,18 @@ class TestChatsPOSTRequest(ChatsTest):
         result = res_chats.data
 
         self.assertEqual(expected, result)
+
+    def test_return_error_if_chat_exists_and_is_in_user(self):
+        expected = 'Chat already exists'
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        res_chats = self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        result = res_chats.data['detail']
+
+        self.assertEqual(expected, result)

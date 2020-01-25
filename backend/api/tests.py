@@ -365,3 +365,14 @@ class TestChatsPOSTRequest(ChatsTest):
         result = self.user1.chats.all().count()
 
         self.assertEqual(expected, result)
+
+    def test_return_error_if_email_of_oneself_is_used(self):
+        expected = 'Please select different user'
+
+        res = self.client.post(reverse('api:chats'), {
+            'email': 'user1@gmail.com'
+        })
+
+        result = res.data
+
+        self.assertEqual(expected, result)

@@ -114,10 +114,8 @@ class Chats(APIView):
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        chat = Chat.objects.filter(Q(users__email=email_user)&Q(users__email=email_recipient))
-
         #4. if chat already exists, return status code 400 with error
-        if chat:
+        if self.chat_exists(email_user, email_recipient):
             res_data = {
                 'detail': 'Chat already exists'
             }
@@ -133,3 +131,14 @@ class Chats(APIView):
 
         #6. return created chat pk to user with status code 201
         return Response(res_data, status=status.HTTP_201_CREATED)
+
+    def chat_exists(self, email_user, email_recipient):
+        chat = (Chat.objects
+                .filter(users__email=email_user)
+                .filter(users__email=email_recipient))
+
+        if not chat:
+            return False
+
+        return True
+

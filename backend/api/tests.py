@@ -388,3 +388,27 @@ class TestChatsPOSTRequest(ChatsTest):
 
         self.assertEqual(expected, result)
 
+    def test_return_chat_pk_if_chat_exists_but_not_in_user(self):
+        expected = 1
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        res_login = self.client.post(reverse('api:login'),
+            {
+                'email': 'user2@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+
+        res_chats = self.client.post(reverse('api:chats'), {
+            'email': 'user1@gmail.com'
+        })
+
+        result = res_chats.data
+
+        self.assertEqual(expected, result)

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'accounts',
     'rest_framework',
     'rest_framework.authtoken',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,14 @@ REST_FRAMEWORK = {
 # Auth model
 
 AUTH_USER_MODEL = 'accounts.User'
+
+
+# Test Runner
+# First run coverage run --source='.' manage.py test
+# https://django-testing-docs.readthedocs.io/en/latest/coverage.html
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=foo,bar',
+]

@@ -87,7 +87,6 @@ class Chats(APIView):
 
         User = get_user_model()
 
-        # 1. if target user is himself/herself return status code 400 with error
         if email_recipient == request.user.email:
             res_data = {
                 'detail': 'Please select different user'
@@ -102,7 +101,6 @@ class Chats(APIView):
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        #4. if chat already exists, return status code 400 with error
         if self.chat_exists(email_user, email_recipient):
             res_data = {
                 'detail': 'Chat already exists'
@@ -110,12 +108,9 @@ class Chats(APIView):
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-
-        #5. if chat doesn't exist, create a chatroom, save
         chat_new = self.create_chat(request.user, user_recipient)
         res_data = chat_new.pk
 
-        #6. return created chat pk to user with status code 201
         return Response(res_data, status=status.HTTP_201_CREATED)
 
     def chat_exists(self, email_user, email_recipient):

@@ -102,12 +102,18 @@ class Chats(APIView):
         chat_exists, chat = self.get_chat(email_user, email_recipient)
         if chat_exists:
 
-            if request.user.chats.filter(pk=chat.pk).count() == 0:
-                request.user.chats.add(chat)
+            if request.user.chats.filter(pk=chat.pk).count() > 0:
+                res_data = {
+                    'detail': 'Chat already exists'
+                }
+
+                return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+
+            request.user.chats.add(chat)
 
             res_data = chat.pk
 
-            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(res_data)
 
         chat_new = self.create_chat(request.user, user_recipient)
         res_data = chat_new.pk

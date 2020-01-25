@@ -266,7 +266,7 @@ class TestLogOutGETRequest(LogoutTest):
 
 
 """
-/api/v1/chats (POST)
+/api/v1/chats (GET)
 """
 
 class ChatsTest(TestCase):
@@ -292,8 +292,6 @@ class ChatsTest(TestCase):
             password='A!jTes@12'
         )
 
-
-
         res = self.client.post(reverse('api:login'),
             {
                 'email': 'user1@gmail.com',
@@ -304,6 +302,23 @@ class ChatsTest(TestCase):
 
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
+
+class TestChatsGETRequest(ChatsTest):
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
+
+        res = self.client.get(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        result = res.status_code
+
+        self.assertEqual(expected, result)
+
+
+"""
+/api/v1/chats (POST)
+"""
 
 class TestChatsPOSTRequest(ChatsTest):
     def test_return_status_code_201_if_successful(self):

@@ -286,6 +286,13 @@ class ChatsTest(TestCase):
             password='A!jTes@12'
         )
 
+        self.user3 = self.User.objects.create_user(
+            email='user3@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
+
+
 
         res = self.client.post(reverse('api:login'),
             {
@@ -318,5 +325,30 @@ class TestChatsPOSTRequest(ChatsTest):
             'email': 'user2@gmail.com'
         })
         result = Chat.objects.all().count()
+
+        self.assertEqual(expected, result)
+
+    def test_return_user1_with_chats_count_of_1_if_successful(self):
+        expected = 1
+
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        res = self.client.post(reverse('api:login'),
+            {
+                'email': 'user2@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
+
+        result = self.user1.chats.all().count()
 
         self.assertEqual(expected, result)

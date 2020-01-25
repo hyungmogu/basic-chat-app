@@ -99,12 +99,13 @@ class Chats(APIView):
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        chat_exists, chat = self.get_chat(email_user, email_recipient):
-        if self.chat_exists(email_user, email_recipient):
+        chat_exists, chat = self.get_chat(email_user, email_recipient)
+        if chat_exists:
 
+            if request.user.chats.filter(pk=chat.pk).count() == 0:
+                request.user.chats.add(chat)
 
-            res_data = pk
-
+            res_data = chat.pk
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 

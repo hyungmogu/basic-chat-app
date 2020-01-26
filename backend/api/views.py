@@ -158,4 +158,10 @@ class ChatBox(APIView):
     permission_classes=(IsAuthenticated,)
         def post(self, request, format=None):
 
-            #1.
+            #1. check if the post data is valid
+
+            #2. if valid, add to chatbox model with associated info including timestamp, user and chat
+
+            #3. save
+
+            #4. send success response with status code 200

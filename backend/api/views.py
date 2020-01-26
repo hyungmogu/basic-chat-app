@@ -157,6 +157,7 @@ class Chats(APIView):
 class ChatBox(APIView):
     permission_classes=(IsAuthenticated,)
         def post(self, request, format=None):
+            test = request.data['text']
 
             #1. check if the post data is valid
 

@@ -192,3 +192,14 @@ class ChatBox(APIView):
 
             #5. send success response with status code 200 (this should be replaced with django channels)
             return Response(res_data)
+
+    def get_chat(self, chat_pk):
+        chat = None
+        chat_exists = True
+
+        try:
+            chat = Chat.objects.get(pk=chat_pk)
+        except (ObjectDoesNotExist):
+            chat_exists = False
+
+        return chat_exists, chat

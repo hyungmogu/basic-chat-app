@@ -203,3 +203,10 @@ class ChatBox(APIView):
             chat_exists = False
 
         return chat_exists, chat
+
+    def chat_valid(self, user, chat):
+
+        if chat.users.filter(pk=user.pk).count() == 0:
+            return False
+
+        return True

@@ -235,6 +235,12 @@ class LogoutTest(TestCase):
             password='A!jTes@12'
         )
 
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
+
         res = self.client.post(reverse('api:login'),
             {
                 'email': 'test@gmail.com',
@@ -256,12 +262,22 @@ class TestLogOutGETRequest(LogoutTest):
 
         self.assertEqual(expected, result)
 
-    def test_return_user_with_auth_token_removed(self):
+    def test_return_user_with_auth_token_removed_if_successful(self):
 
         res = self.client.get(reverse('api:logout'))
 
         with self.assertRaises(ObjectDoesNotExist):
             self.User.objects.get(pk=1).auth_token
+
+    def test_return_is_authenticated_as_false_if_successful(self):
+
+        expected = False
+
+        res = self.client.get(reverse('api:logout'))
+
+        print(self.user.is_authenticated)
+
+        # self.assertEqual(expected, result)
 
 
 
@@ -435,9 +451,7 @@ class TestChatsGETRequest(ChatsTest):
     def test_return_status_code_200_if_successful(self):
         expected = 200
 
-        res = self.client.get(reverse('api:chats'), {
-            'email': 'user2@gmail.com'
-        })
+        res = self.client.get(reverse('api:chats'))
 
         result = res.status_code
 
@@ -453,9 +467,7 @@ class TestChatsGETRequest(ChatsTest):
             'email': 'user3@gmail.com'
         })
 
-        res = self.client.get(reverse('api:chats'), {
-            'email': 'user2@gmail.com'
-        })
+        res = self.client.get(reverse('api:chats'))
 
         result = len(res.data)
 
@@ -472,9 +484,7 @@ class TestChatsGETRequest(ChatsTest):
             'email': 'user3@gmail.com'
         })
 
-        res = self.client.get(reverse('api:chats'), {
-            'email': 'user2@gmail.com'
-        })
+        res = self.client.get(reverse('api:chats'))
 
         result1 = res.data[0]
         result2 = res.data[1]

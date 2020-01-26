@@ -153,3 +153,9 @@ class Chats(APIView):
             user_exists = False
 
         return user_exists, user
+
+class ChatBox(APIView):
+    permission_classes=(IsAuthenticated,)
+        def post(self, request, format=None):
+
+            #1.

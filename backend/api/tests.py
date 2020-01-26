@@ -481,3 +481,12 @@ class TestChatsGETRequest(ChatsTest):
 
         self.assertEqual(expected1, result1)
         self.assertEqual(expected2, result2)
+
+    def test_return_list_of_length_0_if_none_found(self):
+        expected = 0
+
+        res = self.client.get(reverse('api:chats'))
+
+        result = len(res.data)
+
+        self.assertEqual(expected, result)

@@ -266,7 +266,7 @@ class TestLogOutGETRequest(LogoutTest):
 
 
 """
-/api/v1/chats (GET)
+/api/v1/chats (POST)
 """
 
 class ChatsTest(TestCase):
@@ -302,23 +302,6 @@ class ChatsTest(TestCase):
 
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
-
-class TestChatsGETRequest(ChatsTest):
-    def test_return_status_code_200_if_successful(self):
-        expected = 200
-
-        res = self.client.get(reverse('api:chats'), {
-            'email': 'user2@gmail.com'
-        })
-
-        result = res.status_code
-
-        self.assertEqual(expected, result)
-
-
-"""
-/api/v1/chats (POST)
-"""
 
 class TestChatsPOSTRequest(ChatsTest):
     def test_return_status_code_201_if_successful(self):
@@ -440,5 +423,40 @@ class TestChatsPOSTRequest(ChatsTest):
         })
 
         result = res_chats.data['detail']
+
+        self.assertEqual(expected, result)
+
+
+"""
+/api/v1/chats (GET)
+"""
+
+class TestChatsGETRequest(ChatsTest):
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
+
+        res = self.client.get(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        result = res.status_code
+
+        self.assertEqual(expected, result)
+
+    def test_return_objects_with_query_count_of_2_if_successful(self):
+        expected = 2
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
+
+        res = self.client.get(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        result = len(res.data)
 
         self.assertEqual(expected, result)

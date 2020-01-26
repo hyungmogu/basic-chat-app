@@ -12,7 +12,7 @@ from rest_framework.authtoken.models import Token
 from accounts.serializers import UserSerializer
 from main.serializers import ChatSerializer
 
-from main.models import Chat
+from main.models import Chat, ChatBox
 
 
 
@@ -210,3 +210,14 @@ class ChatBox(APIView):
             return False
 
         return True
+
+    def create_chatbox(self, user, chat, text):
+
+        chatbox = ChatBox.objects.create(
+            text=text,
+            user=user,
+            chat=chat
+        )
+
+        return chatbox
+

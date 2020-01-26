@@ -14,6 +14,7 @@ class ChatBoxSerializer(serializers.ModelSerializer):
     class Meta:
 
         extra_kwargs = {
+            'pk': {'read_only': True},
             'timestamp': {'read_only': True},
         }
 

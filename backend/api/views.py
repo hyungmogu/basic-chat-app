@@ -156,13 +156,39 @@ class Chats(APIView):
 
 class ChatBox(APIView):
     permission_classes=(IsAuthenticated,)
-        def post(self, request, format=None):
-            test = request.data['text']
+        def post(self, request, pk, format=None):
+            text = request.data['text']
 
-            #1. check if the post data is valid
+            #1. check if chat exists
+            chat_exists, chat = self.get_chat(pk)
+            if not chat_exists:
+                res_data = {
+                    'detail': 'Chat not found'
+                }
 
-            #2. if valid, add to chatbox model with associated info including timestamp, user and chat
+                return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-            #3. save
+            #2. check if chat valid (that its correct)
+            if not self.chat_valid(request.user, chat):
+                res_data = {
+                    'detail': 'Requested chat is invalid'
+                }
 
-            #4. send success response with status code 200
+                return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+
+            #3. check if the text data is valid
+            serializer = ChatBoxSerializer(data=request.data)
+
+            if not serializer.is_valid():
+                res_data = {
+                    'detail': 'Invalid text input'
+                }
+
+                return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+
+            #4. if valid, add to chatbox model with associated info including timestamp, user and chat
+            chatbox = self.create_chatbox(request.user, chat, text)
+            res_data = ChatBoxSerializer(chatbox).data
+
+            #5. send success response with status code 200 (this should be replaced with django channels)
+            return Response(res_data)

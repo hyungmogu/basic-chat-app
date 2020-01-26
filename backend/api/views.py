@@ -74,10 +74,7 @@ class Chats(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, format=None):
 
-        chats = request.user.chats.all()
-        chats_serializer = ChatSerializer(chats, many=True)
-        res_data = chats_serializer.data
-
+        res_data = request.user.chats.all().values_list('pk', flat=True)
         return Response(res_data)
 
     def post(self, request, format=None):

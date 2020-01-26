@@ -460,3 +460,24 @@ class TestChatsGETRequest(ChatsTest):
         result = len(res.data)
 
         self.assertEqual(expected, result)
+
+    def test_return_list_with_ids_if_successful(self):
+        expected1 = 1
+        expected2 = 2
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
+
+        res = self.client.get(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+
+        result1 = res.data[0]
+        result2 = res.data[1]
+
+        self.assertEqual(expected1, result1)
+        self.assertEqual(expected2, result2)

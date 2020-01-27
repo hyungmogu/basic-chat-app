@@ -158,6 +158,21 @@ class ChatBox(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, pk, format=None):
 
+        chat_exists, chat = self.get_chat(pk)
+        if not chat_exists:
+            res_data = {
+                'detail': 'Chat not found'
+            }
+
+            return Response(res_data, status=status.HTTP_404_NOT_FOUND)
+
+        if not self.chat_valid(request.user, chat):
+            res_data = {
+                'detail': 'Requested chat is invalid'
+            }
+
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+
         chatboxes = ChatBox.objects.filter(chat__pk=pk)
 
         res_data = ChatBoxSerializer(chatboxes, many=True).data

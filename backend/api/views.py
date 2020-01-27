@@ -156,6 +156,14 @@ class Chats(APIView):
 
 class ChatBox(APIView):
     permission_classes=(IsAuthenticated,)
+    def get(self, request, pk, format=None):
+
+        chatboxes = ChatBox.objects.filter(chat__pk=pk)
+
+        res_data = ChatBoxSerializer(chatboxes, many=True).data
+
+        return Response(res_data)
+
     def post(self, request, pk, format=None):
         text = request.data['text']
 

@@ -8,8 +8,8 @@ class ChatSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class ChatBoxSerializer(serializers.ModelSerializer):
-    user_pk = serializers.RelatedField(source='user', read_only=True)
-    chat_pk = serializers.RelatedField(source='chat', read_only=True)
+    user_pk = serializers.ReadOnlyField(source='user.pk')
+    chat_pk = serializers.ReadOnlyField(source='chat.pk')
 
     class Meta:
 

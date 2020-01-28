@@ -567,9 +567,11 @@ class ChatBoxTest(TestCase):
             'text': 'hello'
         })
 
-        result = re.search('[^0-9]', str(res.data['timestamp']))
+        result1 = re.search('[^0-9]', str(res.data['timestamp']))
+        result2 = ChatBoxModel.objects.get(pk=1).timestamp
 
-        self.assertIsNone(result)
+        self.assertIsNone(result1)
+        self.assertIsNone(result2)
 
 
     def test_return_object_with_text_of_hello_if_successful(self):

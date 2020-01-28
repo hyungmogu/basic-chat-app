@@ -70,11 +70,12 @@ class Logout(APIView):
         return Response(status=status.HTTP_200_OK)
 
 
-class Chats(APIView):
+
+class ChatRoom(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, format=None):
 
-        res_data = request.user.chats.all().values_list('pk', flat=True)
+        res_data = request.user.chatrooms.all().values_list('pk', flat=True)
         return Response(res_data)
 
     def post(self, request, format=None):
@@ -96,50 +97,50 @@ class Chats(APIView):
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        chat_exists, chat = self.get_chat(email_user, email_recipient)
-        if chat_exists:
+        chatroom_exists, chatroom = self.get_chatroom(email_user, email_recipient)
+        if chatroom_exists:
 
-            if request.user.chats.filter(pk=chat.pk).count() > 0:
+            if request.user.chatrooms.filter(pk=chatroom.pk).count() > 0:
                 res_data = {
-                    'detail': 'Chat already exists'
+                    'detail': 'Chat Room already exists'
                 }
 
                 return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-            request.user.chats.add(chat)
+            request.user.chatrooms.add(chatroom)
 
-            res_data = chat.pk
+            res_data = chatroom.pk
 
             return Response(res_data)
 
-        chat_new = self.create_chat(request.user, user_recipient)
-        res_data = chat_new.pk
+        chatroom_new = self.create_chatroom(request.user, user_recipient)
+        res_data = chatroom_new.pk
 
         return Response(res_data, status=status.HTTP_201_CREATED)
 
-    def get_chat(self, email_user, email_recipient):
-        chat_exists = True
+    def get_chatroom(self, email_user, email_recipient):
+        chatroom_exists = True
 
-        chat = (Chat.objects
+        chatroom = (ChatRoom.objects
                 .filter(users__email=email_user)
                 .filter(users__email=email_recipient))
 
-        if chat.count() == 0:
-            chat_exists = False
-            chat = None
+        if chatroom.count() == 0:
+            chatroom_exists = False
+            chatroom = None
 
-            return chat_exists, chat
+            return chatroom_exists, chatroom
 
-        return chat_exists, chat[0]
+        return chatroom_exists, chatroom[0]
 
-    def create_chat(self, user, user_recipient):
-        chat_new = Chat()
-        chat_new.save()
-        chat_new.users.add(user, user_recipient)
+    def create_chatroom(self, user, user_recipient):
+        chatroom_new = ChatRoom()
+        chatroom_new.save()
+        chatroom_new.users.add(user, user_recipient)
 
-        user.chats.add(chat_new)
+        user.chats.add(chatroom_new)
 
-        return chat_new
+        return chatroom_new
 
     def get_user(self, email):
         User = get_user_model()
@@ -154,7 +155,7 @@ class Chats(APIView):
 
         return user_exists, user
 
-class ChatBox(GenericAPIView):
+class Chat(GenericAPIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, pk, format=None):
 

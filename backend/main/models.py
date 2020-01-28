@@ -1,14 +1,14 @@
 from django.db import models
 from django.conf import settings
 
-class ChatRoom(models.Model):
+class Chat(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
-class Chat(models.Model):
-    timestamp = models.DateTimeField(auto_now_add=True, blank=True)
+class ChatBox(models.Model):
+    timestamp = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
-    chat_room = models.ForeignKey('ChatRoom', on_delete=models.CASCADE)
+    chat = models.ForeignKey('Chat', on_delete=models.CASCADE)
 
     def __str__(self):
         datetime = self.timestamp.strftime('%Y-%m-%d %H:%M')

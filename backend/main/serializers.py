@@ -4,7 +4,7 @@ from . import models
 
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.ChatRoom
+        model = models.Chat
         fields = '__all__'
 
 class ChatBoxSerializer(serializers.ModelSerializer):

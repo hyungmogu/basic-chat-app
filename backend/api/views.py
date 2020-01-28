@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework import status, permissions
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, GenericAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -154,7 +154,7 @@ class Chats(APIView):
 
         return user_exists, user
 
-class ChatBox(APIView):
+class ChatBox(GenericAPIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, pk, format=None):
 
@@ -179,7 +179,8 @@ class ChatBox(APIView):
 
         return Response(res_data)
 
-    def post(self, request, pk, format=None):
+    def post(self, request, *args, **kwargs):
+        pk = kwargs['pk']
         text = request.data['text']
 
         chat_exists, chat = self.get_chat(pk)

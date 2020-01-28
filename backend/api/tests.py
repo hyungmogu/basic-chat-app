@@ -562,7 +562,7 @@ class ChatBoxTest(TestCase):
         self.assertEqual(expected, result)
 
 
-    def test_return_timestamp_of_created_chatbox_in_unix_format_if_successful(self):
+    def test_return_object_with_timestamp_in_unix_format_if_successful(self):
         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
             'text': 'hello'
         })

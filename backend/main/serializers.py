@@ -4,7 +4,7 @@ from . import models
 
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Chat
+        model = models.ChatRoom
         fields = '__all__'
 
 class ChatBoxSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class ChatBoxSerializer(serializers.ModelSerializer):
             'timestamp': {'read_only': True},
         }
 
-        model = models.ChatBox
+        model = models.Chat
         fields = (
             'pk',
             'timestamp',

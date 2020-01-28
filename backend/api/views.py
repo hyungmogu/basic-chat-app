@@ -159,24 +159,24 @@ class Chat(GenericAPIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, pk, format=None):
 
-        chat_exists, chat = self.get_chat(pk)
-        if not chat_exists:
+        chatroom_exists, chatroom = self.get_chatroom(pk)
+        if not chatroom_exists:
             res_data = {
-                'detail': 'Chat not found'
+                'detail': 'Chat Room not found'
             }
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        if not self.chat_valid(request.user, chat):
+        if not self.chatroom_valid(request.user, chatroom):
             res_data = {
-                'detail': 'Requested chat is invalid'
+                'detail': 'Requested chat room is invalid'
             }
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        chatboxes = ChatBox.objects.filter(chat__pk=pk)
+        chats = Chat.objects.filter(chatroom__pk=pk)
 
-        res_data = ChatBoxSerializer(chatboxes, many=True).data
+        res_data = ChatBoxSerializer(chats, many=True).data
 
         return Response(res_data)
 
@@ -184,22 +184,22 @@ class Chat(GenericAPIView):
         pk = kwargs['pk']
         text = request.data['text']
 
-        chat_exists, chat = self.get_chat(pk)
-        if not chat_exists:
+        chatroom_exists, chatroom = self.get_chatroom(pk)
+        if not chatroom_exists:
             res_data = {
-                'detail': 'Chat not found'
+                'detail': 'Chat Room not found'
             }
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
         if not self.chat_valid(request.user, chat):
             res_data = {
-                'detail': 'Requested chat is invalid'
+                'detail': 'Requested chat room is invalid'
             }
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = ChatBoxSerializer(data=request.data)
+        serializer = ChatSerializer(data=request.data)
 
         if not serializer.is_valid():
             res_data = {
@@ -208,36 +208,36 @@ class Chat(GenericAPIView):
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        chatbox = self.create_chatbox(request.user, chat, text)
-        res_data = ChatBoxSerializer(chatbox).data
+        chat = self.create_chat(request.user, chat, text)
+        res_data = ChatSerializer(chat).data
 
         return Response(res_data, status=status.HTTP_201_CREATED)
 
-    def get_chat(self, chat_pk):
-        chat = None
-        chat_exists = True
+    def get_chatroom(self, chat_pk):
+        chatroom = None
+        chatroom_exists = True
 
         try:
-            chat = Chat.objects.get(pk=chat_pk)
+            chat = ChatRoom.objects.get(pk=chat_pk)
         except (ObjectDoesNotExist):
-            chat_exists = False
+            chatroom_exists = False
 
-        return chat_exists, chat
+        return chatroom_exists, chatroom
 
-    def chat_valid(self, user, chat):
+    def chatroom_valid(self, user, chatroom):
 
-        if chat.users.filter(pk=user.pk).count() == 0:
+        if chatroom.users.filter(pk=user.pk).count() == 0:
             return False
 
         return True
 
-    def create_chatbox(self, user, chat, text):
+    def create_chat(self, user, chatroom, text):
 
-        chatbox = ChatBox.objects.create(
+        chat = Chat.objects.create(
             text=text,
             user=user,
-            chat=chat
+            chatroom=chatroom
         )
 
-        return chatbox
+        return chat
 

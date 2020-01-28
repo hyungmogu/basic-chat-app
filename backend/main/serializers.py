@@ -18,7 +18,7 @@ class ChatBoxSerializer(serializers.ModelSerializer):
             'timestamp': {'read_only': True},
         }
 
-        model = models.Chat
+        model = models.ChatBox
         fields = (
             'pk',
             'timestamp',

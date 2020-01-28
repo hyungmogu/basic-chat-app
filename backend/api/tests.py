@@ -304,7 +304,7 @@ class ChatsTest(TestCase):
 
         self.user3 = self.User.objects.create_user(
             email='user3@gmail.com',
-            name='User2',
+            name='User3',
             password='A!jTes@12'
         )
 
@@ -500,3 +500,39 @@ class TestChatsGETRequest(ChatsTest):
         result = len(res.data)
 
         self.assertEqual(expected, result)
+
+"""
+/api/v1/chats/{pk} (POST)
+"""
+
+class ChatBoxTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.user1 = self.User.objects.create_user(
+            email='user1@gmail.com',
+            name='User1',
+            password='A!jTes@12'
+        )
+
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
+
+        res = self.client.post(reverse('api:login'),
+            {
+                'email': 'user1@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+

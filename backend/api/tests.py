@@ -536,3 +536,16 @@ class ChatBoxTest(TestCase):
             'email': 'user2@gmail.com'
         })
 
+    def test_return_status_code_201_if_successful(self):
+        expected = 201
+
+        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        result = res.status_code
+
+        self.assertEqual(expected, result)
+
+
+

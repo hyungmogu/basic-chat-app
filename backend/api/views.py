@@ -209,7 +209,7 @@ class ChatBox(APIView):
         chatbox = self.create_chatbox(request.user, chat, text)
         res_data = ChatBoxSerializer(chatbox).data
 
-        return Response(res_data)
+        return Response(res_data, status=status.HTTP_201_CREATED)
 
     def get_chat(self, chat_pk):
         chat = None

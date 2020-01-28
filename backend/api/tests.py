@@ -9,6 +9,7 @@ from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 
 from main.models import Chat
+from main.models import ChatBox as ChatBoxModel
 
 # -----------
 # MODEL TESTS
@@ -545,6 +546,17 @@ class ChatBoxTest(TestCase):
         })
 
         result = res.status_code
+
+        self.assertEqual(expected, result)
+
+    def test_return_objects_with_query_count_of_1_if_successful(self):
+        expected = 1
+
+        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        result = ChatBoxModel.objects.all().count()
 
         self.assertEqual(expected, result)
 

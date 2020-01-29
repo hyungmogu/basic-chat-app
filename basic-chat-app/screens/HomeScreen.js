@@ -27,8 +27,6 @@ export default class HomeScreen extends Component {
                     rooms: [...res.data]
                 }
             })
-
-            console.log(this.state.rooms)
         })
     }
 

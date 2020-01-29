@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main',
+    'api',
+    'accounts',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +124,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+    'DATETIME_FORMAT': '%s'
+}
+
+AUTH_USER_MODEL = 'accounts.User'

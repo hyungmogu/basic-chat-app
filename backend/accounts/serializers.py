@@ -13,7 +13,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         model=get_user_model()
         fields=(
-            'last_login',
             'email',
             'name',
             'profile_picture',

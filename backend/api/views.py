@@ -73,8 +73,8 @@ class Logout(APIView):
 class Chats(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, format=None):
-        chats = Chat.objects.filter(users__pk=request.user.pk)
-        res_data = ChatSerializer(chats, many=True).data
+        chat_users = Chat.objects.chat_users.all()
+        res_data = UserSerializer(chat_users, many=True).data
 
         return Response(res_data)
 
@@ -97,50 +97,29 @@ class Chats(APIView):
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        chat_exists, chat = self.get_chat(email_user, email_recipient)
-        if chat_exists:
+        if self.chat_exists(request.user, user_recipient):
 
-            if request.user.chats.filter(pk=chat.pk).count() > 0:
-                res_data = {
-                    'detail': 'Chat already exists'
-                }
+            res_data = {
+                'detail': 'Chat already exists'
+            }
 
-                return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-            request.user.chats.add(chat)
+        request.user.chat_users.add(user_recipient)
 
-            res_data = chat.pk
-
-            return Response(res_data)
-
-        chat_new = self.create_chat(request.user, user_recipient)
-        res_data = chat_new.pk
+        res_data = user_recipient.pk
 
         return Response(res_data, status=status.HTTP_201_CREATED)
 
-    def get_chat(self, email_user, email_recipient):
-        chat_exists = True
+    def chat_exists(self, user, user_recipient):
 
-        chat = (Chat.objects
-                .filter(users__email=email_user)
-                .filter(users__email=email_recipient))
+        chat_user = (user.chat_users
+                .filter(users__pk=user_recipient.pk))
 
-        if chat.count() == 0:
-            chat_exists = False
-            chat = None
+        if chat_user.count() == 0:
+            return False
 
-            return chat_exists, chat
-
-        return chat_exists, chat[0]
-
-    def create_chat(self, user, user_recipient):
-        chat_new = Chat()
-        chat_new.save()
-        chat_new.users.add(user, user_recipient)
-
-        user.chats.add(chat_new)
-
-        return chat_new
+        return True
 
     def get_user(self, email):
         User = get_user_model()

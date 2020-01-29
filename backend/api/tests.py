@@ -787,6 +787,32 @@ class TestChatBoxGETRequest(ChatBoxTest):
         self.assertEqual(expected, result)
         self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
 
+    def test_return_list_with_second_object_having_user_pk_of_2_if_successful(self):
+        expected = 2
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        res_login = self.client.post(reverse('api:login'),
+            {
+                'email': 'user2@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hi'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result = res.data[-1]['user_pk']
+
+        self.assertEqual(expected, result)
+        self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
 
 
 

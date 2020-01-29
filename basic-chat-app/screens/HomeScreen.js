@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
+import axios from 'axios';
+
 import ChatMenuItem from '../components/ChatMenuItem';
 import AddNewButton from '../components/AddNewButton';
 
 export default class HomeScreen extends Component {
+
+    componentDidMount() {
+        let opts = {
+            headers: {
+                Authorization: 'Token bcaf3fb0f2b93a6a4c6fe2808c2a65084e61a097'
+            }
+        }
+        axios.get('http://localhost:8000/api/v1/chats/', opts).then(res => {
+            console.log(res.data);
+        })
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         return (

@@ -372,63 +372,63 @@ class TestChatsPOSTRequest(ChatsTest):
         self.assertEqual(expected, result)
 
 
-# """
-# /api/v1/chats (GET)
-# """
+"""
+/api/v1/chats (GET)
+"""
 
-# class TestChatsGETRequest(ChatsTest):
-#     def test_return_status_code_200_if_successful(self):
-#         expected = 200
+class TestChatsGETRequest(ChatsTest):
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
 
-#         res = self.client.get(reverse('api:chats'))
+        res = self.client.get(reverse('api:chats'))
 
-#         result = res.status_code
+        result = res.status_code
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_objects_with_query_count_of_2_if_successful(self):
-#         expected = 2
+    def test_return_objects_with_query_count_of_2_if_successful(self):
+        expected = 2
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user3@gmail.com'
-#         })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
 
-#         res = self.client.get(reverse('api:chats'))
+        res = self.client.get(reverse('api:chats'))
 
-#         result = len(res.data)
+        result = len(res.data)
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_list_with_ids_if_successful(self):
-#         expected1 = 1
-#         expected2 = 2
+    def test_return_list_of_users_if_successful(self):
+        expected1 = 'user2@gmail.com'
+        expected2 = 'user3@gmail.com'
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user3@gmail.com'
-#         })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
 
-#         res = self.client.get(reverse('api:chats'))
+        res = self.client.get(reverse('api:chats'))
 
-#         result1 = res.data[0]
-#         result2 = res.data[1]
+        result1 = res.data[0]['email']
+        result2 = res.data[1]['email']
 
-#         self.assertEqual(expected1, result1)
-#         self.assertEqual(expected2, result2)
+        self.assertEqual(expected1, result1)
+        self.assertEqual(expected2, result2)
 
-#     def test_return_list_of_length_0_if_none_found(self):
-#         expected = 0
+    def test_return_list_of_length_0_if_none_found(self):
+        expected = 0
 
-#         res = self.client.get(reverse('api:chats'))
+        res = self.client.get(reverse('api:chats'))
 
-#         result = len(res.data)
+        result = len(res.data)
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
 
 # """

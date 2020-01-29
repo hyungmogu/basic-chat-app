@@ -74,7 +74,7 @@ class Logout(APIView):
 class Chats(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, format=None):
-        chat_users = Chat.objects.chat_users.all()
+        chat_users = request.user.chat_users.all()
         res_data = UserSerializer(chat_users, many=True).data
 
         return Response(res_data)

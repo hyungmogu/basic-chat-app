@@ -213,175 +213,192 @@ class TestLogOutGETRequest(LogoutTest):
 
     def test_return_error_if_auth_token_not_attached(self):
 
-        expected = 'Invalid token.'
+        expected = 'Authentication credentials were not provided.'
 
+        self.client.credentials()
         res = self.client.get(reverse('api:logout'))
+
+        print(res.data)
 
         result = res.data['detail']
 
         self.assertEqual(expected, result)
 
 
-# """
-# /api/v1/chats (POST)
-# """
+    def test_return_error_if_auth_token_invalid(self):
 
-# class ChatsTest(TestCase):
-#     def setUp(self):
-#         self.client = APIClient()
-#         self.factory = RequestFactory()
-#         self.User = get_user_model()
-#         self.user1 = self.User.objects.create_user(
-#             email='user1@gmail.com',
-#             name='User1',
-#             password='A!jTes@12'
-#         )
+        expected = 'Invalid token.'
 
-#         self.user2 = self.User.objects.create_user(
-#             email='user2@gmail.com',
-#             name='User2',
-#             password='A!jTes@12'
-#         )
+        self.client.get(reverse('api:logout'))
+        res = self.client.get(reverse('api:logout'))
 
-#         self.user3 = self.User.objects.create_user(
-#             email='user3@gmail.com',
-#             name='User3',
-#             password='A!jTes@12'
-#         )
+        print(res.data)
 
-#         res = self.client.post(reverse('api:login'),
-#             {
-#                 'email': 'user1@gmail.com',
-#                 'password': 'A!jTes@12'
-#             },
-#             format='json'
-#         )
+        result = res.data['detail']
 
-#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+        self.assertEqual(expected, result)
 
 
-# class TestChatsPOSTRequest(ChatsTest):
-#     def test_return_status_code_201_if_successful(self):
-#         expected = 201
+"""
+/api/v1/chats (POST)
+"""
 
-#         res = self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
+class ChatsTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.user1 = self.User.objects.create_user(
+            email='user1@gmail.com',
+            name='User1',
+            password='A!jTes@12'
+        )
 
-#         result = res.status_code
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
 
-#         self.assertEqual(expected, result)
+        self.user3 = self.User.objects.create_user(
+            email='user3@gmail.com',
+            name='User3',
+            password='A!jTes@12'
+        )
 
+        res = self.client.post(reverse('api:login'),
+            {
+                'email': 'user1@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
 
-#     def test_return_objects_with_query_count_of_1_if_successful(self):
-#         expected = 1
-
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
-#         result = Chat.objects.all().count()
-
-#         self.assertEqual(expected, result)
-
-#     def test_return_user1_chats_containing_user1_and_user2_if_successful(self):
-#         expected = 1
-
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
-
-#         result1 = Chat.objects.filter(users__email=self.user1.email).count()
-#         result2 = Chat.objects.filter(users__email=self.user2.email).count()
-
-#         self.assertEqual(expected, result1)
-#         self.assertEqual(expected, result2)
-
-#     def test_return_user1_with_chats_count_of_1_if_successful(self):
-#         expected = 1
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
+class TestChatsPOSTRequest(ChatsTest):
+    def test_return_status_code_201_if_successful(self):
+        expected = 201
 
-#         res = self.client.post(reverse('api:login'),
-#             {
-#                 'email': 'user2@gmail.com',
-#                 'password': 'A!jTes@12'
-#             },
-#             format='json'
-#         )
-#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+        res = self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user3@gmail.com'
-#         })
+        result = res.status_code
 
-#         result = self.user1.chats.all().count()
+        self.assertEqual(expected, result)
 
-#         self.assertEqual(expected, result)
 
-#     def test_return_error_if_email_of_oneself_is_used(self):
-#         expected = 'Please select different user'
+    # def test_return_objects_with_query_count_of_1_if_successful(self):
+    #     expected = 1
 
-#         res = self.client.post(reverse('api:chats'), {
-#             'email': 'user1@gmail.com'
-#         })
+    #     self.client.post(reverse('api:chats'), {
+    #         'email': 'user2@gmail.com'
+    #     })
+    #     result = Chat.objects.all().count()
 
-#         result = res.data['detail']
+    #     self.assertEqual(expected, result)
 
-#         self.assertEqual(expected, result)
+    # def test_return_user1_chats_containing_user1_and_user2_if_successful(self):
+    #     expected = 1
 
-#     def test_return_error_if_user_email_doesnt_exist(self):
-#         expected = 'User not found'
+    #     self.client.post(reverse('api:chats'), {
+    #         'email': 'user2@gmail.com'
+    #     })
 
-#         res = self.client.post(reverse('api:chats'), {
-#             'email': 'thisuserdoesntexist@gmail.com'
-#         })
+    #     result1 = Chat.objects.filter(users__email=self.user1.email).count()
+    #     result2 = Chat.objects.filter(users__email=self.user2.email).count()
 
-#         result = res.data['detail']
+    #     self.assertEqual(expected, result1)
+    #     self.assertEqual(expected, result2)
 
-#         self.assertEqual(expected, result)
+    # def test_return_user1_with_chats_count_of_1_if_successful(self):
+    #     expected = 1
 
-#     def test_return_chat_pk_if_chat_exists_but_not_in_user(self):
-#         expected = 1
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
+    #     self.client.post(reverse('api:chats'), {
+    #         'email': 'user2@gmail.com'
+    #     })
 
-#         res_login = self.client.post(reverse('api:login'),
-#             {
-#                 'email': 'user2@gmail.com',
-#                 'password': 'A!jTes@12'
-#             },
-#             format='json'
-#         )
+    #     res = self.client.post(reverse('api:login'),
+    #         {
+    #             'email': 'user2@gmail.com',
+    #             'password': 'A!jTes@12'
+    #         },
+    #         format='json'
+    #     )
+    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
-#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+    #     self.client.post(reverse('api:chats'), {
+    #         'email': 'user3@gmail.com'
+    #     })
 
-#         res_chats = self.client.post(reverse('api:chats'), {
-#             'email': 'user1@gmail.com'
-#         })
+    #     result = self.user1.chats.all().count()
 
-#         result = res_chats.data
+    #     self.assertEqual(expected, result)
 
-#         self.assertEqual(expected, result)
+    # def test_return_error_if_email_of_oneself_is_used(self):
+    #     expected = 'Please select different user'
 
-#     def test_return_error_if_chat_exists_and_is_in_user(self):
-#         expected = 'Chat already exists'
+    #     res = self.client.post(reverse('api:chats'), {
+    #         'email': 'user1@gmail.com'
+    #     })
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
+    #     result = res.data['detail']
 
-#         res_chats = self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
+    #     self.assertEqual(expected, result)
 
-#         result = res_chats.data['detail']
+    # def test_return_error_if_user_email_doesnt_exist(self):
+    #     expected = 'User not found'
 
-#         self.assertEqual(expected, result)
+    #     res = self.client.post(reverse('api:chats'), {
+    #         'email': 'thisuserdoesntexist@gmail.com'
+    #     })
+
+    #     result = res.data['detail']
+
+    #     self.assertEqual(expected, result)
+
+    # def test_return_chat_pk_if_chat_exists_but_not_in_user(self):
+    #     expected = 1
+
+    #     self.client.post(reverse('api:chats'), {
+    #         'email': 'user2@gmail.com'
+    #     })
+
+    #     res_login = self.client.post(reverse('api:login'),
+    #         {
+    #             'email': 'user2@gmail.com',
+    #             'password': 'A!jTes@12'
+    #         },
+    #         format='json'
+    #     )
+
+    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+
+    #     res_chats = self.client.post(reverse('api:chats'), {
+    #         'email': 'user1@gmail.com'
+    #     })
+
+    #     result = res_chats.data
+
+    #     self.assertEqual(expected, result)
+
+    # def test_return_error_if_chat_exists_and_is_in_user(self):
+    #     expected = 'Chat already exists'
+
+    #     self.client.post(reverse('api:chats'), {
+    #         'email': 'user2@gmail.com'
+    #     })
+
+    #     res_chats = self.client.post(reverse('api:chats'), {
+    #         'email': 'user2@gmail.com'
+    #     })
+
+    #     result = res_chats.data['detail']
+
+    #     self.assertEqual(expected, result)
 
 
 # """

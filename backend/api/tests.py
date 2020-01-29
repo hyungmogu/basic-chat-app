@@ -733,7 +733,7 @@ class TestChatBoxGETRequest(ChatBoxTest):
 
         self.assertEqual(expected, result)
 
-    def test_return_list_with_pk_of_first_object_being_1_given_2_objects_if_successful(self):
+    def test_return_list_with_earliest_being_first_if_successful(self):
         expected = 1
 
         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
@@ -749,4 +749,42 @@ class TestChatBoxGETRequest(ChatBoxTest):
         result = res.data[0]['pk']
 
         self.assertEqual(expected, result)
+
+    def test_return_list_with_earliest_being_first_if_successful(self):
+        expected = 1
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hi'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result = res.data[0]['pk']
+
+        self.assertEqual(expected, result)
+
+
+    def test_return_list_with_latest_being_last_if_successful(self):
+        expected = 2
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hi'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result = res.data[-1]['pk']
+
+        self.assertEqual(expected, result)
+
+
+
 

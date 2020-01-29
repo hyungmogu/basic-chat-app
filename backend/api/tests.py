@@ -503,6 +503,7 @@ from main.models import ChatBox as ChatBoxModel
 
 #         self.assertEqual(expected, result)
 
+
 """
 /api/v1/chats/{pk} (POST)
 """
@@ -537,6 +538,9 @@ class ChatBoxTest(TestCase):
         self.client.post(reverse('api:chats'), {
             'email': 'user2@gmail.com'
         })
+
+
+class TestChatBoxPOSTRequest(ChatBoxTest):
 
     def test_return_status_code_201_if_successful(self):
         expected = 201
@@ -612,3 +616,23 @@ class ChatBoxTest(TestCase):
 
         self.assertEqual(expected, result1)
         self.assertEqual(expected, result2)
+
+
+"""
+/api/v1/chats/{pk} (GET)
+"""
+
+class TestChatBoxGETRequest(ChatBoxTest):
+
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result = res.status_code
+
+        self.assertEqual(expected, result)

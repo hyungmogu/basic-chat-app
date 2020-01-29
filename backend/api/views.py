@@ -35,7 +35,6 @@ class Login(APIView):
         password = request.data['password']
 
         user = authenticate(email=email, password=password)
-        User = get_user_model()
 
         if not user:
             error = {

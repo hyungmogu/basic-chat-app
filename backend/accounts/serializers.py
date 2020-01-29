@@ -25,3 +25,14 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Two passwords must match')
 
         return data
+
+    def create(self, validated_data):
+        User = get_user_model()
+
+        user = User.objects.create_user(
+            validated_data['email'],
+            validated_data['name'],
+            validated_data['password']
+        )
+
+        return user

@@ -658,6 +658,30 @@ class TestChatBoxPOSTRequest(ChatBoxTest):
 
         self.assertEqual(expected, result)
 
+    def test_return_error_if_chat_doesnt_exist(self):
+        expected = 'Requested chat is invalid'
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello from user 1'
+        })
+
+        res_login = self.client.post(reverse('api:login'),
+            {
+                'email': 'user3@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+
+        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello from user 3'
+        })
+
+        result = res.data['detail']
+
+        self.assertEqual(expected, result)
+
 
 """
 /api/v1/chats/{pk} (GET)
@@ -677,3 +701,52 @@ class TestChatBoxGETRequest(ChatBoxTest):
         result = res.status_code
 
         self.assertEqual(expected, result)
+
+
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result = res.status_code
+
+        self.assertEqual(expected, result)
+
+    def test_return_list_with_length_2_given_2_objects_if_successful(self):
+        expected = 2
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hi'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result = len(res.data)
+
+        self.assertEqual(expected, result)
+
+    def test_return_list_with_pk_of_first_object_being_1_given_2_objects_if_successful(self):
+        expected = 1
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hi'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result = res.data[0]['pk']
+
+        self.assertEqual(expected, result)
+

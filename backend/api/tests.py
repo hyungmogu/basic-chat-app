@@ -163,64 +163,63 @@ class TestLoginPOSTRequest(LoginTest):
         self.assertIsNotNone(result.auth_token)
 
 
-# """
-# /api/v1/logout (GET)
-# """
-# class LogoutTest(TestCase):
-#     def setUp(self):
-#         self.client = APIClient()
-#         self.factory = RequestFactory()
-#         self.User = get_user_model()
-#         self.user = self.User.objects.create_user(
-#             email='test@gmail.com',
-#             name='Test Hello',
-#             password='A!jTes@12'
-#         )
+"""
+/api/v1/logout (GET)
+"""
+class LogoutTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.user = self.User.objects.create_user(
+            email='test@gmail.com',
+            name='Test Hello',
+            password='A!jTes@12'
+        )
 
-#         self.user2 = self.User.objects.create_user(
-#             email='user2@gmail.com',
-#             name='User2',
-#             password='A!jTes@12'
-#         )
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
 
-#         res = self.client.post(reverse('api:login'),
-#             {
-#                 'email': 'test@gmail.com',
-#                 'password': 'A!jTes@12'
-#             },
-#             format='json'
-#         )
+        res = self.client.post(reverse('api:login'),
+            {
+                'email': 'test@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
 
-#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
 
-# class TestLogOutGETRequest(LogoutTest):
-#     def test_return_status_code_200_if_successful(self):
-#         expected = 200
+class TestLogOutGETRequest(LogoutTest):
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
 
-#         res = self.client.get(reverse('api:logout'))
+        res = self.client.get(reverse('api:logout'))
 
-#         result = res.status_code
+        result = res.status_code
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_user_with_auth_token_removed_if_successful(self):
+    def test_return_user_with_auth_token_removed_if_successful(self):
 
-#         res = self.client.get(reverse('api:logout'))
+        res = self.client.get(reverse('api:logout'))
 
-#         with self.assertRaises(ObjectDoesNotExist):
-#             self.User.objects.get(pk=1).auth_token
+        with self.assertRaises(ObjectDoesNotExist):
+            self.User.objects.get(pk=1).auth_token
 
-#     def test_return_is_authenticated_as_false_if_successful(self):
+    def test_return_error_if_auth_token_not_attached(self):
 
-#         expected = False
+        expected = 'Invalid token.'
 
-#         res = self.client.get(reverse('api:logout'))
+        res = self.client.get(reverse('api:logout'))
 
-#         result = self.user.is_authenticated
+        result = res.data['detail']
 
-#         self.assertEqual(expected, result)
-
+        self.assertEqual(expected, result)
 
 
 # """

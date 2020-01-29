@@ -55,6 +55,7 @@ class Login(APIView):
 
 
 class Logout(APIView):
+    permission_classes=(IsAuthenticated,)
     def get(self, request, format=None):
 
         try:

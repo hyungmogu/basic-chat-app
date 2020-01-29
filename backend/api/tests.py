@@ -9,7 +9,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.test import APIClient
 from rest_framework.authtoken.models import Token
 
-from main.models import Chat
 from main.models import ChatBox as ChatBoxModel
 
 # -----------
@@ -124,66 +123,66 @@ from main.models import ChatBox as ChatBoxModel
 # # -----------
 
 
-# """
-# /api/v1/signup (POST)
-# """
-# class SignUpTest(TestCase):
-#     def setUp(self):
-#         self.client = APIClient()
-#         self.user = get_user_model()
-#         self.resp_register = self.client.post(
-#             reverse('api:signup'),
-#             {
-#                 'email': 'test@gmail.com',
-#                 'name': 'Test Hello',
-#                 'password': 'A!jTes@12',
-#                 'password2': 'A!jTes@12'
-#             },
-#             format='json'
-#         )
+"""
+/api/v1/signup (POST)
+"""
+class SignUpTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = get_user_model()
+        self.resp_register = self.client.post(
+            reverse('api:signup'),
+            {
+                'email': 'test@gmail.com',
+                'name': 'Test Hello',
+                'password': 'A!jTes@12',
+                'password2': 'A!jTes@12'
+            },
+            format='json'
+        )
 
 
-# class TestSignUpPOSTRequest(SignUpTest):
-#     def test_return_status_code_201_if_successful(self):
-#         expected = 201
+class TestSignUpPOSTRequest(SignUpTest):
+    def test_return_status_code_201_if_successful(self):
+        expected = 201
 
-#         result = self.resp_register.status_code
+        result = self.resp_register.status_code
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_user_with_length_1(self):
-#         expected = 1
+    def test_return_user_with_length_1(self):
+        expected = 1
 
-#         result = self.user.objects.all().count()
+        result = self.user.objects.all().count()
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_user_with_matching_email(self):
-#         expected = 'test@gmail.com'
+    def test_return_user_with_matching_email(self):
+        expected = 'test@gmail.com'
 
-#         user = self.user.objects.get(pk=1)
+        user = self.user.objects.get(pk=1)
 
-#         result = user.email
+        result = user.email
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_user_with_matching_name(self):
-#         expected = 'Test Hello'
+    def test_return_user_with_matching_name(self):
+        expected = 'Test Hello'
 
-#         user = self.user.objects.get(pk=1)
+        user = self.user.objects.get(pk=1)
 
-#         result = user.name
+        result = user.name
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_user_with_matching_password(self):
-#         expected = 'A!jTes@12'
+    def test_return_user_with_matching_password(self):
+        expected = True
 
-#         user = self.user.objects.get(pk=1)
+        user = self.user.objects.get(pk=1)
 
-#         result = user.password
+        result = user.check_password('A!jTes@12')
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
 
 # """
@@ -277,9 +276,9 @@ from main.models import ChatBox as ChatBoxModel
 
 #         res = self.client.get(reverse('api:logout'))
 
-#         print(self.user.is_authenticated)
+#         result = self.user.is_authenticated
 
-#         # self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
 
@@ -504,343 +503,343 @@ from main.models import ChatBox as ChatBoxModel
 #         self.assertEqual(expected, result)
 
 
-"""
-/api/v1/chats/{pk} (POST)
-"""
+# """
+# /api/v1/chats/{pk} (POST)
+# """
 
-class ChatBoxTest(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.factory = RequestFactory()
-        self.User = get_user_model()
-        self.user1 = self.User.objects.create_user(
-            email='user1@gmail.com',
-            name='User1',
-            password='A!jTes@12'
-        )
+# class ChatBoxTest(TestCase):
+#     def setUp(self):
+#         self.client = APIClient()
+#         self.factory = RequestFactory()
+#         self.User = get_user_model()
+#         self.user1 = self.User.objects.create_user(
+#             email='user1@gmail.com',
+#             name='User1',
+#             password='A!jTes@12'
+#         )
 
-        self.user2 = self.User.objects.create_user(
-            email='user2@gmail.com',
-            name='User2',
-            password='A!jTes@12'
-        )
+#         self.user2 = self.User.objects.create_user(
+#             email='user2@gmail.com',
+#             name='User2',
+#             password='A!jTes@12'
+#         )
 
-        self.user3 = self.User.objects.create_user(
-            email='user3@gmail.com',
-            name='User3',
-            password='A!jTes@12'
-        )
+#         self.user3 = self.User.objects.create_user(
+#             email='user3@gmail.com',
+#             name='User3',
+#             password='A!jTes@12'
+#         )
 
-        res = self.client.post(reverse('api:login'),
-            {
-                'email': 'user1@gmail.com',
-                'password': 'A!jTes@12'
-            },
-            format='json'
-        )
+#         res = self.client.post(reverse('api:login'),
+#             {
+#                 'email': 'user1@gmail.com',
+#                 'password': 'A!jTes@12'
+#             },
+#             format='json'
+#         )
 
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
-        self.client.post(reverse('api:chats'), {
-            'email': 'user2@gmail.com'
-        })
+#         self.client.post(reverse('api:chats'), {
+#             'email': 'user2@gmail.com'
+#         })
 
-        self.client.post(reverse('api:chats'), {
-            'email': 'user3@gmail.com'
-        })
+#         self.client.post(reverse('api:chats'), {
+#             'email': 'user3@gmail.com'
+#         })
 
 
 
-class TestChatBoxPOSTRequest(ChatBoxTest):
+# class TestChatBoxPOSTRequest(ChatBoxTest):
 
-    def test_return_status_code_201_if_successful(self):
-        expected = 201
+#     def test_return_status_code_201_if_successful(self):
+#         expected = 201
 
-        print(reverse('api:chat', kwargs={'pk': 1}))
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         print(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        result = res.status_code
+#         result = res.status_code
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_objects_with_query_count_of_1_if_successful(self):
-        expected = 1
+#     def test_return_objects_with_query_count_of_1_if_successful(self):
+#         expected = 1
 
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        result = ChatBoxModel.objects.all().count()
+#         result = ChatBoxModel.objects.all().count()
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
-    def test_return_object_with_timestamp_in_unix_format_if_successful(self):
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#     def test_return_object_with_timestamp_in_unix_format_if_successful(self):
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        result1 = re.search('[^0-9]', str(res.data['timestamp']))
-        result2 = ChatBoxModel.objects.get(pk=1).timestamp
+#         result1 = re.search('[^0-9]', str(res.data['timestamp']))
+#         result2 = ChatBoxModel.objects.get(pk=1).timestamp
 
-        self.assertIsNone(result1)
-        self.assertIsNotNone(result2)
+#         self.assertIsNone(result1)
+#         self.assertIsNotNone(result2)
 
 
-    def test_return_object_with_text_of_hello_if_successful(self):
-        expected = 'hello'
+#     def test_return_object_with_text_of_hello_if_successful(self):
+#         expected = 'hello'
 
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        result1 = ChatBoxModel.objects.get(pk=1).text
-        result2 = res.data['text']
+#         result1 = ChatBoxModel.objects.get(pk=1).text
+#         result2 = res.data['text']
 
-        self.assertEqual(expected, result1)
-        self.assertEqual(expected, result2)
+#         self.assertEqual(expected, result1)
+#         self.assertEqual(expected, result2)
 
-    def test_return_object_with_user_pk_of_1_if_successful(self):
-        expected =  1
+#     def test_return_object_with_user_pk_of_1_if_successful(self):
+#         expected =  1
 
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        result1 = ChatBoxModel.objects.get(pk=1).user.pk
-        result2 = res.data['user_pk']
+#         result1 = ChatBoxModel.objects.get(pk=1).user.pk
+#         result2 = res.data['user_pk']
 
-        self.assertEqual(expected, result1)
-        self.assertEqual(expected, result2)
+#         self.assertEqual(expected, result1)
+#         self.assertEqual(expected, result2)
 
-    def test_return_object_with_chat_pk_of_1_if_successful(self):
-        expected =  1
+#     def test_return_object_with_chat_pk_of_1_if_successful(self):
+#         expected =  1
 
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        result1 = ChatBoxModel.objects.get(pk=1).chat.pk
-        result2 = res.data['chat_pk']
+#         result1 = ChatBoxModel.objects.get(pk=1).chat.pk
+#         result2 = res.data['chat_pk']
 
-        self.assertEqual(expected, result1)
-        self.assertEqual(expected, result2)
+#         self.assertEqual(expected, result1)
+#         self.assertEqual(expected, result2)
 
-    def test_return_error_if_chat_doesnt_exist(self):
-        expected = 'Chat not found'
+#     def test_return_error_if_chat_doesnt_exist(self):
+#         expected = 'Chat not found'
 
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 10}), {
-            'text': 'hello'
-        })
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 10}), {
+#             'text': 'hello'
+#         })
 
-        result = res.data['detail']
+#         result = res.data['detail']
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_error_if_chat_doesnt_exist(self):
-        expected = 'Requested chat is invalid'
+#     def test_return_error_if_chat_doesnt_exist(self):
+#         expected = 'Requested chat is invalid'
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello from user 1'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello from user 1'
+#         })
 
-        res_login = self.client.post(reverse('api:login'),
-            {
-                'email': 'user3@gmail.com',
-                'password': 'A!jTes@12'
-            },
-            format='json'
-        )
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+#         res_login = self.client.post(reverse('api:login'),
+#             {
+#                 'email': 'user3@gmail.com',
+#                 'password': 'A!jTes@12'
+#             },
+#             format='json'
+#         )
+#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
 
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello from user 3'
-        })
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello from user 3'
+#         })
 
-        result = res.data['detail']
+#         result = res.data['detail']
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_error_if_chat_doesnt_exist(self):
-        expected = 'Requested chat is invalid'
+#     def test_return_error_if_chat_doesnt_exist(self):
+#         expected = 'Requested chat is invalid'
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello from user 1'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello from user 1'
+#         })
 
-        res_login = self.client.post(reverse('api:login'),
-            {
-                'email': 'user3@gmail.com',
-                'password': 'A!jTes@12'
-            },
-            format='json'
-        )
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+#         res_login = self.client.post(reverse('api:login'),
+#             {
+#                 'email': 'user3@gmail.com',
+#                 'password': 'A!jTes@12'
+#             },
+#             format='json'
+#         )
+#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
 
-        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello from user 3'
-        })
+#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello from user 3'
+#         })
 
-        result = res.data['detail']
+#         result = res.data['detail']
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
-"""
-/api/v1/chats/{pk} (GET)
-"""
+# """
+# /api/v1/chats/{pk} (GET)
+# """
 
-class TestChatBoxGETRequest(ChatBoxTest):
+# class TestChatBoxGETRequest(ChatBoxTest):
 
-    def test_return_status_code_200_if_successful(self):
-        expected = 200
+#     def test_return_status_code_200_if_successful(self):
+#         expected = 200
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result = res.status_code
+#         result = res.status_code
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
-    def test_return_status_code_200_if_successful(self):
-        expected = 200
+#     def test_return_status_code_200_if_successful(self):
+#         expected = 200
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result = res.status_code
+#         result = res.status_code
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_list_with_length_2_given_2_objects_if_successful(self):
-        expected = 2
+#     def test_return_list_with_length_2_given_2_objects_if_successful(self):
+#         expected = 2
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hi'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hi'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result = len(res.data)
+#         result = len(res.data)
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_list_with_earliest_being_first_if_successful(self):
-        expected = 1
+#     def test_return_list_with_earliest_being_first_if_successful(self):
+#         expected = 1
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hi'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hi'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result = res.data[0]['pk']
+#         result = res.data[0]['pk']
 
-        self.assertEqual(expected, result)
-        self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
+#         self.assertEqual(expected, result)
+#         self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
 
-    def test_return_list_with_first_object_containing_text_hello_if_successful(self):
-        expected = 'hello'
+#     def test_return_list_with_first_object_containing_text_hello_if_successful(self):
+#         expected = 'hello'
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hi'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hi'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result = res.data[0]['text']
+#         result = res.data[0]['text']
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
-    def test_return_list_with_latest_being_last_if_successful(self):
-        expected = 2
+#     def test_return_list_with_latest_being_last_if_successful(self):
+#         expected = 2
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hi'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hi'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result = res.data[-1]['pk']
+#         result = res.data[-1]['pk']
 
-        self.assertEqual(expected, result)
-        self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
+#         self.assertEqual(expected, result)
+#         self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
 
-    def test_return_list_with_second_object_having_user_pk_of_2_if_successful(self):
-        expected = 2
+#     def test_return_list_with_second_object_having_user_pk_of_2_if_successful(self):
+#         expected = 2
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        res_login = self.client.post(reverse('api:login'),
-            {
-                'email': 'user2@gmail.com',
-                'password': 'A!jTes@12'
-            },
-            format='json'
-        )
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+#         res_login = self.client.post(reverse('api:login'),
+#             {
+#                 'email': 'user2@gmail.com',
+#                 'password': 'A!jTes@12'
+#             },
+#             format='json'
+#         )
+#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hi'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hi'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result = res.data[-1]['user_pk']
+#         result = res.data[-1]['user_pk']
 
-        self.assertEqual(expected, result)
-        self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
+#         self.assertEqual(expected, result)
+#         self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
 
-    def test_return_list_with_all_objects_having_chat_pk_of_1_if_successful(self):
-        expected = 1
+#     def test_return_list_with_all_objects_having_chat_pk_of_1_if_successful(self):
+#         expected = 1
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hello'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hello'
+#         })
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-            'text': 'hi'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+#             'text': 'hi'
+#         })
 
-        self.client.post(reverse('api:chat', kwargs={'pk': 2}), {
-            'text': 'hello world'
-        })
+#         self.client.post(reverse('api:chat', kwargs={'pk': 2}), {
+#             'text': 'hello world'
+#         })
 
-        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+#         res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
 
-        result1 = res.data[0]['chat_pk']
-        result2 = res.data[1]['chat_pk']
+#         result1 = res.data[0]['chat_pk']
+#         result2 = res.data[1]['chat_pk']
 
-        self.assertEqual(expected, result1)
-        self.assertEqual(expected, result2)
+#         self.assertEqual(expected, result1)
+#         self.assertEqual(expected, result2)
 
 
 

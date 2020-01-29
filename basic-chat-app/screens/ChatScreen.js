@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, TextInput } from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import axios from 'axios';
 
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
@@ -34,6 +35,8 @@ export default class ChatScreen extends Component {
                 timestamp: 1579196322
             }
         ];
+
+
 
         let chatter = {
             id: 1,

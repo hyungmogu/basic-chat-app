@@ -15,112 +15,53 @@ from main.models import ChatBox as ChatBoxModel
 # MODEL TESTS
 # -----------
 
-# class ChatModelTest(TestCase):
-#     def setUp(self):
-#         User = get_user_model()
+class UserModelTest(TestCase):
+    def setUp(self):
+        self.User = get_user_model()
 
-#         self.user1 = User.objects.create_user(
-#             email='user1@gmail.com',
-#             name='User1',
-#             password='A!jTes@12'
-#         )
-#         self.user2 = User.objects.create_user(
-#             email='user2@gmail.com',
-#             name='User2',
-#             password='A!jTes@12'
-#         )
-#         self.user3 = User.objects.create_user(
-#             email='user3@gmail.com',
-#             name='User3',
-#             password='A!jTes@12'
-#         )
+        self.user1 = self.User.objects.create_user(
+            email='user1@gmail.com',
+            name='User1',
+            password='A!jTes@12'
+        )
 
-#         self.chat1 = Chat()
-#         self.chat2 = Chat()
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
 
-#         self.chat1.save()
-#         self.chat2.save()
+        self.user3 = self.User.objects.create_user(
+            email='user3@gmail.com',
+            name='User3',
+            password='A!jTes@12'
+        )
 
-#         self.chat1.users.add(self.user1, self.user2)
-#         self.chat2.users.add(self.user1, self.user3)
+        self.user1.chat_users.add(self.user2, self.user3)
+        self.user2.chat_users.add(self.user1, self.user3)
 
-#     def test_return_all_objects_with_query_count_of_2(self):
-#         expected = 2
+    def test_return_objects_with_query_count_of_3_if_all_queried(self):
+        expected = 3
 
-#         result = Chat.objects.all().count()
+        result = self.User.objects.all().count()
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_object_with_query_count_of_1_when_filtered_by_2_users(self):
+    def test_return_error_if_user_not_found(self):
 
-#         expected = 1
+        with self.assertRaises(ObjectDoesNotExist):
+            result = self.User.objects.get(email='user4@gmail.com')
 
-#         result = Chat.objects.filter(users__email=self.user1.email).filter(users__email=self.user2.email).count()
+    def test_return_objects_with_query_count_of_2_if_chat_users_is_nonempty_and_all_chat_queried(self):
+        expected = 2
 
-#         self.assertEqual(expected, result)
+        result = self.user1.chat_users.all().count()
 
+        self.assertEqual(expected, result)
 
-# class UserModelTest(TestCase):
-#     def setUp(self):
-#         self.User = get_user_model()
-
-#         self.user1 = self.User.objects.create_user(
-#             email='user1@gmail.com',
-#             name='User1',
-#             password='A!jTes@12'
-#         )
-
-#         self.user2 = self.User.objects.create_user(
-#             email='user2@gmail.com',
-#             name='User2',
-#             password='A!jTes@12'
-#         )
-
-#         self.user3 = self.User.objects.create_user(
-#             email='user3@gmail.com',
-#             name='User3',
-#             password='A!jTes@12'
-#         )
-
-#         chat1 = Chat()
-#         chat1.save()
-#         chat1.users.add(self.user1, self.user2)
-
-#         chat2 = Chat()
-#         chat2.save()
-#         chat2.users.add(self.user1, self.user3)
-
-#         self.user1.chats.add(chat1, chat2)
-
-#     def test_return_objects_with_query_count_of_3_if_all_queried(self):
-#         expected = 3
-
-#         result = self.User.objects.all().count()
-
-#         self.assertEqual(expected, result)
-
-#     def test_return_error_if_user_not_found(self):
-
-#         with self.assertRaises(ObjectDoesNotExist):
-#             result = self.User.objects.get(email='user4@gmail.com')
-
-#     def test_return_objects_with_query_count_of_2_if_chat_is_nonempty_and_all_chat_queried(self):
-#         expected = 2
-
-#         result = self.user1.chats.all().count()
-
-#         self.assertEqual(expected, result)
-
-#     def test_return_objects_with_query_count_of_0_if_chat_is_empty_and_all_chat_queried(self):
-#         expected = 0
-
-#         result = self.user2.chats.all().count()
-
-#         self.assertEqual(expected, result)
-
-# # -----------
-# # API TESTS
-# # -----------
+# -----------
+# API TESTS
+# -----------
 
 
 """
@@ -185,41 +126,41 @@ class TestSignUpPOSTRequest(SignUpTest):
         self.assertEqual(expected, result)
 
 
-# """
-# /api/v1/login (POST)
-# """
-# class LoginTest(TestCase):
-#     def setUp(self):
-#         self.client = APIClient()
-#         self.factory = RequestFactory()
-#         self.User = get_user_model()
-#         self.user = self.User.objects.create_user(
-#             email='test@gmail.com',
-#             name='Test Hello',
-#             password='A!jTes@12'
-#         )
+"""
+/api/v1/login (POST)
+"""
+class LoginTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.user = self.User.objects.create_user(
+            email='test@gmail.com',
+            name='Test Hello',
+            password='A!jTes@12'
+        )
 
-#         self.response = self.client.post(reverse('api:login'),
-#             {
-#                 'email': 'test@gmail.com',
-#                 'password': 'A!jTes@12'
-#             },
-#             format='json'
-#         )
+        self.response = self.client.post(reverse('api:login'),
+            {
+                'email': 'test@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
 
-# class TestLoginPOSTRequest(LoginTest):
-#     def test_return_status_code_200_if_successful(self):
-#         expected = 200
+class TestLoginPOSTRequest(LoginTest):
+    def test_return_status_code_200_if_successful(self):
+        expected = 200
 
-#         result = self.response.status_code
+        result = self.response.status_code
 
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
-#     def test_return_user_containing_auth_token_if_successful(self):
+    def test_return_user_containing_auth_token_if_successful(self):
 
-#         result = self.User.objects.get(pk=1)
+        result = self.User.objects.get(pk=1)
 
-#         self.assertIsNotNone(result.auth_token)
+        self.assertIsNotNone(result.auth_token)
 
 
 # """

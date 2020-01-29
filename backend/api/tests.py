@@ -525,6 +525,12 @@ class ChatBoxTest(TestCase):
             password='A!jTes@12'
         )
 
+        self.user3 = self.User.objects.create_user(
+            email='user3@gmail.com',
+            name='User3',
+            password='A!jTes@12'
+        )
+
         res = self.client.post(reverse('api:login'),
             {
                 'email': 'user1@gmail.com',
@@ -622,6 +628,30 @@ class TestChatBoxPOSTRequest(ChatBoxTest):
 
         res = self.client.post(reverse('api:chat', kwargs={'pk': 10}), {
             'text': 'hello'
+        })
+
+        result = res.data['detail']
+
+        self.assertEqual(expected, result)
+
+    def test_return_error_if_chat_doesnt_exist(self):
+        expected = 'Requested chat is invalid'
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello from user 1'
+        })
+
+        res_login = self.client.post(reverse('api:login'),
+            {
+                'email': 'user3@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
+
+        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello from user 3'
         })
 
         result = res.data['detail']

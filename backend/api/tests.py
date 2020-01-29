@@ -617,6 +617,17 @@ class TestChatBoxPOSTRequest(ChatBoxTest):
         self.assertEqual(expected, result1)
         self.assertEqual(expected, result2)
 
+    def test_return_error_if_chat_doesnt_exist(self):
+        expected = 'Chat not found'
+
+        res = self.client.post(reverse('api:chat', kwargs={'pk': 10}), {
+            'text': 'hello'
+        })
+
+        result = res.data['detail']
+
+        self.assertEqual(expected, result)
+
 
 """
 /api/v1/chats/{pk} (GET)

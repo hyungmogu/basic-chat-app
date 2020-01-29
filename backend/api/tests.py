@@ -749,9 +749,10 @@ class TestChatBoxGETRequest(ChatBoxTest):
         result = res.data[0]['pk']
 
         self.assertEqual(expected, result)
+        self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
 
     def test_return_list_with_first_object_containing_text_hello_if_successful(self):
-        expected = 1
+        expected = 'hello'
 
         self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
             'text': 'hello'
@@ -784,6 +785,7 @@ class TestChatBoxGETRequest(ChatBoxTest):
         result = res.data[-1]['pk']
 
         self.assertEqual(expected, result)
+        self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
 
 
 

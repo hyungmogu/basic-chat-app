@@ -600,3 +600,15 @@ class ChatBoxTest(TestCase):
         self.assertEqual(expected, result1)
         self.assertEqual(expected, result2)
 
+    def test_return_object_with_chat_pk_of_1_if_successful(self):
+        expected =  1
+
+        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        result1 = ChatBoxModel.objects.get(pk=1).chat.pk
+        result2 = res.data['chat_pk']
+
+        self.assertEqual(expected, result1)
+        self.assertEqual(expected, result2)

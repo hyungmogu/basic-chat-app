@@ -10,9 +10,8 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
 from accounts.serializers import UserSerializer
-from main.serializers import ChatSerializer, ChatBoxSerializer
+from main.serializers import ChatBoxSerializer
 
-from main.models import Chat
 from main.models import ChatBox as ChatBoxModel
 
 

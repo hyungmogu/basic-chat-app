@@ -3,8 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
-from main.models import Chat
-
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
@@ -36,7 +34,7 @@ class User (AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=100)
     profile_picture = models.URLField(blank=True, null=True)
     password2 = models.CharField(max_length=255, blank=True, null=True)
-    chats = models.ManyToManyField(Chat, blank=True)
+    chat_users = models.ManyToManyField("self", blank=True)
 
     objects = UserManager()
 

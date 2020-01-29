@@ -14,7 +14,9 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             name=name)
+
         user.set_password(password)
+        user.is_active = True
         user.save()
 
         return user
@@ -24,6 +26,7 @@ class UserManager(BaseUserManager):
         user = self.create_user(email, name, password)
 
         user.is_superuser = True
+        user.is_active = True
         user.save()
 
         return user

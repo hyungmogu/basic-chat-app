@@ -21,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
         )
 
     def validate(self, data):
-
         if data['password'] != data['password2']:
             raise serializers.ValidationError('Two passwords must match')
 

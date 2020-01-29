@@ -545,6 +545,11 @@ class ChatBoxTest(TestCase):
             'email': 'user2@gmail.com'
         })
 
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
+
+
 
 class TestChatBoxPOSTRequest(ChatBoxTest):
 
@@ -813,6 +818,29 @@ class TestChatBoxGETRequest(ChatBoxTest):
 
         self.assertEqual(expected, result)
         self.assertLessEqual(int(res.data[0]['timestamp']), int(res.data[-1]['timestamp']))
+
+    def test_return_list_with_all_objects_having_chat_pk_of_1_if_successful(self):
+        expected = 1
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hi'
+        })
+
+        self.client.post(reverse('api:chat', kwargs={'pk': 2}), {
+            'text': 'hello world'
+        })
+
+        res = self.client.get(reverse('api:chat', kwargs={'pk': 1}))
+
+        result1 = res.data[0]['chat_pk']
+        result2 = res.data[1]['chat_pk']
+
+        self.assertEqual(expected, result1)
+        self.assertEqual(expected, result2)
 
 
 

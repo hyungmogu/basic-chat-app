@@ -115,7 +115,7 @@ class Chats(APIView):
     def chat_exists(self, user, user_recipient):
 
         chat_user = (user.chat_users
-                .filter(users__pk=user_recipient.pk))
+                .filter(pk=user_recipient.pk))
 
         if chat_user.count() == 0:
             return False

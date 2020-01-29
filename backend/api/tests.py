@@ -11,232 +11,232 @@ from rest_framework.authtoken.models import Token
 
 from main.models import ChatBox as ChatBoxModel
 
-# -----------
-# MODEL TESTS
-# -----------
+# # -----------
+# # MODEL TESTS
+# # -----------
 
-class UserModelTest(TestCase):
-    def setUp(self):
-        self.User = get_user_model()
+# class UserModelTest(TestCase):
+#     def setUp(self):
+#         self.User = get_user_model()
 
-        self.user1 = self.User.objects.create_user(
-            email='user1@gmail.com',
-            name='User1',
-            password='A!jTes@12'
-        )
+#         self.user1 = self.User.objects.create_user(
+#             email='user1@gmail.com',
+#             name='User1',
+#             password='A!jTes@12'
+#         )
 
-        self.user2 = self.User.objects.create_user(
-            email='user2@gmail.com',
-            name='User2',
-            password='A!jTes@12'
-        )
+#         self.user2 = self.User.objects.create_user(
+#             email='user2@gmail.com',
+#             name='User2',
+#             password='A!jTes@12'
+#         )
 
-        self.user3 = self.User.objects.create_user(
-            email='user3@gmail.com',
-            name='User3',
-            password='A!jTes@12'
-        )
+#         self.user3 = self.User.objects.create_user(
+#             email='user3@gmail.com',
+#             name='User3',
+#             password='A!jTes@12'
+#         )
 
-        self.user1.chat_users.add(self.user2, self.user3)
-        self.user2.chat_users.add(self.user1, self.user3)
+#         self.user1.chat_users.add(self.user2, self.user3)
+#         self.user2.chat_users.add(self.user1, self.user3)
 
-    def test_return_objects_with_query_count_of_3_if_all_queried(self):
-        expected = 3
+#     def test_return_objects_with_query_count_of_3_if_all_queried(self):
+#         expected = 3
 
-        result = self.User.objects.all().count()
+#         result = self.User.objects.all().count()
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_error_if_user_not_found(self):
+#     def test_return_error_if_user_not_found(self):
 
-        with self.assertRaises(ObjectDoesNotExist):
-            result = self.User.objects.get(email='user4@gmail.com')
+#         with self.assertRaises(ObjectDoesNotExist):
+#             result = self.User.objects.get(email='user4@gmail.com')
 
-    def test_return_objects_with_query_count_of_2_if_chat_users_is_nonempty_and_all_chat_queried(self):
-        expected = 2
+#     def test_return_objects_with_query_count_of_2_if_chat_users_is_nonempty_and_all_chat_queried(self):
+#         expected = 2
 
-        result = self.user1.chat_users.all().count()
+#         result = self.user1.chat_users.all().count()
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-# -----------
-# API TESTS
-# -----------
+# # -----------
+# # API TESTS
+# # -----------
 
 
-"""
-/api/v1/signup (POST)
-"""
-class SignUpTest(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.user = get_user_model()
-        self.resp_register = self.client.post(
-            reverse('api:signup'),
-            {
-                'email': 'test@gmail.com',
-                'name': 'Test Hello',
-                'password': 'A!jTes@12',
-                'password2': 'A!jTes@12'
-            },
-            format='json'
-        )
+# """
+# /api/v1/signup (POST)
+# """
+# class SignUpTest(TestCase):
+#     def setUp(self):
+#         self.client = APIClient()
+#         self.user = get_user_model()
+#         self.resp_register = self.client.post(
+#             reverse('api:signup'),
+#             {
+#                 'email': 'test@gmail.com',
+#                 'name': 'Test Hello',
+#                 'password': 'A!jTes@12',
+#                 'password2': 'A!jTes@12'
+#             },
+#             format='json'
+#         )
 
 
-class TestSignUpPOSTRequest(SignUpTest):
-    def test_return_status_code_201_if_successful(self):
-        expected = 201
+# class TestSignUpPOSTRequest(SignUpTest):
+#     def test_return_status_code_201_if_successful(self):
+#         expected = 201
 
-        result = self.resp_register.status_code
+#         result = self.resp_register.status_code
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_user_with_length_1(self):
-        expected = 1
+#     def test_return_user_with_length_1(self):
+#         expected = 1
 
-        result = self.user.objects.all().count()
+#         result = self.user.objects.all().count()
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_user_with_matching_email(self):
-        expected = 'test@gmail.com'
+#     def test_return_user_with_matching_email(self):
+#         expected = 'test@gmail.com'
 
-        user = self.user.objects.get(pk=1)
+#         user = self.user.objects.get(pk=1)
 
-        result = user.email
+#         result = user.email
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_user_with_matching_name(self):
-        expected = 'Test Hello'
+#     def test_return_user_with_matching_name(self):
+#         expected = 'Test Hello'
 
-        user = self.user.objects.get(pk=1)
+#         user = self.user.objects.get(pk=1)
 
-        result = user.name
+#         result = user.name
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_user_with_matching_password(self):
-        expected = True
+#     def test_return_user_with_matching_password(self):
+#         expected = True
 
-        user = self.user.objects.get(pk=1)
+#         user = self.user.objects.get(pk=1)
 
-        result = user.check_password('A!jTes@12')
+#         result = user.check_password('A!jTes@12')
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
-"""
-/api/v1/login (POST)
-"""
-class LoginTest(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.factory = RequestFactory()
-        self.User = get_user_model()
-        self.user = self.User.objects.create_user(
-            email='test@gmail.com',
-            name='Test Hello',
-            password='A!jTes@12'
-        )
+# """
+# /api/v1/login (POST)
+# """
+# class LoginTest(TestCase):
+#     def setUp(self):
+#         self.client = APIClient()
+#         self.factory = RequestFactory()
+#         self.User = get_user_model()
+#         self.user = self.User.objects.create_user(
+#             email='test@gmail.com',
+#             name='Test Hello',
+#             password='A!jTes@12'
+#         )
 
-        self.response = self.client.post(reverse('api:login'),
-            {
-                'email': 'test@gmail.com',
-                'password': 'A!jTes@12'
-            },
-            format='json'
-        )
+#         self.response = self.client.post(reverse('api:login'),
+#             {
+#                 'email': 'test@gmail.com',
+#                 'password': 'A!jTes@12'
+#             },
+#             format='json'
+#         )
 
-class TestLoginPOSTRequest(LoginTest):
-    def test_return_status_code_200_if_successful(self):
-        expected = 200
+# class TestLoginPOSTRequest(LoginTest):
+#     def test_return_status_code_200_if_successful(self):
+#         expected = 200
 
-        result = self.response.status_code
+#         result = self.response.status_code
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_user_containing_auth_token_if_successful(self):
+#     def test_return_user_containing_auth_token_if_successful(self):
 
-        result = self.User.objects.get(pk=1)
+#         result = self.User.objects.get(pk=1)
 
-        self.assertIsNotNone(result.auth_token)
+#         self.assertIsNotNone(result.auth_token)
 
 
-"""
-/api/v1/logout (GET)
-"""
-class LogoutTest(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.factory = RequestFactory()
-        self.User = get_user_model()
-        self.user = self.User.objects.create_user(
-            email='test@gmail.com',
-            name='Test Hello',
-            password='A!jTes@12'
-        )
+# """
+# /api/v1/logout (GET)
+# """
+# class LogoutTest(TestCase):
+#     def setUp(self):
+#         self.client = APIClient()
+#         self.factory = RequestFactory()
+#         self.User = get_user_model()
+#         self.user = self.User.objects.create_user(
+#             email='test@gmail.com',
+#             name='Test Hello',
+#             password='A!jTes@12'
+#         )
 
-        self.user2 = self.User.objects.create_user(
-            email='user2@gmail.com',
-            name='User2',
-            password='A!jTes@12'
-        )
+#         self.user2 = self.User.objects.create_user(
+#             email='user2@gmail.com',
+#             name='User2',
+#             password='A!jTes@12'
+#         )
 
-        res = self.client.post(reverse('api:login'),
-            {
-                'email': 'test@gmail.com',
-                'password': 'A!jTes@12'
-            },
-            format='json'
-        )
+#         res = self.client.post(reverse('api:login'),
+#             {
+#                 'email': 'test@gmail.com',
+#                 'password': 'A!jTes@12'
+#             },
+#             format='json'
+#         )
 
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
 
-class TestLogOutGETRequest(LogoutTest):
-    def test_return_status_code_200_if_successful(self):
-        expected = 200
+# class TestLogOutGETRequest(LogoutTest):
+#     def test_return_status_code_200_if_successful(self):
+#         expected = 200
 
-        res = self.client.get(reverse('api:logout'))
+#         res = self.client.get(reverse('api:logout'))
 
-        result = res.status_code
+#         result = res.status_code
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
-    def test_return_user_with_auth_token_removed_if_successful(self):
+#     def test_return_user_with_auth_token_removed_if_successful(self):
 
-        res = self.client.get(reverse('api:logout'))
+#         res = self.client.get(reverse('api:logout'))
 
-        with self.assertRaises(ObjectDoesNotExist):
-            self.User.objects.get(pk=1).auth_token
+#         with self.assertRaises(ObjectDoesNotExist):
+#             self.User.objects.get(pk=1).auth_token
 
-    def test_return_error_if_auth_token_not_attached(self):
+#     def test_return_error_if_auth_token_not_attached(self):
 
-        expected = 'Authentication credentials were not provided.'
+#         expected = 'Authentication credentials were not provided.'
 
-        self.client.credentials()
-        res = self.client.get(reverse('api:logout'))
+#         self.client.credentials()
+#         res = self.client.get(reverse('api:logout'))
 
-        print(res.data)
+#         print(res.data)
 
-        result = res.data['detail']
+#         result = res.data['detail']
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
-    def test_return_error_if_auth_token_invalid(self):
+#     def test_return_error_if_auth_token_invalid(self):
 
-        expected = 'Invalid token.'
+#         expected = 'Invalid token.'
 
-        self.client.get(reverse('api:logout'))
-        res = self.client.get(reverse('api:logout'))
+#         self.client.get(reverse('api:logout'))
+#         res = self.client.get(reverse('api:logout'))
 
-        print(res.data)
+#         print(res.data)
 
-        result = res.data['detail']
+#         result = res.data['detail']
 
-        self.assertEqual(expected, result)
+#         self.assertEqual(expected, result)
 
 
 """
@@ -289,116 +289,87 @@ class TestChatsPOSTRequest(ChatsTest):
 
         self.assertEqual(expected, result)
 
+    def test_return_objects_with_query_count_of_1_if_successful(self):
+        expected = 1
 
-    # def test_return_objects_with_query_count_of_1_if_successful(self):
-    #     expected = 1
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
+        result = self.user1.chat_users.all().count()
 
-    #     self.client.post(reverse('api:chats'), {
-    #         'email': 'user2@gmail.com'
-    #     })
-    #     result = Chat.objects.all().count()
+        self.assertEqual(expected, result)
 
-    #     self.assertEqual(expected, result)
+    def test_return_user1_chat_users_containing_user2_if_successful(self):
+        expected = 1
 
-    # def test_return_user1_chats_containing_user1_and_user2_if_successful(self):
-    #     expected = 1
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
 
-    #     self.client.post(reverse('api:chats'), {
-    #         'email': 'user2@gmail.com'
-    #     })
+        result = self.user1.chat_users.filter(email=self.user2.email).count()
 
-    #     result1 = Chat.objects.filter(users__email=self.user1.email).count()
-    #     result2 = Chat.objects.filter(users__email=self.user2.email).count()
+        self.assertEqual(expected, result)
 
-    #     self.assertEqual(expected, result1)
-    #     self.assertEqual(expected, result2)
+    def test_return_user1_with_chats_count_of_1_if_successful(self):
+        expected = 1
 
-    # def test_return_user1_with_chats_count_of_1_if_successful(self):
-    #     expected = 1
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
 
+        res = self.client.post(reverse('api:login'),
+            {
+                'email': 'user2@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
-    #     self.client.post(reverse('api:chats'), {
-    #         'email': 'user2@gmail.com'
-    #     })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
 
-    #     res = self.client.post(reverse('api:login'),
-    #         {
-    #             'email': 'user2@gmail.com',
-    #             'password': 'A!jTes@12'
-    #         },
-    #         format='json'
-    #     )
-    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+        result = self.user1.chat_users.all().count()
 
-    #     self.client.post(reverse('api:chats'), {
-    #         'email': 'user3@gmail.com'
-    #     })
+        self.assertEqual(expected, result)
 
-    #     result = self.user1.chats.all().count()
+    def test_return_error_if_email_of_oneself_is_used(self):
+        expected = 'Please select different user'
 
-    #     self.assertEqual(expected, result)
+        res = self.client.post(reverse('api:chats'), {
+            'email': 'user1@gmail.com'
+        })
 
-    # def test_return_error_if_email_of_oneself_is_used(self):
-    #     expected = 'Please select different user'
+        result = res.data['detail']
 
-    #     res = self.client.post(reverse('api:chats'), {
-    #         'email': 'user1@gmail.com'
-    #     })
+        self.assertEqual(expected, result)
 
-    #     result = res.data['detail']
+    def test_return_error_if_user_email_doesnt_exist(self):
+        expected = 'User not found'
 
-    #     self.assertEqual(expected, result)
+        res = self.client.post(reverse('api:chats'), {
+            'email': 'thisuserdoesntexist@gmail.com'
+        })
 
-    # def test_return_error_if_user_email_doesnt_exist(self):
-    #     expected = 'User not found'
+        result = res.data['detail']
 
-    #     res = self.client.post(reverse('api:chats'), {
-    #         'email': 'thisuserdoesntexist@gmail.com'
-    #     })
+        self.assertEqual(expected, result)
 
-    #     result = res.data['detail']
+    def test_return_error_if_chat_exists_and_is_in_user(self):
+        expected = 'Chat already exists'
 
-    #     self.assertEqual(expected, result)
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
 
-    # def test_return_chat_pk_if_chat_exists_but_not_in_user(self):
-    #     expected = 1
+        res_chats = self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
 
-    #     self.client.post(reverse('api:chats'), {
-    #         'email': 'user2@gmail.com'
-    #     })
+        result = res_chats.data['detail']
 
-    #     res_login = self.client.post(reverse('api:login'),
-    #         {
-    #             'email': 'user2@gmail.com',
-    #             'password': 'A!jTes@12'
-    #         },
-    #         format='json'
-    #     )
-
-    #     self.client.credentials(HTTP_AUTHORIZATION='Token ' + res_login.data['auth_token'])
-
-    #     res_chats = self.client.post(reverse('api:chats'), {
-    #         'email': 'user1@gmail.com'
-    #     })
-
-    #     result = res_chats.data
-
-    #     self.assertEqual(expected, result)
-
-    # def test_return_error_if_chat_exists_and_is_in_user(self):
-    #     expected = 'Chat already exists'
-
-    #     self.client.post(reverse('api:chats'), {
-    #         'email': 'user2@gmail.com'
-    #     })
-
-    #     res_chats = self.client.post(reverse('api:chats'), {
-    #         'email': 'user2@gmail.com'
-    #     })
-
-    #     result = res_chats.data['detail']
-
-    #     self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
 
 # """

@@ -8,6 +8,11 @@ import AddNewButton from '../components/AddNewButton';
 
 export default class HomeScreen extends Component {
 
+    state = {
+        loaded: false,
+        rooms: []
+    }
+
     componentDidMount() {
         let opts = {
             headers: {
@@ -15,7 +20,15 @@ export default class HomeScreen extends Component {
             }
         }
         axios.get('http://localhost:8000/api/v1/chats/', opts).then(res => {
-            console.log(res.data);
+
+            this.setState(prevState => {
+                return {
+                    loaded: true,
+                    rooms: [...res.data]
+                }
+            })
+
+            console.log(this.state.rooms)
         })
     }
 

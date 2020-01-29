@@ -1,14 +1,11 @@
 from django.db import models
 from django.conf import settings
 
-class Chat(models.Model):
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL)
-
 class ChatBox(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.SET_NULL)
-    chat = models.ForeignKey('Chat', on_delete=models.CASCADE)
+    user_from = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user_to = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         datetime = self.timestamp.strftime('%Y-%m-%d %H:%M')

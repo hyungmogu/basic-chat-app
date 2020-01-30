@@ -14,19 +14,26 @@ export default class HomeScreen extends Component {
     }
 
     componentDidMount() {
+        this.handleGetRooms();
+    }
+
+    handleGetRooms = () => {
+        // TEMP
         let opts = {
             headers: {
-                Authorization: 'Token bcaf3fb0f2b93a6a4c6fe2808c2a65084e61a097'
+                Authorization: 'Token 0956db69f67726a70e1240a4f006bd6155cee221'
             }
         }
-        axios.get('http://localhost:8000/api/v1/chats/', opts).then(res => {
 
+        axios.get('http://localhost:8000/api/v1/chats/', opts).then(res => {
             this.setState(prevState => {
                 return {
                     loaded: true,
                     rooms: [...res.data]
                 }
             })
+        }).catch(err => {
+            console.warn(err);
         })
     }
 
@@ -36,12 +43,12 @@ export default class HomeScreen extends Component {
             <SafeAreaView style={styles.safeViewContainer}>
                 <AddNewButton onPress={() => navigate('AddNewChat')}/>
                 <ScrollView style={styles.container}>
-                    { [...Array(20).keys()].map(index =>
+                    { this.state.rooms.map((item, index) =>
                         <ChatMenuItem
                             key={index}
-                            name={'James'}
-                            latestMessage={'Hello World'}
-                            image={'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
+                            name={item.name}
+                            latestMessage={item.latestText || 'Add New Message Here'}
+                            image={item.profile_picture || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
                             onPress={() => navigate('Chat')}
                         />
                     )}

@@ -12,8 +12,9 @@ export default class App extends Component {
         avatar: null
     }
 
-    updateUserInfo = ({name, auth_token, email, avatar}) => {
+    updateUserInfo = ({name, auth_token, email, profile_picture}) => {
         let authToken = auth_token;
+        let avatar = profile_picture;
 
         this.setState(prevState => {
             return {

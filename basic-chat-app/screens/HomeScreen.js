@@ -39,6 +39,7 @@ export default class HomeScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
+
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <AddNewButton onPress={() => navigate('AddNewChat')}/>

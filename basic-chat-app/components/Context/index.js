@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoginContext = React.createContext();
+const ChatAppContext = React.createContext();
 
-export const LoginProvider = LoginContext.Provider;
-export const LoginConsumer = LoginContext.Consumer;
+export const Provider = ChatAppContext.Provider;
+export const Consumer = ChatAppContext.Consumer;

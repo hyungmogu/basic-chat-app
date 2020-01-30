@@ -47,7 +47,7 @@ export default class UserScreen extends Component {
                                 <View style={styles.footerContainer}>
                                     <AppButton
                                         type={'secondary'}
-                                        onPress={() => handleLogout(
+                                        onPress={() => this.handleLogout(
                                             authToken,
                                             resetUserInfo,
                                             navigate

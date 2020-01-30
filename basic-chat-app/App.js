@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Provider } from './components/Context';
+import { UserProvider } from './components/Context';
 
 import AppNavigator from './navigation/AppNavigator';
 
@@ -35,7 +35,7 @@ export default class App extends Component {
 
     render() {
         return (
-            <Provider value={{
+            <UserProvider value={{
                 authToken: this.state.authToken,
                 name: this.state.name,
                 email: this.state.email,
@@ -46,7 +46,7 @@ export default class App extends Component {
                 }
             }}>
                 <AppNavigator/>
-            </Provider>
+            </UserProvider>
         );
     }
 }

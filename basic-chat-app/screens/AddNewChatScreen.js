@@ -39,6 +39,7 @@ export default class AddNewChatScreen extends Component {
                 { context => {
                     let authToken = context.authToken;
                     let addChatUser = context.actions.addChatUser;
+
                     return(
                         <SafeAreaView style={styles.safeViewContainer}>
                             <View style={styles.container}>

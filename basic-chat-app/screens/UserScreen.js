@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView, Image, Text } from 'react-native';
 
 import axios from 'axios';
 
-import { Consumer } from '../components/Context';
+import { UserConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 
 export default class UserScreen extends Component {
@@ -26,7 +26,7 @@ export default class UserScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <Consumer>
+            <UserConsumer>
                 { context => {
                     let name = context.name;
                     let authToken = context.authToken;
@@ -60,7 +60,7 @@ export default class UserScreen extends Component {
                         </SafeAreaView>
                     );
                 }}
-            </Consumer>
+            </UserConsumer>
         );
     }
 }

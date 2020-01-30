@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChatAppContext = React.createContext();
+const UserContext = React.createContext();
 
-export const Provider = ChatAppContext.Provider;
-export const Consumer = ChatAppContext.Consumer;
+export const UserProvider = UserContext.Provider;
+export const UserConsumer = UserContext.Consumer;

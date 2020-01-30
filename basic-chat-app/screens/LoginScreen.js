@@ -8,7 +8,7 @@ import {
 
 import axios from 'axios';
 
-import { Consumer } from '../components/Context';
+import { UserConsumer } from '../components/Context';
 import AppInput from '../components/AppInput';
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
@@ -35,7 +35,7 @@ export default class LoginScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <Consumer>
+            <UserConsumer>
                 { context => {
 
                     let updateUserInfo = context.actions.updateUserInfo;
@@ -79,7 +79,7 @@ export default class LoginScreen extends Component {
                         </SafeAreaView>
                     )
                 }}
-            </Consumer>
+            </UserConsumer>
         );
     }
 }

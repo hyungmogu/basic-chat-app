@@ -26,7 +26,7 @@ export default class LoginScreen extends Component {
 
         axios.post('http://localhost:8000/api/v1/login/', data).then( res => {
             updateUserInfo(res.data);
-            navigate('HomeScreen');
+            navigate('Home');
         }).catch(err => {
             console.warn(err);
         });

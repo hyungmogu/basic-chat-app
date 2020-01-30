@@ -17,22 +17,18 @@ export default class LoginScreen extends Component {
 
     componentDidMount() {}
 
-    handleLogin = (email, password, storeUserInfo) => {
+    handleLogin = (email, password, updateUserInfo, navigate) => {
         let data = JSON.stringify({
-            email: email,
-            password: password
+            email: email || '',
+            password: password || ''
         })
 
-        // display spinner
+        axios.post('http://localhost:8000/api/v1/login/', data).then( res => {
+            updateUserInfo(res.data);
 
-        axios.post('http://localhost:8000/api/v1/login', data).then( res => {
-            // add response to state at app level
-
-            // proceed to Home Screen
+            navigate('HomeScreen');
         }).catch(err => {
             console.warn(err);
-        }).finally(_ => {
-            // close spinner
         });
     }
 

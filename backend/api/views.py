@@ -137,9 +137,11 @@ class Chats(APIView):
 
 class ChatBox(GenericAPIView):
     permission_classes=(IsAuthenticated,)
-    def get(self, request, pk, format=None):
+    def get(self, request, *args, **kwargs):
 
-        user_exists, user_recipient = self.get_user(email_recipient)
+        user_recipient_pk = kwargs.get('pk')
+
+        user_exists, user_recipient = self.get_user(user_recipient_pk)
         if not user_exists:
             res_data = {
                 'detail': 'User not found'
@@ -147,14 +149,14 @@ class ChatBox(GenericAPIView):
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        if not self.chat_valid(request.user, chat):
+        if not self.chat_valid(request.user, user_recipient):
             res_data = {
                 'detail': 'Requested chat is invalid'
             }
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        chatboxes = ChatBoxModel.objects.filter(chat__pk=pk)
+        chatboxes = ChatBoxModel.objects.filter((Q(msg_from=request.user)&Q(msg_to=user_recipient))|(Q(msg_from=user_recipient)&Q(msg_to=request.user)))
 
         res_data = ChatBoxSerializer(chatboxes, many=True).data
 
@@ -163,6 +165,13 @@ class ChatBox(GenericAPIView):
     def post(self, request, *args, **kwargs):
         user_recipient_pk = kwargs.get('pk')
         text = request.data['text']
+
+        if request.user.pk == user_recipient_pk:
+            res_data = {
+                'detail': 'Message cannot be sent to self'
+            }
+
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
         user_exists, user_recipient = self.get_user(user_recipient_pk)
         if not user_exists:

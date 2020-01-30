@@ -11,13 +11,14 @@ export default class UserScreen extends Component {
             <Consumer>
                 { context => {
                     let name = context.name;
+                    let avatar = context.avatar || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg';
                     return (
                         <SafeAreaView style={styles.safeViewContainer}>
                             <View style={styles.container}>
                                 <View style={styles.bodyContainer}>
                                     <Image
                                         style={styles.userImage}
-                                        source={{uri: 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg' }}
+                                        source={{uri: avatar}}
                                     />
                                     <Text style={styles.name}>{ name }</Text>
                                     <AppButton>Change Profile Picture</AppButton>

@@ -24,7 +24,7 @@ export default class SignUpScreen extends Component {
             name: name || '',
             email: email || '',
             password: password || '',
-            password2: password2 | ''
+            password2: password2 || ''
         };
 
         axios.post('http://localhost:8000/api/v1/signup/', data).then( res => {

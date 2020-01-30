@@ -431,66 +431,64 @@ class TestChatsGETRequest(ChatsTest):
         self.assertEqual(expected, result)
 
 
-# """
-# /api/v1/chats/{pk} (POST)
-# """
+"""
+/api/v1/chats/{pk} (POST)
+"""
 
-# class ChatBoxTest(TestCase):
-#     def setUp(self):
-#         self.client = APIClient()
-#         self.factory = RequestFactory()
-#         self.User = get_user_model()
-#         self.user1 = self.User.objects.create_user(
-#             email='user1@gmail.com',
-#             name='User1',
-#             password='A!jTes@12'
-#         )
+class ChatBoxTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.factory = RequestFactory()
+        self.User = get_user_model()
+        self.user1 = self.User.objects.create_user(
+            email='user1@gmail.com',
+            name='User1',
+            password='A!jTes@12'
+        )
 
-#         self.user2 = self.User.objects.create_user(
-#             email='user2@gmail.com',
-#             name='User2',
-#             password='A!jTes@12'
-#         )
+        self.user2 = self.User.objects.create_user(
+            email='user2@gmail.com',
+            name='User2',
+            password='A!jTes@12'
+        )
 
-#         self.user3 = self.User.objects.create_user(
-#             email='user3@gmail.com',
-#             name='User3',
-#             password='A!jTes@12'
-#         )
+        self.user3 = self.User.objects.create_user(
+            email='user3@gmail.com',
+            name='User3',
+            password='A!jTes@12'
+        )
 
-#         res = self.client.post(reverse('api:login'),
-#             {
-#                 'email': 'user1@gmail.com',
-#                 'password': 'A!jTes@12'
-#             },
-#             format='json'
-#         )
+        res = self.client.post(reverse('api:login'),
+            {
+                'email': 'user1@gmail.com',
+                'password': 'A!jTes@12'
+            },
+            format='json'
+        )
 
-#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + res.data['auth_token'])
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user2@gmail.com'
-#         })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user2@gmail.com'
+        })
 
-#         self.client.post(reverse('api:chats'), {
-#             'email': 'user3@gmail.com'
-#         })
+        self.client.post(reverse('api:chats'), {
+            'email': 'user3@gmail.com'
+        })
 
 
+class TestChatBoxPOSTRequest(ChatBoxTest):
 
-# class TestChatBoxPOSTRequest(ChatBoxTest):
+    def test_return_status_code_201_if_successful(self):
+        expected = 201
 
-#     def test_return_status_code_201_if_successful(self):
-#         expected = 201
+        res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
+            'text': 'hello'
+        })
 
-#         print(reverse('api:chat', kwargs={'pk': 1}))
-#         res = self.client.post(reverse('api:chat', kwargs={'pk': 1}), {
-#             'text': 'hello'
-#         })
+        result = res.status_code
 
-#         result = res.status_code
-
-#         self.assertEqual(expected, result)
+        self.assertEqual(expected, result)
 
 #     def test_return_objects_with_query_count_of_1_if_successful(self):
 #         expected = 1

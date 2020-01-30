@@ -139,10 +139,10 @@ class ChatBox(GenericAPIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, pk, format=None):
 
-        chat_exists, chat = self.get_chat(pk)
-        if not chat_exists:
+        user_exists, user_recipient = self.get_user(email_recipient)
+        if not user_exists:
             res_data = {
-                'detail': 'Chat not found'
+                'detail': 'User not found'
             }
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
@@ -161,18 +161,18 @@ class ChatBox(GenericAPIView):
         return Response(res_data)
 
     def post(self, request, *args, **kwargs):
-        pk = kwargs['pk']
+        user_recipient_pk = kwargs.get('pk')
         text = request.data['text']
 
-        chat_exists, chat = self.get_chat(pk)
-        if not chat_exists:
+        user_exists, user_recipient = self.get_user(user_recipient_pk)
+        if not user_exists:
             res_data = {
-                'detail': 'Chat not found'
+                'detail': 'User not found'
             }
 
             return Response(res_data, status=status.HTTP_404_NOT_FOUND)
 
-        if not self.chat_valid(request.user, chat):
+        if not self.chat_valid(request.user, user_recipient):
             res_data = {
                 'detail': 'Requested chat is invalid'
             }
@@ -188,35 +188,37 @@ class ChatBox(GenericAPIView):
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        chatbox = self.create_chatbox(request.user, chat, text)
+        chatbox = self.create_chatbox(request.user, user_recipient, text)
         res_data = ChatBoxSerializer(chatbox).data
 
         return Response(res_data, status=status.HTTP_201_CREATED)
 
-    def get_chat(self, chat_pk):
-        chat = None
-        chat_exists = True
+    def get_user(self, user_pk):
+        User = get_user_model()
+
+        user_exists = True
+        user = None
 
         try:
-            chat = Chat.objects.get(pk=chat_pk)
+            user = User.objects.get(pk=user_pk)
         except (ObjectDoesNotExist):
-            chat_exists = False
+            user_exists = False
 
-        return chat_exists, chat
+        return user_exists, user
 
-    def chat_valid(self, user, chat):
+    def chat_valid(self, user, user_recipient):
 
-        if chat.users.filter(pk=user.pk).count() == 0:
+        if user.chat_users.filter(pk=user_recipient.pk).count() == 0:
             return False
 
         return True
 
-    def create_chatbox(self, user, chat, text):
+    def create_chatbox(self, user, user_recipient, text):
 
         chatbox = ChatBoxModel.objects.create(
             text=text,
-            user=user,
-            chat=chat
+            msg_from=user,
+            msg_to=user_recipient
         )
 
         return chatbox

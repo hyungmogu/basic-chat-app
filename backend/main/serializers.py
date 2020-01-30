@@ -4,8 +4,8 @@ from . import models
 from accounts.serializers import UserSerializer
 
 class ChatBoxSerializer(serializers.ModelSerializer):
-    user_pk = serializers.ReadOnlyField(source='user.pk')
-    chat_pk = serializers.ReadOnlyField(source='chat.pk')
+    msg_to = serializers.ReadOnlyField(source='msg_to.pk')
+    msg_from = serializers.ReadOnlyField(source='msg_from.pk')
 
     class Meta:
 
@@ -19,6 +19,6 @@ class ChatBoxSerializer(serializers.ModelSerializer):
             'pk',
             'timestamp',
             'text',
-            'user_pk',
-            'chat_pk',
+            'msg_to',
+            'msg_from',
         )

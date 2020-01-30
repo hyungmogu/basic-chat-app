@@ -19,10 +19,10 @@ export default class LoginScreen extends Component {
     passwordRef = React.createRef();
 
     handleLogin = (email, password, updateUserInfo, navigate) => {
-        let data = JSON.stringify({
+        let data = {
             email: email || '',
             password: password || ''
-        });
+        };
 
         axios.post('http://localhost:8000/api/v1/login/', data).then( res => {
             updateUserInfo(res.data);

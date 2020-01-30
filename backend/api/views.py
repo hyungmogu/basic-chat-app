@@ -30,7 +30,7 @@ class SignUp(APIView):
 
 class Login(APIView):
     def post(self, request, format=None):
-
+        print(request.data)
         email = request.data['email']
         password = request.data['password']
 

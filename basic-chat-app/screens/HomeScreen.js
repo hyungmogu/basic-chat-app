@@ -3,10 +3,11 @@ import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import axios from 'axios';
 
+import { Consumer } from '../components/Context';
 import ChatMenuItem from '../components/ChatMenuItem';
 import AddNewButton from '../components/AddNewButton';
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
 
     state = {
         loaded: false,
@@ -14,14 +15,14 @@ export default class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        this.handleGetRooms();
+        this.handleGetRooms(this.props.context.auth_token);
     }
 
-    handleGetRooms = () => {
+    handleGetRooms = (authToken) => {
         // TEMP
         let opts = {
             headers: {
-                Authorization: 'Token 0956db69f67726a70e1240a4f006bd6155cee221'
+                Authorization: `Token ${authToken}`
             }
         }
 
@@ -68,3 +69,10 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
+
+
+export default React.forwardRef((props, ref) => (
+    <Consumer>
+      {context => <HomeScreen {...props} context={context} ref={ref} />}
+    </Consumer>
+  ));

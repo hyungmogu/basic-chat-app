@@ -1,26 +1,46 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, TextInput } from 'react-native';
 
-class AppInput extends Component {
-    render() {
-        const {
-            login,
-            placeholder,
-            secureTextEntry,
-            forwardRef
-        } = this.props;
+// class AppInput extends Component {
+//     render() {
+//         const {
+//             login,
+//             placeholder,
+//             secureTextEntry,
+//             forwardRef
+//         } = this.props;
 
-        return (
-            <TextInput
-                style={ login ? [styles.input, styles.inputLogin] : styles.input}
-                secureTextEntry={secureTextEntry}
-                placeholder={placeholder}
-                placeholderTextColor="black"
-                ref={forwardRef}
-            ></TextInput>
-        );
-    }
-}
+//         return (
+//             <TextInput
+//                 style={ login ? [styles.input, styles.inputLogin] : styles.input}
+//                 secureTextEntry={secureTextEntry}
+//                 placeholder={placeholder}
+//                 placeholderTextColor="black"
+//                 ref={forwardRef}
+//             ></TextInput>
+//         );
+//     }
+// }
+
+
+
+const AppInput = React.forwardRef((props, ref) => {
+    const {
+        login,
+        placeholder,
+        secureTextEntry
+    } = props;
+
+    return (
+        <TextInput
+            style={ login ? [styles.input, styles.inputLogin] : styles.input}
+            secureTextEntry={secureTextEntry}
+            placeholder={placeholder}
+            placeholderTextColor="black"
+            ref={ref}
+        ></TextInput>
+    );
+});
 
 const styles = StyleSheet.create({
     input: {

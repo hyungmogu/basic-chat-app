@@ -15,17 +15,17 @@ import AppButton from '../components/AppButton';
 
 export default class LoginScreen extends Component {
 
-    componentDidMount() {}
+    emailRef = React.createRef();
+    passwordRef = React.createRef();
 
     handleLogin = (email, password, updateUserInfo, navigate) => {
         let data = JSON.stringify({
             email: email || '',
             password: password || ''
-        })
+        });
 
         axios.post('http://localhost:8000/api/v1/login/', data).then( res => {
             updateUserInfo(res.data);
-
             navigate('HomeScreen');
         }).catch(err => {
             console.warn(err);
@@ -38,6 +38,8 @@ export default class LoginScreen extends Component {
             <Consumer>
                 { context => {
 
+                    let updateUserInfo = context.actions.updateUserInfo;
+
                     return(
                         <SafeAreaView style={styles.safeViewContainer}>
                             <KeyboardAvoidingView
@@ -49,14 +51,19 @@ export default class LoginScreen extends Component {
                                     <Logo/>
                                 </View>
                                 <View style={styles.inputContainer}>
-                                    <AppInput placeholder={'Email'}/>
-                                    <AppInput secureTextEntry={true} placeholder={'Password'}/>
+                                    <AppInput ref={this.emailRef} placeholder={'Email'}/>
+                                    <AppInput ref={this.passwordRef} secureTextEntry={true} placeholder={'Password'}/>
                                 </View>
                                 <View style={styles.buttonContainer}>
                                     <AppButton
                                         type={"primary"}
                                         style={{marginBottom: 5}}
-                                        onPress={() => navigate('Home')}
+                                        onPress={() => this.handleLogin(
+                                            this.emailRef.current._lastNativeText,
+                                            this.passwordRef.current._lastNativeText,
+                                            updateUserInfo,
+                                            navigate
+                                        )}
                                     >
                                         Login
                                     </AppButton>

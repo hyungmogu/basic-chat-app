@@ -7,9 +7,22 @@ import AppNavigator from './navigation/AppNavigator';
 export default class App extends Component {
     state = {
         name: null,
-        auth_token: null,
+        authToken: null,
         email: null,
         avatar: null
+    }
+
+    updateUserInfo = ({name, auth_token, email, avatar}) => {
+        let authToken = auth_token;
+
+        this.setState(prevState => {
+            return {
+                name: name ? name : prevState.name,
+                authToken: authToken ? authToken : prevState.authToken,
+                email: email ? email : prevState.email,
+                avatar: avatar ? avatar : prevState.avatar
+            }
+        })
     }
 
     render() {
@@ -18,7 +31,10 @@ export default class App extends Component {
                 auth_token: this.state.auth_token,
                 name: this.state.name,
                 email: this.state.email,
-                avatar: this.state.avatar
+                avatar: this.state.avatar,
+                actions: {
+                    updateUserInfo: this.updateUserInfo
+                }
             }}>
                 <AppNavigator/>
             </Provider>

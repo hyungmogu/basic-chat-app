@@ -11,6 +11,27 @@ import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
 
 export default class LoginScreen extends Component {
+
+    async componentDidMount() {
+        const { status } = await Camera.requestPermissionsAsync();
+
+        this.setState({
+            hasPermission: status === 'granted'
+        });
+
+        try {
+            let photos = await FileSystem.readDirectoryAsync(this.state.photosPath);
+
+            if (photos && Array.isArray(photos)) {
+                this.setState({
+                photos: [...photos],
+                latestImage: Array.isArray(photos) ? photos[photos.length - 1] : []
+                });
+            }
+        } catch (Error) {}
+    }
+
+
     render() {
         const {navigate} = this.props.navigation;
         return (

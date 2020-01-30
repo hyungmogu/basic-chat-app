@@ -16,20 +16,18 @@ export default class App extends Component {
         let authToken = auth_token;
         let avatar = profile_picture;
 
-        this.setState(prevState => {
-            return {
-                name: name ? name : prevState.name,
-                authToken: authToken ? authToken : prevState.authToken,
-                email: email ? email : prevState.email,
-                avatar: avatar ? avatar : prevState.avatar
-            }
-        })
+        this.setState({
+            name: name,
+            authToken: authToken,
+            email: email,
+            avatar: avatar
+        });
     }
 
     render() {
         return (
             <Provider value={{
-                auth_token: this.state.auth_token,
+                authToken: this.state.authToken,
                 name: this.state.name,
                 email: this.state.email,
                 avatar: this.state.avatar,

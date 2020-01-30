@@ -12,6 +12,15 @@ export default class App extends Component {
         avatar: null
     }
 
+    resetUserInfo = () => {
+        this.setState({
+            name: null,
+            authToken: null,
+            email: null,
+            avatar: null
+        })
+    }
+
     updateUserInfo = ({name, auth_token, email, profile_picture}) => {
         let authToken = auth_token;
         let avatar = profile_picture;
@@ -32,7 +41,8 @@ export default class App extends Component {
                 email: this.state.email,
                 avatar: this.state.avatar,
                 actions: {
-                    updateUserInfo: this.updateUserInfo
+                    updateUserInfo: this.updateUserInfo,
+                    resetUserInfo: this.resetUserInfo
                 }
             }}>
                 <AppNavigator/>

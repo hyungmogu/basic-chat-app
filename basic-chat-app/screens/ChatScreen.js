@@ -16,6 +16,7 @@ class ChatScreen extends Component {
     };
 
     textRef = React.createRef();
+    scrollViewRef = React.createRef();
 
     componentDidMount() {
         this.handleGetChatBoxes(
@@ -103,7 +104,10 @@ class ChatScreen extends Component {
 
                             <ScrollView
                                 style={styles.chatContainer}
-                            >
+                                ref={this.scrollViewRef}
+                                onContentSizeChange={()=>{
+                                    this.scrollViewRef.current.scrollToEnd({animated: false});
+                            }}>
                                 <ChatBoxList
                                     messages={this.state.messages}
                                     toggleDateTime={this.handleToggleDateTime}

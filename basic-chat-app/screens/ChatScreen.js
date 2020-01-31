@@ -15,16 +15,16 @@ class ChatScreen extends Component {
         messages: []
     };
 
-    _inputElement = React.createRef();
+    textRef = React.createRef();
 
     componentDidMount() {
         this.handleGetChatBoxes(
             this.props.navigation.getParam('chatUser'),
-            this.props.context.user.authToken
+            this.props.userContext.user.authToken
         );
 
         this.props.navigation.setParams({
-            chatter: this.props.context.user,
+            chatter: this.props.userContext.user,
             chattee: this.props.navigation.getParam('chatUser')
         });
     }
@@ -115,14 +115,18 @@ class ChatScreen extends Component {
                             >
                                 <AppTextArea
                                     placeholder={'Message'}
-                                    onChangeText={(text) => {
-                                        this.setState({ text })
-                                    }}
-                                    forwardRef={this._inputElement}
-                                    value={val => console.warn(val)}
+                                    ref={this.textRef}
                                     style={{flex: 1, marginRight: 10}}
                                 />
-                                <AppButton type={'secondary'} onPress={this.handleSubmit}>Submit</AppButton>
+                                <AppButton
+                                    type={'secondary'}
+                                    onPress={() => this.handleSubmit(
+                                        this.textRef.current._lastNativeText,
+                                        this.props.navigation.getParam('chatUser'),
+                                        this.props.userContext.user.authToken
+                                    )}>
+                                        Submit
+                                </AppButton>
                             </View>
                         </KeyboardAvoidingView>
                     </SafeAreaView>
@@ -159,6 +163,6 @@ const styles = StyleSheet.create({
 
 export default React.forwardRef((props, ref) => (
     <UserConsumer>
-      {context => <ChatScreen {...props} context={context} ref={ref} />}
+      {context => <ChatScreen {...props} userContext={context} ref={ref} />}
     </UserConsumer>
   ));

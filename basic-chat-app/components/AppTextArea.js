@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, TextInput } from 'react-native';
 
-class AppInput extends Component {
-    render() {
-        const {
-            placeholder,
-            onChangeText,
-            style
-        } = this.props;
+const AppTextarea = React.forwardRef((props, ref) => {
+    const {
+        placeholder,
+        onChangeText,
+        style
+    } = props;
 
-        return (
-            <TextInput
-                style={[styles.input, style]}
-                multiline={true}
-                numberOfLines={1}
-                placeholder={placeholder}
-                onChangeText={onChangeText}
-                placeholderTextColor="black"
-            />
-        );
-    }
-}
+    return (
+        <TextInput
+            style={[styles.input, style]}
+            multiline={true}
+            numberOfLines={1}
+            placeholder={placeholder}
+            onChangeText={onChangeText}
+            placeholderTextColor="black"
+            ref={ref}
+        />
+    );
+});
 
 const styles = StyleSheet.create({
     input: {
@@ -35,4 +34,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AppInput;
+export default AppTextarea;

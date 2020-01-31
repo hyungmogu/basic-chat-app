@@ -3,23 +3,20 @@ import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import axios from 'axios';
 
-import { UserConsumer } from '../components/Context';
+import { UserConsumer, ChatConsumer } from '../components/Context';
 import ChatMenuItem from '../components/ChatMenuItem';
 import AddNewButton from '../components/AddNewButton';
 
 class HomeScreen extends Component {
 
-    state = {
-        loaded: false,
-        rooms: []
-    }
-
     componentDidMount() {
-        this.handleGetRooms(this.props.context.user.authToken);
+        this.handleGetRooms(
+            this.props.userContext.user.authToken,
+            this.props.chatContext.actions.addChatUsers
+        );
     }
 
-    handleGetRooms = (authToken) => {
-        // TEMP
+    handleGetRooms = (authToken, addChatUsers) => {
         let opts = {
             headers: {
                 Authorization: `Token ${authToken}`
@@ -27,12 +24,7 @@ class HomeScreen extends Component {
         }
 
         axios.get('http://localhost:8000/api/v1/chats/', opts).then(res => {
-            this.setState(prevState => {
-                return {
-                    loaded: true,
-                    rooms: [...res.data]
-                }
-            })
+            addChatUsers(res.data);
         }).catch(err => {
             console.warn(err);
         })
@@ -40,12 +32,12 @@ class HomeScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
-
+        const chatUsers = this.props.chatContext.chatUsers;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <AddNewButton onPress={() => navigate('AddNewChat')}/>
                 <ScrollView style={styles.container}>
-                    { this.state.rooms.map((item, index) =>
+                    { chatUsers.map((item, index) =>
                         <ChatMenuItem
                             key={index}
                             name={item.name}
@@ -75,6 +67,12 @@ const styles = StyleSheet.create({
 
 export default React.forwardRef((props, ref) => (
     <UserConsumer>
-      {context => <HomeScreen {...props} context={context} ref={ref} />}
+        { userContext =>
+            <ChatConsumer>
+                { chatContext =>
+                    <HomeScreen {...props} userContext={userContext} chatContext={chatContext} ref={ref} />
+                }
+            </ChatConsumer>
+        }
     </UserConsumer>
-  ));
+));

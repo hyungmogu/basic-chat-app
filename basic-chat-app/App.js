@@ -87,7 +87,8 @@ export default class App extends Component {
                 <ChatProvider value={{
                     chatUsers: this.state.chatUsers,
                     actions: {
-                        addChatUser: this.handleAddChatUser
+                        addChatUser: this.handleAddChatUser,
+                        addChatUsers: this.handleAddChatUsers
                     }
                 }}>
                     <AppNavigator/>

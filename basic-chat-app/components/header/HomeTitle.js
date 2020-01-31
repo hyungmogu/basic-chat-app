@@ -10,7 +10,7 @@ class HomeTitle extends Component {
         return (
             <UserConsumer>
                 { context => {
-                    let name = context.name;
+                    let name = context.user.name;
 
                     return(
                         <TouchableOpacity style={styles.item} onPress={() => navigate('User')}>

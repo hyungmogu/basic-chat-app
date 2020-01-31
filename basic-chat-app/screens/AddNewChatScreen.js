@@ -36,7 +36,7 @@ export default class AddNewChatScreen extends Component {
         return (
             <UserConsumer>
                 { context => {
-                    let authToken = context.authToken;
+                    let authToken = context.user.authToken;
                     let addChatUser = context.actions.addChatUser;
 
                     return(

@@ -23,10 +23,10 @@ class ChatScreen extends Component {
             this.props.context.authToken
         );
 
-        // this.props.navigation.setParams({
-        //     chatter: chatter,
-        //     chattee: chattee.name
-        // });
+        this.props.navigation.setParams({
+            chatter: this.props.context.user,
+            chattee: this.props.navigation.getParam('chatUser')
+        });
     }
 
     handleGetChatBoxes = (chatUser, authToken) => {

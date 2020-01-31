@@ -15,7 +15,7 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        this.handleGetRooms(this.props.context.authToken);
+        this.handleGetRooms(this.props.context.user.authToken);
     }
 
     handleGetRooms = (authToken) => {

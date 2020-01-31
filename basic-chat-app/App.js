@@ -25,12 +25,13 @@ export default class App extends Component {
         })
     }
 
-    updateUserInfo = ({name, auth_token, email, profile_picture}) => {
+    updateUserInfo = ({pk, name, auth_token, email, profile_picture}) => {
         let authToken = auth_token;
         let avatar = profile_picture;
 
         this.setState({
             user: {
+                pk: pk,
                 name: name,
                 email: email,
                 avatar: avatar,
@@ -43,6 +44,7 @@ export default class App extends Component {
         return (
             <UserProvider value={{
                 user: {
+                    pk: this.state.user.pk,
                     name: this.state.user.name,
                     email: this.state.user.email,
                     avatar: this.state.user.avatar,

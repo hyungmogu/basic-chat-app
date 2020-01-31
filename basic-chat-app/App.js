@@ -45,12 +45,26 @@ export default class App extends Component {
         this.setState(prevState => {
             if (!prevState.chatUsers || prevState.chatUsers.length === 0) {
                 return {
-                    chats: [user]
+                    chatUsers: [user]
                 }
             }
 
             return {
-                chats: [user, ...prevState.chatUsers]
+                chatUsers: [user, ...prevState.chatUsers]
+            }
+        })
+    }
+
+    handleAddChatUsers = (users) => {
+        this.setState(prevState => {
+            if (!prevState.chatUsers || prevState.chatUsers.length === 0) {
+                return {
+                    chatUsers: users
+                }
+            }
+
+            return {
+                chatUsers: [...users, ...prevState.chatUsers]
             }
         })
     }

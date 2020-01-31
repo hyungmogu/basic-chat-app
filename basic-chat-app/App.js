@@ -14,7 +14,7 @@ export default class App extends Component {
         }
     }
 
-    resetUserInfo = () => {
+    handleResetUserInfo = () => {
         this.setState({
             user: {
                 name: null,
@@ -25,7 +25,7 @@ export default class App extends Component {
         })
     }
 
-    updateUserInfo = ({pk, name, auth_token, email, profile_picture}) => {
+    handleUpdateUserInfo = ({pk, name, auth_token, email, profile_picture}) => {
         let authToken = auth_token;
         let avatar = profile_picture;
 
@@ -40,6 +40,8 @@ export default class App extends Component {
         });
     }
 
+
+
     render() {
         return (
             <UserProvider value={{
@@ -51,8 +53,8 @@ export default class App extends Component {
                     authToken: this.state.user.authToken
                 },
                 actions: {
-                    updateUserInfo: this.updateUserInfo,
-                    resetUserInfo: this.resetUserInfo
+                    updateUserInfo: this.handleUpdateUserInfo,
+                    resetUserInfo: this.handleResetUserInfo
                 }
             }}>
                 <AppNavigator/>

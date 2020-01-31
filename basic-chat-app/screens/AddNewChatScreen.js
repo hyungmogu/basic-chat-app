@@ -23,7 +23,7 @@ export default class AddNewChatScreen extends Component {
         };
 
         axios.post('http://localhost:8000/api/v1/chats/', data, opts).then( res => {
-            // addChatUser(res.data);
+            addChatUser(res.data);
             navigate('Chat');
         }).catch(err => {
             console.warn(err);

@@ -40,7 +40,19 @@ export default class App extends Component {
         });
     }
 
+    handleAddChatUser = (user) => {
+        this.setState(prevState => {
+            if (!prevState.chatUsers || prevState.chatUsers.length === 0) {
+                return {
+                    chats: [user]
+                }
+            }
 
+            return {
+                chats: [user, ...prevState.chatUsers]
+            }
+        })
+    }
 
     render() {
         return (

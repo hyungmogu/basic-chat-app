@@ -102,8 +102,7 @@ class ChatScreen extends Component {
                         >
 
                             <ScrollView
-                                style={{flex: 1, borderWidth: 5, borderColor: 'red'}}
-                                contentContainerStyle={styles.chatContainer}
+                                style={styles.chatContainer}
                             >
                                 <ChatBoxList
                                     messages={this.state.messages}
@@ -150,7 +149,6 @@ const styles = StyleSheet.create({
     },
     chatContainer: {
         flex: 1,
-        justifyContent: 'flex-end',
         padding: 10
     },
     inputContainer: {

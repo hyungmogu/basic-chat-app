@@ -56,16 +56,8 @@ export default class App extends Component {
     }
 
     handleAddChatUsers = (users) => {
-        this.setState(prevState => {
-            if (!prevState.chatUsers || prevState.chatUsers.length === 0) {
-                return {
-                    chatUsers: users
-                }
-            }
-
-            return {
-                chatUsers: [...users, ...prevState.chatUsers]
-            }
+        this.setState({
+            chatUsers: users
         })
     }
 

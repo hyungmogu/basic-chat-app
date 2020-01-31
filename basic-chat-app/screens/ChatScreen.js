@@ -81,19 +81,6 @@ export default class ChatScreen extends Component {
 
     handleSubmit = () => {
 
-        console.log(this._inputElement);
-        // this.setState( prevState => {
-
-        //     return {
-        //         messages: [...prevState.messages, {
-        //             name: prevState.chatter.name,
-        //             email: prevState.chatter.email,
-        //             text: prevState.text,
-        //             timestamp: Math.round(new Date().getTime()/1000),
-        //         }],
-        //         text: ''
-        //     }
-        // })
     }
 
     render() {
@@ -120,13 +107,6 @@ export default class ChatScreen extends Component {
                                 style={styles.inputContainer}
                                 onLayout={(event) => {this.handleMeasureInputHeight(event)}}
                             >
-                                {/* <TextInput
-                                    placeholder={'Message2'}
-                                    ref={ref => {this._inputElement = ref}}
-                                    onChangeText={(text) => {
-                                        this.setState({ text })
-                                    }}
-                                /> */}
                                 <AppTextArea
                                     placeholder={'Message'}
                                     onChangeText={(text) => {

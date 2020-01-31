@@ -12,7 +12,6 @@ export default class AddNewChatScreen extends Component {
     emailRef = React.createRef();
 
     handleCreateChat = (authToken, email, addChatUser, navigate) => {
-
         let opts = {
             headers: {
                 Authorization: `Token ${authToken}`

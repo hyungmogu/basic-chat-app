@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, TextInput } from 'react-native';
+import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, Text } from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import axios from 'axios';
@@ -100,8 +100,9 @@ class ChatScreen extends Component {
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                             enabled
                         >
+
                             <ScrollView
-                                style={{flex: 1}}
+                                style={{flex: 1, borderWidth: 5, borderColor: 'red'}}
                                 contentContainerStyle={styles.chatContainer}
                             >
                                 <ChatBoxList

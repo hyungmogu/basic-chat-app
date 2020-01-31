@@ -30,7 +30,7 @@ export default class SignUpScreen extends Component {
         axios.post('http://localhost:8000/api/v1/signup/', data).then( res => {
             navigate('Login');
         }).catch(err => {
-            console.warn(err);
+            console.warn(err.response.data);
         });
     }
 

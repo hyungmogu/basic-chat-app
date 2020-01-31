@@ -19,14 +19,15 @@ import ChatBoxList from '../components/ChatBoxList';
 
 class ChatScreen extends Component {
     state = {
+        loaded: false,
         messages: []
     };
 
     textRef = React.createRef();
     scrollViewRef = React.createRef();
 
-    componentDidMount() {
-        this.handleGetChatBoxes(
+    async componentDidMount() {
+        await this.handleGetChatBoxes(
             this.props.navigation.getParam('chatUser'),
             this.props.userContext.user.authToken
         );
@@ -46,10 +47,11 @@ class ChatScreen extends Component {
 
         axios.get(`http://localhost:8000/api/v1/chats/${chattee.pk}`, opts).then(res => {
             this.setState({
+                loaded: true,
                 messages: res.data
             });
         }).catch(err => {
-            console.warn(err);
+            console.warn(err.response.data.detail);
         })
     }
 

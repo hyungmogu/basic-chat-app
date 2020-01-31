@@ -26,7 +26,7 @@ class HomeScreen extends Component {
         axios.get('http://localhost:8000/api/v1/chats/', opts).then(res => {
             addChatUsers(res.data);
         }).catch(err => {
-            console.warn(err);
+            console.warn(err.response.data.detail);
         })
     }
 

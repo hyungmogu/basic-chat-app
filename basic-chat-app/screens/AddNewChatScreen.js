@@ -26,7 +26,7 @@ export default class AddNewChatScreen extends Component {
             addChatUser(res.data);
             navigate('Chat');
         }).catch(err => {
-            console.warn(err);
+            console.warn(err.response.data.detail);
         });
     }
 

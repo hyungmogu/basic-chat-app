@@ -28,7 +28,7 @@ export default class LoginScreen extends Component {
             updateUserInfo(res.data);
             navigate('Home');
         }).catch(err => {
-            console.warn(err);
+            console.warn(err.response.data);
         });
     }
 

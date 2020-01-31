@@ -19,7 +19,7 @@ export default class UserScreen extends Component {
             resetUserInfo(res.data);
             navigate('Login')
         }).catch(err => {
-            console.warn(err);
+            console.warn(err.response.data.detail);
         });
     }
 

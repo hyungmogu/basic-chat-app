@@ -6,7 +6,7 @@ import { UserConsumer } from './Context';
 class ChatBoxList extends Component {
 
     handleGetDateTime = (unixTimestamp) => {
-        let dateTime = new Date(unixTimestamp * 1000);
+        let dateTime = new Date(parseInt(unixTimestamp) * 1000);
         let hours = dateTime.getHours();
         let ampm = (hours >= 12) ? "PM" : "AM";
         let minutes = dateTime.getMinutes();

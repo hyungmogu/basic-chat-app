@@ -94,7 +94,9 @@ class ChatScreen extends Component {
                     <SafeAreaView style={styles.safeViewContainer}>
                         <KeyboardAvoidingView
                             style={styles.container}
-                            keyboardVerticalOffset={this.state.inputHeight + (Platform.OS === 'ios' ? insets.bottom : 10)}
+                            keyboardVerticalOffset={
+                                this.state.inputHeight + (Platform.OS === 'ios' ? insets.bottom : 10)
+                            }
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                             enabled
                         >

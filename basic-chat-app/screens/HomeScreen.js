@@ -51,7 +51,9 @@ class HomeScreen extends Component {
                             name={item.name}
                             latestMessage={item.latestText || 'Add New Message Here'}
                             image={item.profile_picture || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
-                            onPress={() => navigate('Chat')}
+                            onPress={() => navigate('Chat', {
+                                chatUser: item
+                            })}
                         />
                     )}
                 </ScrollView>

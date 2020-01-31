@@ -3,14 +3,14 @@ import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platf
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
+import { UserConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
 import ChatBoxList from '../components/ChatBoxList';
 
-export default class ChatScreen extends Component {
+
+class ChatScreen extends Component {
     state = {
-        chatter: null,
-        chattee: null,
         text: '',
         messages: []
     };
@@ -18,45 +18,31 @@ export default class ChatScreen extends Component {
     _inputElement = React.createRef();
 
     componentDidMount() {
-        let messages = [
-            {
-                id: 1,
-                email: 'james@gmail.com',
-                name: 'James Yu',
-                text: 'Hello there!',
-                timestamp: 1579196191
-            },
-            {
-                id: 2,
-                email: 'john@gmail.com',
-                name: 'John Doe',
-                text: 'Hey',
-                timestamp: 1579196322
+        this.handleGetChatBoxes(
+            this.props.navigation.getParam('chatUser'),
+            this.props.context.authToken
+        );
+
+        // this.props.navigation.setParams({
+        //     chatter: chatter,
+        //     chattee: chattee.name
+        // });
+    }
+
+    handleGetChatBoxes = (chatUser, authToken) => {
+        let opts = {
+            headers: {
+                Authorization: `Token ${authToken}`
             }
-        ];
-
-        let chatter = {
-            id: 1,
-            name: 'John Doe',
-            email: 'john@gmail.com'
-        }
-
-        let chattee = {
-            id: 2,
-            name: 'James Yu',
-            email: 'james@gmail.com'
         };
 
-        this.setState({
-            chatter: chatter,
-            chattee: chattee,
-            messages: messages
-        });
-
-        this.props.navigation.setParams({
-            chatter: chatter,
-            chattee: chattee
-        });
+        axios.get(`http://localhost:8000/api/v1/chats/${chatUser.pk}`, opts).then(res => {
+            this.setState({
+                messages: res.data
+            });
+        }).catch(err => {
+            console.warn(err);
+        })
     }
 
     handleToggleDateTime = (messages, index) => {
@@ -149,3 +135,10 @@ const styles = StyleSheet.create({
         padding: 10
     }
 });
+
+
+export default React.forwardRef((props, ref) => (
+    <UserConsumer>
+      {context => <ChatScreen {...props} context={context} ref={ref} />}
+    </UserConsumer>
+  ));

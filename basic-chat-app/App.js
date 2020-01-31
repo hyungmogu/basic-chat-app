@@ -43,9 +43,11 @@ export default class App extends Component {
         return (
             <UserProvider value={{
                 authToken: this.state.authToken,
-                name: this.state.user.name,
-                email: this.state.user.email,
-                avatar: this.state.user.avatar,
+                user: {
+                    name: this.state.user.name,
+                    email: this.state.user.email,
+                    avatar: this.state.user.avatar
+                },
                 actions: {
                     updateUserInfo: this.updateUserInfo,
                     resetUserInfo: this.resetUserInfo

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text , TouchableOpacity, View } from 'react-native';
 
+import { UserConsumer } from './Context';
+
 class ChatBoxList extends Component {
 
     handleGetDateTime = (unixTimestamp) => {
@@ -24,30 +26,32 @@ class ChatBoxList extends Component {
             toggleDateTime
         } = this.props;
 
-        let user = {
-            name: 'John Doe',
-            email: "john@gmail.com"
-        };
-
         return (
-            <React.Fragment>
-                {
-                    messages.map((message, index) =>
-                        <View
-                            key={index}
-                            style={[styles.chatBoxContainer, user.email === message.email ? styles.chatterBoxContainer : styles.chatteeBoxContainer]}
-                        >
-                            <TouchableOpacity
-                                style={[styles.chatbox, user.email === message.email ? styles.chatter : styles.chattee]}
-                                onPress={() => toggleDateTime(messages, index)}
-                            >
-                                <Text>{message.text}</Text>
-                            </TouchableOpacity>
-                            { message.showDateTime ? <Text style={[styles.dateTime]}>{this.handleGetDateTime(message.timestamp)}</Text> : null }
-                        </View>
-                    )
-                }
-            </React.Fragment>
+            <UserConsumer>
+                { context => {
+                    let user = context.user;
+                    return(
+                        <React.Fragment>
+                            {
+                                messages.map((message, index) =>
+                                    <View
+                                        key={index}
+                                        style={[styles.chatBoxContainer, user.pk === message.msg_from ? styles.chatterBoxContainer : styles.chatteeBoxContainer]}
+                                    >
+                                        <TouchableOpacity
+                                            style={[styles.chatbox, user.pk === message.msg_from ? styles.chatter : styles.chattee]}
+                                            onPress={() => toggleDateTime(messages, index)}
+                                        >
+                                            <Text>{message.text}</Text>
+                                        </TouchableOpacity>
+                                        { message.showDateTime ? <Text style={[styles.dateTime]}>{this.handleGetDateTime(message.timestamp)}</Text> : null }
+                                    </View>
+                                )
+                            }
+                        </React.Fragment>
+                    );
+                }}
+            </UserConsumer>
         );
     }
 }

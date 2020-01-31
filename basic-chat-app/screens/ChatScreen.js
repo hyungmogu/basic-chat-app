@@ -90,6 +90,8 @@ class ChatScreen extends Component {
                     messages: [...prevState.messages, res.data]
                 }
             });
+
+            this.textRef.current.clear();
         }).catch(err => {
             console.warn(err);
         })

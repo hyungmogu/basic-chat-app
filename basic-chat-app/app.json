@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Basic Chat App",
-    "slug": "basic-chat-app",
+    "name": "Chat Application",
+    "slug": "chat-application",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [

@@ -12,7 +12,6 @@ import ChatBoxList from '../components/ChatBoxList';
 
 class ChatScreen extends Component {
     state = {
-        text: '',
         messages: []
     };
 
@@ -66,8 +65,28 @@ class ChatScreen extends Component {
         })
     }
 
-    handleSubmit = () => {
+    handleSubmit = (text, chattee, authToken) => {
+        let opts = {
+            headers: {
+                Authorization: `Token ${authToken}`
+            }
+        };
 
+        let data = {
+            text: text
+        }
+
+        console.log(data);
+
+        axios.post(`http://localhost:8000/api/v1/chats/${chattee.pk}`, data, opts).then(res => {
+            this.setState(prevState => {
+                return {
+                    messages: [...prevState, res.data]
+                }
+            });
+        }).catch(err => {
+            console.warn(err);
+        })
     }
 
     render() {

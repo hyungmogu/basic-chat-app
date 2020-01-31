@@ -6,18 +6,22 @@ import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends Component {
     state = {
-        name: null,
         authToken: null,
-        email: null,
-        avatar: null
+        user: {
+            name: null,
+            email: null,
+            avatar: null
+        }
     }
 
     resetUserInfo = () => {
         this.setState({
-            name: null,
             authToken: null,
-            email: null,
-            avatar: null
+            user: {
+                name: null,
+                email: null,
+                avatar: null
+            }
         })
     }
 
@@ -26,10 +30,12 @@ export default class App extends Component {
         let avatar = profile_picture;
 
         this.setState({
-            name: name,
             authToken: authToken,
-            email: email,
-            avatar: avatar
+            user: {
+                name: name,
+                email: email,
+                avatar: avatar
+            }
         });
     }
 
@@ -37,9 +43,9 @@ export default class App extends Component {
         return (
             <UserProvider value={{
                 authToken: this.state.authToken,
-                name: this.state.name,
-                email: this.state.email,
-                avatar: this.state.avatar,
+                name: this.state.user.name,
+                email: this.state.user.email,
+                avatar: this.state.user.avatar,
                 actions: {
                     updateUserInfo: this.updateUserInfo,
                     resetUserInfo: this.resetUserInfo

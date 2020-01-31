@@ -28,9 +28,9 @@ export default class UserScreen extends Component {
         return (
             <UserConsumer>
                 { context => {
-                    let name = context.name;
-                    let authToken = context.authToken;
-                    let avatar = context.avatar || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg';
+                    let name = context.user.name;
+                    let authToken = context.user.authToken;
+                    let avatar = context.user.avatar || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg';
                     let resetUserInfo = context.actions.resetUserInfo;
                     return (
                         <SafeAreaView style={styles.safeViewContainer}>

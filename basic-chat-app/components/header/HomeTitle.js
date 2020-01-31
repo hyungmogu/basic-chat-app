@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-import { Consumer } from '../Context';
+import { UserConsumer } from '../Context';
 import { withNavigation } from 'react-navigation';
 
 class HomeTitle extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <Consumer>
+            <UserConsumer>
                 { context => {
                     let name = context.name;
 
@@ -18,7 +18,7 @@ class HomeTitle extends Component {
                         </TouchableOpacity>
                     );
                 }}
-            </Consumer>
+            </UserConsumer>
         );
     }
 }

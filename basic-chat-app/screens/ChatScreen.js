@@ -76,12 +76,10 @@ class ChatScreen extends Component {
             text: text
         }
 
-        console.log(data);
-
         axios.post(`http://localhost:8000/api/v1/chats/${chattee.pk}`, data, opts).then(res => {
             this.setState(prevState => {
                 return {
-                    messages: [...prevState, res.data]
+                    messages: [...prevState.messages, res.data]
                 }
             });
         }).catch(err => {

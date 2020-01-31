@@ -46,7 +46,7 @@ export default class App extends Component {
                     name: this.state.user.name,
                     email: this.state.user.email,
                     avatar: this.state.user.avatar,
-                    authToken: this.state.authToken
+                    authToken: this.state.user.authToken
                 },
                 actions: {
                     updateUserInfo: this.updateUserInfo,

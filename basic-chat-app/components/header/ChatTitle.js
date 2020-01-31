@@ -14,8 +14,11 @@ class ChatTitle extends Component {
             chatter
         } = this.props.navigation.state.params;
 
+        let chatterName = chatter && chatter.name ? chatter.name : '';
+        let chatteeName = chattee && chattee.name ? chattee.name : '';
+
         return (
-            <Text style={styles.text}>{chatter.name}, {chattee.name}</Text>
+            <Text style={styles.text}>{chatterName}, {chatteeName}</Text>
         );
     }
 }

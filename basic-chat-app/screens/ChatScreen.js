@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, TextInput } from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import axios from 'axios';
 
 import { UserConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
@@ -20,7 +21,7 @@ class ChatScreen extends Component {
     componentDidMount() {
         this.handleGetChatBoxes(
             this.props.navigation.getParam('chatUser'),
-            this.props.context.authToken
+            this.props.context.user.authToken
         );
 
         this.props.navigation.setParams({
@@ -29,14 +30,14 @@ class ChatScreen extends Component {
         });
     }
 
-    handleGetChatBoxes = (chatUser, authToken) => {
+    handleGetChatBoxes = (chattee, authToken) => {
         let opts = {
             headers: {
                 Authorization: `Token ${authToken}`
             }
         };
 
-        axios.get(`http://localhost:8000/api/v1/chats/${chatUser.pk}`, opts).then(res => {
+        axios.get(`http://localhost:8000/api/v1/chats/${chattee.pk}`, opts).then(res => {
             this.setState({
                 messages: res.data
             });

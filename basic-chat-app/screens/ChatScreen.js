@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, KeyboardAvoidingView, View, ScrollView, Platform, Text } from 'react-native';
+import {
+    StyleSheet,
+    SafeAreaView,
+    KeyboardAvoidingView,
+    View,
+    ScrollView,
+    Platform
+} from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import axios from 'axios';

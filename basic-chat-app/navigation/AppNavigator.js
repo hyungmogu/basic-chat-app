@@ -61,7 +61,8 @@ const MainAppNavigation = createStackNavigator({
         headerTitleStyle: {
             fontSize: 15,
             fontWeight: 'bold'
-        }
+        },
+        headerBackTitleVisible: false
     }
 });
 

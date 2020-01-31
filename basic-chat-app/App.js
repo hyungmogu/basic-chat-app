@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { UserProvider } from './components/Context';
+import { UserProvider, ChatProvider } from './components/Context';
 
 import AppNavigator from './navigation/AppNavigator';
 
@@ -11,7 +11,8 @@ export default class App extends Component {
             email: null,
             avatar: null,
             authToken: null
-        }
+        },
+        chatUsers: []
     }
 
     handleResetUserInfo = () => {
@@ -69,7 +70,14 @@ export default class App extends Component {
                     resetUserInfo: this.handleResetUserInfo
                 }
             }}>
-                <AppNavigator/>
+                <ChatProvider value={{
+                    chatUsers: this.state.chatUsers,
+                    actions: {
+                        addChatUser: this.handleAddChatUser
+                    }
+                }}>
+                    <AppNavigator/>
+                </ChatProvider>
             </UserProvider>
         );
     }

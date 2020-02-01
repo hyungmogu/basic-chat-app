@@ -26,9 +26,8 @@ export default class App extends Component {
         })
     }
 
-    handleUpdateUserInfo = ({pk, name, auth_token, email, profile_picture}) => {
+    handleUpdateUserInfo = ({pk, name, auth_token, email, avatar}) => {
         let authToken = auth_token;
-        let avatar = profile_picture;
 
         this.setState({
             user: {

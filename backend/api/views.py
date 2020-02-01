@@ -18,7 +18,15 @@ from main.models import ChatBox as ChatBoxModel
 
 class User(APIView):
     def put(self, request, format=None):
-        pass
+
+        # 1. parse name and url from request
+        # also fetch user pk
+
+        # 2. update name and url into database
+
+        # 3. on success, return status code 200
+
+        return Response()
 
 
 

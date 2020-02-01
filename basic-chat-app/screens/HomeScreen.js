@@ -11,8 +11,8 @@ class HomeScreen extends Component {
 
     componentDidMount() {
         this.handleGetRooms(
-            this.props.userContext.user.authToken,
-            this.props.chatContext.actions.addChatUsers
+            this.props.context.user.authToken,
+            this.props.context.actions.addChatUsers
         );
     }
 
@@ -32,17 +32,17 @@ class HomeScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
-        const chatUsers = this.props.chatContext.chatUsers;
+        const chatUsers = this.props.context.chatUsers;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <AddNewButton onPress={() => navigate('AddNewChat')}/>
                 <ScrollView style={styles.container}>
                     { chatUsers.map((item, index) =>
-                        <ChatMenuItem
+                        <ChatåMenuItem
                             key={index}
                             name={item.name}
                             latestMessage={item.latestText || 'Add New Message Here'}
-                            image={item.profile_picture || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
+                            image={item.avatar || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
                             onPress={() => navigate('Chat', {
                                 chatUser: item
                             })}
@@ -67,12 +67,8 @@ const styles = StyleSheet.create({
 
 export default React.forwardRef((props, ref) => (
     <UserConsumer>
-        { userContext =>
-            <ChatConsumer>
-                { chatContext =>
-                    <HomeScreen {...props} userContext={userContext} chatContext={chatContext} ref={ref} />
-                }
-            </ChatConsumer>
+        { context =>
+            <HomeScreen {...props} context={context} ref={ref} />
         }
     </UserConsumer>
 ));

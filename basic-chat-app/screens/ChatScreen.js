@@ -29,11 +29,11 @@ class ChatScreen extends Component {
     async componentDidMount() {
         await this.handleGetChatBoxes(
             this.props.navigation.getParam('chatUser'),
-            this.props.userContext.user.authToken
+            this.props.context.user.authToken
         );
 
         this.props.navigation.setParams({
-            chatter: this.props.userContext.user,
+            chatter: this.props.context.user,
             chattee: this.props.navigation.getParam('chatUser')
         });
     }
@@ -138,7 +138,7 @@ class ChatScreen extends Component {
                                     onPress={() => this.handleSubmit(
                                         this.textRef.current._lastNativeText,
                                         this.props.navigation.getParam('chatUser'),
-                                        this.props.userContext.user.authToken
+                                        this.props.context.user.authToken
                                     )}>
                                         Submit
                                 </AppButton>
@@ -177,6 +177,6 @@ const styles = StyleSheet.create({
 
 export default React.forwardRef((props, ref) => (
     <UserConsumer>
-      {context => <ChatScreen {...props} userContext={context} ref={ref} />}
+      {context => <ChatScreen {...props} context={context} ref={ref} />}
     </UserConsumer>
   ));

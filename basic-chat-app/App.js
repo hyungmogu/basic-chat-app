@@ -70,20 +70,15 @@ export default class App extends Component {
                     avatar: this.state.user.avatar,
                     authToken: this.state.user.authToken
                 },
+                chatUsers: this.state.chatUsers,
                 actions: {
                     updateUserInfo: this.handleUpdateUserInfo,
-                    resetUserInfo: this.handleResetUserInfo
+                    resetUserInfo: this.handleResetUserInfo,
+                    addChatUser: this.handleAddChatUser,
+                    addChatUsers: this.handleAddChatUsers
                 }
             }}>
-                <ChatProvider value={{
-                    chatUsers: this.state.chatUsers,
-                    actions: {
-                        addChatUser: this.handleAddChatUser,
-                        addChatUsers: this.handleAddChatUsers
-                    }
-                }}>
-                    <AppNavigator/>
-                </ChatProvider>
+                <AppNavigator/>
             </UserProvider>
         );
     }

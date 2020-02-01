@@ -807,6 +807,8 @@ class TestUserPUTRequest(UserTest):
             'profile_picture': 'http://via.placeholder.com/350x150'
         })
 
+        print(res.data)
+
         result = res.status_code
 
         self.assertEqual(expected, result)

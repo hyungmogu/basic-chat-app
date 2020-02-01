@@ -5,12 +5,6 @@ from . import models
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-
-        extra_kwargs = {
-            'password': {'write_only': True},
-            'password2': {'write_only': True}
-        }
-
         model=get_user_model()
         fields=(
             'pk',
@@ -20,6 +14,14 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
             'password2',
         )
+
+
+class UserPOSTSerializer(UserSerializer):
+
+    extra_kwargs = {
+        'password': {'write_only': True},
+        'password2': {'write_only': True}
+    }
 
     def validate(self, data):
         if data['password'] != data['password2']:

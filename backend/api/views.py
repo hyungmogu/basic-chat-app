@@ -16,13 +16,14 @@ from main.models import ChatBox as ChatBoxModel
 
 
 
-class User(APIView):
+class User(GenericAPIView):
     permission_classes=(IsAuthenticated,)
     def put(self, request, format=None):
 
-        serializer = UserSerializer(data=request.data)
+        serializer = UserSerializer(data=request.data, partial=True)
 
-        if not serializer.is_valid():
+        if not serializer.is_valid(raise_exception=True):
+
             res_data = {
                 'detail': 'User data is incorrect. Please check again'
             }
@@ -46,7 +47,7 @@ class User(APIView):
 class SignUp(APIView):
     def post(self, request, format=None):
 
-        serializer = UserSerializer(data=request.data)
+        serializer = UserPOSTSerializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
 

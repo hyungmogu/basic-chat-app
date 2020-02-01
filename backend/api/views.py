@@ -22,7 +22,7 @@ class User(GenericAPIView):
 
         serializer = UserSerializer(data=request.data, partial=True)
 
-        if not serializer.is_valid(raise_exception=True):
+        if not serializer.is_valid():
 
             res_data = {
                 'detail': 'User data is incorrect. Please check again'

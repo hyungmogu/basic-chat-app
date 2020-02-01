@@ -834,3 +834,15 @@ class TestUserPUTRequest(UserTest):
         result = self.User.objects.get(pk=1).profile_picture
 
         self.assertEqual(expected, result)
+
+    def test_return_status_code_400_if_profile_picture_is_not_url(self):
+        expected = 400
+
+        res = self.client.put(reverse('api:user'), {
+            'name': 'New User Name 1',
+            'profile_picture': 'Not url'
+        })
+
+        result = res.status_code
+
+        self.assertEqual(expected, result)

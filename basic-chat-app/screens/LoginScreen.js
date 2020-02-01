@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import axios from 'axios';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 import { UserConsumer } from '../components/Context';
 import AppInput from '../components/AppInput';
@@ -18,7 +19,7 @@ export default class LoginScreen extends Component {
     emailRef = React.createRef();
     passwordRef = React.createRef();
 
-    handleLogin = (email, password, updateUserInfo, navigate) => {
+    handleLogin = (email, password, updateUserInfo, setRootNavigation, navigate) => {
         let data = {
             email: email || '',
             password: password || ''
@@ -26,10 +27,20 @@ export default class LoginScreen extends Component {
 
         axios.post('http://localhost:8000/api/v1/login/', data).then( res => {
             updateUserInfo(res.data);
+            setRootNavigation('Home');
             navigate('Home');
         }).catch(err => {
             console.warn(err.response.data);
         });
+    }
+
+    // TODO: Move this to navigation Provider
+    handleSetRootNavigation = (route) => {
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: route })],
+          });
+          this.props.navigation.dispatch(resetAction);
     }
 
     render() {
@@ -62,6 +73,7 @@ export default class LoginScreen extends Component {
                                             this.emailRef.current._lastNativeText,
                                             this.passwordRef.current._lastNativeText,
                                             updateUserInfo,
+                                            this.handleSetRootNavigation('Home'),
                                             navigate
                                         )}
                                     >

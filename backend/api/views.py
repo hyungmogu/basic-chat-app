@@ -30,17 +30,13 @@ class User(GenericAPIView):
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        # 1. parse name and url from request
-        # also fetch user pk
         validated_data = serializer.validated_data
 
-        # 2. update name and url into database
         user = request.user
         user.name = validated_data.get('name', user.name)
         user.profile_picture = validated_data.get('name', user.profile_picture)
         user.save()
 
-        # 3. on success, return status code 200
         return Response()
 
 

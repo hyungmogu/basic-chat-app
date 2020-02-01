@@ -91,7 +91,7 @@ class Logout(APIView):
             return Response(error, status=status.HTTP_400_BAD_REQUEST)
 
         logout(request)
-        return Response(status=status.HTTP_200_OK)
+        return Response()
 
 
 class Chats(APIView):

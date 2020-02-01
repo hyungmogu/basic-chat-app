@@ -27,7 +27,7 @@ class User(APIView):
                 'detail': 'User data is incorrect. Please check again'
             }
 
-            return Response(res.data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
         # 1. parse name and url from request
         # also fetch user pk

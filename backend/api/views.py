@@ -34,7 +34,7 @@ class User(GenericAPIView):
 
         user = request.user
         user.name = validated_data.get('name', user.name)
-        user.profile_picture = validated_data.get('name', user.profile_picture)
+        user.profile_picture = validated_data.get('profile_picture', user.profile_picture)
         user.save()
 
         return Response()

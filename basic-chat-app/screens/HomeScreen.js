@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import axios from 'axios';
 
-import { ChatConsumer, ChatConsumer } from '../components/Context';
+import { ChatConsumer } from '../components/Context';
 import ChatMenuItem from '../components/ChatMenuItem';
 import AddNewButton from '../components/AddNewButton';
 
@@ -38,7 +38,7 @@ class HomeScreen extends Component {
                 <AddNewButton onPress={() => navigate('AddNewChat')}/>
                 <ScrollView style={styles.container}>
                     { chatUsers.map((item, index) =>
-                        <ChatåMenuItem
+                        <ChatMenuItem
                             key={index}
                             name={item.name}
                             latestMessage={item.latestText || 'Add New Message Here'}

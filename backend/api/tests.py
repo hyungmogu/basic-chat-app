@@ -846,3 +846,15 @@ class TestUserPUTRequest(UserTest):
         result = res.status_code
 
         self.assertEqual(expected, result)
+
+    def test_return_error_if_profile_picture_is_not_url(self):
+        expected = 'User data is incorrect. Please check again'
+
+        res = self.client.put(reverse('api:user'), {
+            'name': 'New User Name 1',
+            'profile_picture': 'Not url'
+        })
+
+        result = res.data['detail']
+
+        self.assertEqual(expected, result)

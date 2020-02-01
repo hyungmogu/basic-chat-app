@@ -8,7 +8,7 @@ import AppButton from '../components/AppButton';
 
 export default class UserScreen extends Component {
 
-    handleLogout = (authToken, resetUserInfo, navigate) => {
+    handleLogout = (authToken, resetUserInfo, setRootNavigation, navigate) => {
         let opts = {
             headers: {
                 Authorization: `Token ${authToken}`
@@ -17,10 +17,19 @@ export default class UserScreen extends Component {
 
         axios.get('http://localhost:8000/api/v1/logout/', opts).then( res => {
             resetUserInfo(res.data);
+            setRootNavigation('Login');
             navigate('Login')
         }).catch(err => {
             console.warn(err.response.data.detail);
         });
+    }
+
+    handleSetRootNavigation = (route) => {
+        const resetAction = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: route })],
+          });
+          this.props.navigation.dispatch(resetAction);
     }
 
     render() {
@@ -50,6 +59,7 @@ export default class UserScreen extends Component {
                                         onPress={() => this.handleLogout(
                                             authToken,
                                             resetUserInfo,
+                                            this.handleSetRootNavigation,
                                             navigate
                                         )}
                                     >

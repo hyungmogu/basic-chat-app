@@ -27,9 +27,9 @@ export default class UserScreen extends Component {
     handleSetRootNavigation = (route) => {
         const resetAction = StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: route })],
-          });
-          this.props.navigation.dispatch(resetAction);
+            actions: [NavigationActions.navigate({ routeName: route })]
+        });
+        this.props.navigation.dispatch(resetAction);
     }
 
     render() {

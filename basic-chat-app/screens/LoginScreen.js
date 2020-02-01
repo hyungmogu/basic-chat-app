@@ -9,7 +9,7 @@ import {
 import axios from 'axios';
 import { StackActions, NavigationActions } from 'react-navigation';
 
-import { UserConsumer } from '../components/Context';
+import { ChatConsumer } from '../components/Context';
 import AppInput from '../components/AppInput';
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
@@ -46,7 +46,7 @@ export default class LoginScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <UserConsumer>
+            <ChatConsumer>
                 { context => {
 
                     let updateUserInfo = context.actions.updateUserInfo;
@@ -91,7 +91,7 @@ export default class LoginScreen extends Component {
                         </SafeAreaView>
                     )
                 }}
-            </UserConsumer>
+            </ChatConsumer>
         );
     }
 }

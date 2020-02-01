@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text , TouchableOpacity, View } from 'react-native';
 
-import { UserConsumer } from './Context';
+import { ChatConsumer } from './Context';
 
 class ChatBoxList extends Component {
 
@@ -27,7 +27,7 @@ class ChatBoxList extends Component {
         } = this.props;
 
         return (
-            <UserConsumer>
+            <ChatConsumer>
                 { context => {
                     let user = context.user;
                     return(
@@ -51,7 +51,7 @@ class ChatBoxList extends Component {
                         </React.Fragment>
                     );
                 }}
-            </UserConsumer>
+            </ChatConsumer>
         );
     }
 }

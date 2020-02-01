@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { UserProvider, ChatProvider } from './components/Context';
+import { ChatProvider } from './components/Context';
 
 import AppNavigator from './navigation/AppNavigator';
 
@@ -62,7 +62,7 @@ export default class App extends Component {
 
     render() {
         return (
-            <UserProvider value={{
+            <ChatProvider value={{
                 user: {
                     pk: this.state.user.pk,
                     name: this.state.user.name,
@@ -79,7 +79,7 @@ export default class App extends Component {
                 }
             }}>
                 <AppNavigator/>
-            </UserProvider>
+            </ChatProvider>
         );
     }
 }

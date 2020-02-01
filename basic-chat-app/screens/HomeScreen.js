@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
 import axios from 'axios';
 
-import { UserConsumer, ChatConsumer } from '../components/Context';
+import { ChatConsumer, ChatConsumer } from '../components/Context';
 import ChatMenuItem from '../components/ChatMenuItem';
 import AddNewButton from '../components/AddNewButton';
 
@@ -66,9 +66,9 @@ const styles = StyleSheet.create({
 
 
 export default React.forwardRef((props, ref) => (
-    <UserConsumer>
+    <ChatConsumer>
         { context =>
             <HomeScreen {...props} context={context} ref={ref} />
         }
-    </UserConsumer>
+    </ChatConsumer>
 ));

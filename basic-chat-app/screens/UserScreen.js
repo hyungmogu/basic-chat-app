@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView, Image, Text } from 'react-native';
 
 import axios from 'axios';
 
-import { UserConsumer } from '../components/Context';
+import { ChatConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 
 export default class UserScreen extends Component {
@@ -35,7 +35,7 @@ export default class UserScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <UserConsumer>
+            <ChatConsumer>
                 { context => {
                     let name = context.user.name;
                     let authToken = context.user.authToken;
@@ -70,7 +70,7 @@ export default class UserScreen extends Component {
                         </SafeAreaView>
                     );
                 }}
-            </UserConsumer>
+            </ChatConsumer>
         );
     }
 }

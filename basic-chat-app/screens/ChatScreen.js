@@ -11,7 +11,7 @@ import {
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import axios from 'axios';
 
-import { UserConsumer } from '../components/Context';
+import { ChatConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
 import ChatBoxList from '../components/ChatBoxList';
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
 
 
 export default React.forwardRef((props, ref) => (
-    <UserConsumer>
+    <ChatConsumer>
       {context => <ChatScreen {...props} context={context} ref={ref} />}
-    </UserConsumer>
+    </ChatConsumer>
   ));

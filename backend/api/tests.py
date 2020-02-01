@@ -807,8 +807,30 @@ class TestUserPUTRequest(UserTest):
             'profile_picture': 'http://via.placeholder.com/350x150'
         })
 
-        print(res.data)
-
         result = res.status_code
+
+        self.assertEqual(expected, result)
+
+    def test_return_new_name_if_successful(self):
+        expected = 'New User Name 1'
+
+        self.client.put(reverse('api:user'), {
+            'name': 'New User Name 1',
+            'profile_picture': 'http://via.placeholder.com/350x150'
+        })
+
+        result = self.User.objects.get(pk=1).name
+
+        self.assertEqual(expected, result)
+
+    def test_return_new_url_if_successful(self):
+        expected = 'http://via.placeholder.com/350x150'
+
+        self.client.put(reverse('api:user'), {
+            'name': 'New User Name 1',
+            'profile_picture': 'http://via.placeholder.com/350x150'
+        })
+
+        result = self.User.objects.get(pk=1).profile_picture
 
         self.assertEqual(expected, result)

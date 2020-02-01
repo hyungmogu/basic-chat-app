@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
             'pk',
             'email',
             'name',
-            'profile_picture',
+            'avatar',
             'password',
             'password2',
         )

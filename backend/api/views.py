@@ -16,6 +16,12 @@ from main.models import ChatBox as ChatBoxModel
 
 
 
+class User(APIView):
+    def put(self, request, format=None):
+        pass
+
+
+
 class SignUp(APIView):
     def post(self, request, format=None):
 

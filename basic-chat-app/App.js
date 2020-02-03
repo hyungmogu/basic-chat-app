@@ -62,6 +62,27 @@ export default class App extends Component {
         })
     }
 
+    handleGet = (url, authToken) => {
+
+        if (authToken || this.state.user.authToken) {
+            let opts = {
+                headers: {
+                    Authorization: `Token ${authToken || this.state.user.authToken}`
+                }
+            }
+
+            return new Promise((resolve, reject) => {
+                axios.get(url, opts).then( res => {
+                    resolve(res);
+                }).catch(err => {
+                    reject(err);
+                });
+            })
+        }
+
+
+    }
+
     render() {
         return (
             <ChatProvider value={{

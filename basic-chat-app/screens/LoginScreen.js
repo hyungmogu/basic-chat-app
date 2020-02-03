@@ -45,6 +45,7 @@ export default class LoginScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
+
         return (
             <ChatConsumer>
                 { context => {

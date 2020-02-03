@@ -9,7 +9,11 @@ import AddNewButton from '../components/AddNewButton';
 
 class HomeScreen extends Component {
 
-    componentDidMount() {
+    state = {
+        isLoaded: false
+    }
+
+    componentDidUpdate() {
         this.handleGetRooms(
             this.props.context.user.authToken,
             this.props.context.actions.addChatUsers
@@ -17,8 +21,18 @@ class HomeScreen extends Component {
     }
 
     handleGetRooms = (authToken, addChatUsers) => {
-        console.log(authToken);
-        console.log('!!!!!!!');
+
+        if (!this.authTokenExists(authToken)) {
+            return;
+        }
+
+        if (this.state.isLoaded) {
+            return;
+        }
+
+        this.setState({
+            isLoaded: true
+        })
 
         let opts = {
             headers: {
@@ -32,6 +46,16 @@ class HomeScreen extends Component {
             console.warn(err.response.data.detail);
         })
     }
+
+    authTokenExists(authToken) {
+        if(!authToken) {
+            return false;
+        }
+
+        return true;
+    }
+
+
 
     render() {
         const {navigate} = this.props.navigation;

@@ -38,6 +38,8 @@ export default class App extends Component {
                 authToken: authToken
             }
         });
+
+        console.log(this.state);
     }
 
     handleAddChatUser = (user) => {

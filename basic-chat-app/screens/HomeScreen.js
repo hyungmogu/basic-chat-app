@@ -17,6 +17,9 @@ class HomeScreen extends Component {
     }
 
     handleGetRooms = (authToken, addChatUsers) => {
+        console.log(authToken);
+        console.log('!!!!!!!');
+
         let opts = {
             headers: {
                 Authorization: `Token ${authToken}`

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import { ChatProvider } from './components/Context';
+import axios from 'axios';
 
+import { ChatProvider, APIProvider } from './components/Context';
 import AppNavigator from './navigation/AppNavigator';
 
 export default class App extends Component {
@@ -63,6 +64,7 @@ export default class App extends Component {
     }
 
     handleGet = (url, authToken) => {
+        let httpRequest = axios.get(url);
 
         if (authToken || this.state.user.authToken) {
             let opts = {
@@ -71,14 +73,16 @@ export default class App extends Component {
                 }
             }
 
-            return new Promise((resolve, reject) => {
-                axios.get(url, opts).then( res => {
-                    resolve(res);
-                }).catch(err => {
-                    reject(err);
-                });
-            })
+            httpRequest = axios.get(url, opts);
         }
+
+        return new Promise((resolve, reject) => {
+            httpRequest.then( res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        })
 
 
     }
@@ -101,7 +105,15 @@ export default class App extends Component {
                     addChatUsers: this.handleAddChatUsers
                 }
             }}>
-                <AppNavigator/>
+                <APIProvider
+                    value={{
+                        actions: {
+                            get: this.handleGet
+                        }
+                    }}
+                >
+                    <AppNavigator/>
+                </APIProvider>
             </ChatProvider>
         );
     }

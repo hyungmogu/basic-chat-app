@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView, Image, Text } from 'react-native';
 
 import axios from 'axios';
 
-import { ChatConsumer } from '../components/Context';
+import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 
 export default class UserScreen extends Component {

@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 
-import axios from 'axios';
-
-import { ChatConsumer } from '../components/Context';
+import { ChatConsumer, APIConsumer } from '../components/Context';
 import ChatMenuItem from '../components/ChatMenuItem';
 import AddNewButton from '../components/AddNewButton';
 
 class HomeScreen extends Component {
 
+    apiService = this.props.apiContext.actions;
     state = {
         isLoaded: false
     }
 
     componentDidUpdate() {
         this.handleGetRooms(
-            this.props.context.user.authToken,
-            this.props.context.actions.addChatUsers
+            this.props.chatContext.user.authToken,
+            this.props.chatContext.actions.addChatUsers
         );
     }
 
@@ -34,13 +33,7 @@ class HomeScreen extends Component {
             isLoaded: true
         })
 
-        let opts = {
-            headers: {
-                Authorization: `Token ${authToken}`
-            }
-        }
-
-        axios.get('http://localhost:8000/api/v1/chats/', opts).then(res => {
+        this.apiService.get('http://localhost:8000/api/v1/chats/').then(res => {
             addChatUsers(res.data);
         }).catch(err => {
             console.warn(err.response.data.detail);
@@ -57,8 +50,7 @@ class HomeScreen extends Component {
 
     render() {
         const {navigate} = this.props.navigation;
-        const chatUsers = this.props.context.chatUsers;
-
+        const chatUsers = this.props.chatContext.chatUsers;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <AddNewButton onPress={() => navigate('AddNewChat')}/>
@@ -93,8 +85,12 @@ const styles = StyleSheet.create({
 
 export default React.forwardRef((props, ref) => (
     <ChatConsumer>
-        { context =>
-            <HomeScreen {...props} context={context} ref={ref} />
+        { chatContext =>
+            <APIConsumer>
+                { apiContext =>
+                    <HomeScreen {...props} chatContext={chatContext} apiContext={apiContext} ref={ref} />
+                }
+            </APIConsumer>
         }
     </ChatConsumer>
 ));

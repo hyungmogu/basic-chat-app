@@ -1,5 +1,8 @@
-from channels.generic.websocket import AsyncWebsocketConsumer
 import json
+from channels.generic.websocket import AsyncWebsocketConsumer
+from django.contrib.auth import get_user_model
+
+from main.serializers import ChatBoxSerializer
 
 class ChatBoxConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -24,7 +27,6 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, data):
-        # parse data
         data_json = json.loads(data)
 
         await self.channel_layer.group_send(
@@ -35,7 +37,6 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
             }
         )
 
-    # Receive message from room group
     async def send(self, event):
         data = event['data']
 
@@ -43,10 +44,8 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
 
         serializer = ChatBoxSerializer(data=data)
 
-        # Send message to room group
         chatbox = self.create_chatbox(request.user, user_recipient, text)
 
-        # Send message to WebSocket
         await self.send(text_data=json.dumps(serializer.data))
 
     async def create_chatbox(self, user, user_recipient, text):

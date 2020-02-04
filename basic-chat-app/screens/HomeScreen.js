@@ -15,7 +15,7 @@ class HomeScreen extends Component {
     }
 
     componentDidUpdate() {
-        if (!this.authTokenExists(authToken)) {
+        if (!this.authTokenExists(this.props.chatContext.user.authToken)) {
             return;
         }
 

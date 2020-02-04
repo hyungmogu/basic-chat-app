@@ -25,7 +25,6 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
 
-    # Receive message from WebSocket
     async def receive(self, data):
         data_json = json.loads(data)
 

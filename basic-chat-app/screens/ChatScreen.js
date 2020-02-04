@@ -94,7 +94,7 @@ class ChatScreen extends Component {
             text: text
         }
 
-        this.apiService.post(`http://localhost:8000/api/v1/chats/${chattee.pk}`, data).then(res => {
+        this.apiService.post(`http://localhost:8000/api/v1/ws/chats/${chattee.pk}`, data).then(res => {
             this.setState(prevState => {
                 return {
                     messages: [...prevState.messages, res.data]

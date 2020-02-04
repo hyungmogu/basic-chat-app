@@ -85,6 +85,28 @@ export default class App extends Component {
         })
     }
 
+    handleGet = (url, data, authToken) => {
+        let httpRequest = axios.post(url, data);
+
+        if (authToken || this.state.user.authToken) {
+            let opts = {
+                headers: {
+                    Authorization: `Token ${authToken || this.state.user.authToken}`
+                }
+            }
+
+            httpRequest = axios.post(url, data, opts);
+        }
+
+        return new Promise((resolve, reject) => {
+            httpRequest.then( res => {
+                resolve(res);
+            }).catch(err => {
+                reject(err);
+            });
+        })
+    }
+
     render() {
         return (
             <ChatProvider value={{
@@ -106,7 +128,8 @@ export default class App extends Component {
                 <APIProvider
                     value={{
                         actions: {
-                            get: this.handleGet
+                            get: this.handleGet,
+                            post: this.handlePost
                         }
                     }}
                 >

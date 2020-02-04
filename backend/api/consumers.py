@@ -39,11 +39,12 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
     async def send(self, event):
         data = event['data']
 
-        user_recipient = self.get_user(user_recipient_pk)
+        user_recipient = self.get_user(self.chattee_pk)
+        user = self.get_user(self.chatter_pk)
 
         serializer = ChatBoxSerializer(data=data)
 
-        chatbox = self.create_chatbox(request.user, user_recipient, text)
+        chatbox = self.create_chatbox(user, user_recipient, data['text'])
 
         await self.send(text_data=json.dumps(serializer.data))
 

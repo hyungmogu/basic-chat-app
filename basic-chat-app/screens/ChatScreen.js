@@ -73,7 +73,7 @@ class ChatScreen extends Component {
         }
 
         this.webSocket.onmessage = (res) => {
-            let data = JSON.parse(e.data);
+            let data = JSON.parse(res.data);
             this.setState(prevState => {
                 return {
                     messages: [...prevState.messages, data]
@@ -83,6 +83,10 @@ class ChatScreen extends Component {
 
         this.webSocket.onclose = () => {
             console.log('disconnected');
+        }
+
+        this.webSocket.onerror = (err) => {
+            console.log(err);
         }
     }
 

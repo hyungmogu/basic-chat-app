@@ -12,6 +12,9 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
         self.chattee_pk = self.scope['url_route']['kwargs']['user_pk']
         self.chat_group_name = 'chat_{}_{}'.format(self.chatter_pk, self.chattee_pk)
 
+        print(self.chat_group_name)
+        print('!!!!')
+
         await self.channel_layer.group_add(
             self.chat_group_name,
             self.channel_name

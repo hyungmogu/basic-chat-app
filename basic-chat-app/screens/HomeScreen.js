@@ -7,13 +7,12 @@ import AddNewButton from '../components/AddNewButton';
 
 class HomeScreen extends Component {
 
+    chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;
+
     state = {
         isLoaded: false
     }
-
-    chatService = this.props.chatContext.actions;
-    apiService = this.props.apiContext.actions;
 
     componentDidUpdate() {
         this.handleGetRooms(

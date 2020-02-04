@@ -18,10 +18,11 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserPOSTSerializer(UserSerializer):
 
-    extra_kwargs = {
-        'password': {'write_only': True},
-        'password2': {'write_only': True}
-    }
+    class Meta(UserSerializer.Meta):
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'password2': {'write_only': True}
+        }
 
     def validate(self, data):
         if data['password'] != data['password2']:

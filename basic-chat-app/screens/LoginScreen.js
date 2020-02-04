@@ -6,18 +6,19 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 
-import axios from 'axios';
 import { StackActions, NavigationActions } from 'react-navigation';
 
-import { ChatConsumer } from '../components/Context';
+import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppInput from '../components/AppInput';
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
 
-export default class LoginScreen extends Component {
+class LoginScreen extends Component {
 
     emailRef = React.createRef();
     passwordRef = React.createRef();
+
+    apiService = this.props.apiContext.actions;
 
     handleLogin = (email, password, updateUserInfo, setRootNavigation, navigate) => {
         let data = {
@@ -25,7 +26,7 @@ export default class LoginScreen extends Component {
             password: password || ''
         };
 
-        axios.post('http://localhost:8000/api/v1/login/', data).then( res => {
+        this.apiService.post('http://localhost:8000/api/v1/login/', data).then( res => {
             updateUserInfo(res.data);
             setRootNavigation('Home');
             navigate('Home');
@@ -120,3 +121,16 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+
+export default React.forwardRef((props, ref) => (
+    <ChatConsumer>
+        { chatContext =>
+            <APIConsumer>
+                { apiContext =>
+                    <LoginScreen {...props} chatContext={chatContext} apiContext={apiContext} ref={ref} />
+                }
+            </APIConsumer>
+        }
+    </ChatConsumer>
+));

@@ -29,6 +29,10 @@ class ChatScreen extends Component {
     textRef = React.createRef();
     scrollViewRef = React.createRef();
 
+    componentDidMount() {
+        this.connect
+    }
+
     async componentDidUpdate() {
         if (!this.authTokenExists(this.props.chatContext.user.authToken)) {
             return;
@@ -48,6 +52,8 @@ class ChatScreen extends Component {
             chatter: this.props.chatContext.user,
             chattee: this.props.navigation.getParam('chatUser')
         });
+
+        this.connectWebSocket();
     }
 
     authTokenExists(authToken) {
@@ -56,6 +62,28 @@ class ChatScreen extends Component {
         }
 
         return true;
+    }
+
+    connectWebSocket() {
+        let chattee = this.props.navigation.getParam('chatUser');
+        this.webSocket = new WebSocket(`ws://localhost:8000/api/v1/ws/chats/${chattee.pk}/`);
+
+        this.webSocket.onopen = () => {
+            console.log('connected')
+        }
+
+        this.webSocket.onmessage = (res) => {
+            let data = JSON.parse(e.data);
+            this.setState(prevState => {
+                return {
+                    messages: [...prevState.messages, data]
+                }
+            });
+        };
+
+        this.webSocket.onclose = () => {
+            console.log('disconnected');
+        }
     }
 
 
@@ -89,22 +117,26 @@ class ChatScreen extends Component {
         })
     }
 
-    handleSubmit = (text, chattee) => {
-        let data = {
+    handleSubmit = (text) => {
+        let data = JSON.stringify({
             text: text
-        }
+        });
 
-        this.apiService.post(`http://localhost:8000/api/v1/ws/chats/${chattee.pk}`, data).then(res => {
-            this.setState(prevState => {
-                return {
-                    messages: [...prevState.messages, res.data]
-                }
-            });
-
+        this.webSocket.send(data, _ => {
             this.textRef.current.clear();
-        }).catch(err => {
-            console.warn(err);
-        })
+        });
+
+        // this.apiService.post(`http://localhost:8000/api/v1/ws/chats/${chattee.pk}/`, data).then(res => {
+        //     this.setState(prevState => {
+        //         return {
+        //             messages: [...prevState.messages, res.data]
+        //         }
+        //     });
+
+        //     this.textRef.current.clear();
+        // }).catch(err => {
+        //     console.warn(err);
+        // })
     }
 
     render() {
@@ -144,8 +176,7 @@ class ChatScreen extends Component {
                                 <AppButton
                                     type={'secondary'}
                                     onPress={() => this.handleSubmit(
-                                        this.textRef.current._lastNativeText,
-                                        this.props.navigation.getParam('chatUser')
+                                        this.textRef.current._lastNativeText
                                     )}>
                                         Submit
                                 </AppButton>

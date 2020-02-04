@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
-import axios from 'axios';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
@@ -20,7 +19,7 @@ import ChatBoxList from '../components/ChatBoxList';
 class ChatScreen extends Component {
 
     chatService = this.props.chatContext.actions;
-    apiService = this.props.apiContext.actions;
+    apiService = this.props.apiContext.actions;å
 
     state = {
         loaded: false,
@@ -72,18 +71,12 @@ class ChatScreen extends Component {
         })
     }
 
-    handleSubmit = (text, chattee, authToken) => {
-        let opts = {
-            headers: {
-                Authorization: `Token ${authToken}`
-            }
-        };
-
+    handleSubmit = (text, chattee) => {
         let data = {
             text: text
         }
 
-        axios.post(`http://localhost:8000/api/v1/chats/${chattee.pk}`, data, opts).then(res => {
+        this.apiService.post(`http://localhost:8000/api/v1/chats/${chattee.pk}`, data).then(res => {
             this.setState(prevState => {
                 return {
                     messages: [...prevState.messages, res.data]

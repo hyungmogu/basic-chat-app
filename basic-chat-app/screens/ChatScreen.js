@@ -128,18 +128,6 @@ class ChatScreen extends Component {
 
         this.webSocket.send(data);
         this.textRef.current.clear();
-
-        // this.apiService.post(`http://localhost:8000/api/v1/ws/chats/${chattee.pk}/`, data).then(res => {
-        //     this.setState(prevState => {
-        //         return {
-        //             messages: [...prevState.messages, res.data]
-        //         }
-        //     });
-
-        //     this.textRef.current.clear();
-        // }).catch(err => {
-        //     console.warn(err);
-        // })
     }
 
     render() {

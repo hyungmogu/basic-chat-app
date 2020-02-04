@@ -20,16 +20,26 @@ class ChatScreen extends Component {
 
     chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;å
+    loaded = false;
 
     state = {
-        loaded: false,
         messages: []
     };
 
     textRef = React.createRef();
     scrollViewRef = React.createRef();
 
-    async componentDidMount() {
+    async componentDidUpdate() {
+        if (!this.authTokenExists(this.props.chatContext.user.authToken)) {
+            return;
+        }
+
+        if (this.isLoaded) {
+            return;
+        }
+
+        this.isLoaded = true;
+
         await this.handleGetChatBoxes(
             this.props.navigation.getParam('chatUser')
         );
@@ -40,10 +50,18 @@ class ChatScreen extends Component {
         });
     }
 
+    authTokenExists(authToken) {
+        if(!authToken) {
+            return false;
+        }
+
+        return true;
+    }
+
+
     handleGetChatBoxes = (chattee) => {
         this.apiService.get(`http://localhost:8000/api/v1/chats/${chattee.pk}`).then(res => {
             this.setState({
-                loaded: true,
                 messages: res.data
             });
         }).catch(err => {

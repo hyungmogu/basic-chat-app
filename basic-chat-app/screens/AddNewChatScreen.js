@@ -1,28 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, SafeAreaView, View } from 'react-native';
 
-import axios from 'axios';
-
-import { ChatConsumer } from '../components/Context';
+import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
 
-export default class AddNewChatScreen extends Component {
+
+class AddNewChatScreen extends Component {
 
     emailRef = React.createRef();
 
-    handleCreateChat = (authToken, email, addChatUser, navigate) => {
-        let opts = {
-            headers: {
-                Authorization: `Token ${authToken}`
-            }
-        }
+    chatService = this.props.chatContext.actions;
+    apiService = this.props.apiContext.actions;
 
+    handleCreateChat = (email, addChatUser, navigate) => {
         let data = {
             email: email || ''
         };
 
-        axios.post('http://localhost:8000/api/v1/chats/', data, opts).then( res => {
+        this.apiService.post('http://localhost:8000/api/v1/chats/', data).then( res => {
             addChatUser(res.data);
             navigate('Chat');
         }).catch(err => {
@@ -33,32 +29,22 @@ export default class AddNewChatScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
 
-        return (
-            <ChatConsumer>
-                { context => {
-                    let authToken = context.user.authToken;
-                    let addChatUser = context.actions.addChatUser;
-
-                    return(
-                        <SafeAreaView style={styles.safeViewContainer}>
-                            <View style={styles.container}>
-                                <AppInput ref={this.emailRef} placeholder={'Email'}/>
-                                <AppButton
-                                    type={"secondary"}
-                                    onPress={() => this.handleCreateChat(
-                                        authToken,
-                                        this.emailRef.current._lastNativeText,
-                                        addChatUser,
-                                        navigate
-                                    )}
-                                >
-                                    Start New Chat
-                                </AppButton>
-                            </View>
-                        </SafeAreaView>
-                    );
-                }}
-            </ChatConsumer>
+        return(
+            <SafeAreaView style={styles.safeViewContainer}>
+                <View style={styles.container}>
+                    <AppInput ref={this.emailRef} placeholder={'Email'}/>
+                    <AppButton
+                        type={"secondary"}
+                        onPress={() => this.handleCreateChat(
+                            this.emailRef.current._lastNativeText,
+                            this.chatService.addChatUser,
+                            navigate
+                        )}
+                    >
+                        Start New Chat
+                    </AppButton>
+                </View>
+            </SafeAreaView>
         );
     }
 }
@@ -73,3 +59,20 @@ const styles = StyleSheet.create({
         padding: 15
     }
 });
+
+export default React.forwardRef((props, ref) => (
+    <ChatConsumer>
+        { chatContext =>
+            <APIConsumer>
+                { apiContext =>
+                    <AddNewChatScreen
+                        {...props}
+                        chatContext={chatContext}
+                        apiContext={apiContext}
+                        ref={ref}
+                    />
+                }
+            </APIConsumer>
+        }
+    </ChatConsumer>
+));

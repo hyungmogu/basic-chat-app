@@ -85,7 +85,7 @@ export default class App extends Component {
         })
     }
 
-    handleGet = (url, data, authToken) => {
+    handlePost = (url, data, authToken) => {
         let httpRequest = axios.post(url, data);
 
         if (authToken || this.state.user.authToken) {

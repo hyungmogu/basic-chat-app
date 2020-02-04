@@ -6,18 +6,19 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 
-import axios from 'axios';
-
+import { ChatConsumer, APIConsumer } from '../components/Context';
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
 
-export default class SignUpScreen extends Component {
+class SignUpScreen extends Component {
 
     nameRef = React.createRef();
     emailRef = React.createRef();
     passwordRef = React.createRef();
     password2Ref = React.createRef();
+
+    apiService = this.props.apiContext.actions;
 
     handleSignup = (name, email, password, password2, navigate) => {
         let data = {
@@ -27,10 +28,10 @@ export default class SignUpScreen extends Component {
             password2: password2 || ''
         };
 
-        axios.post('http://localhost:8000/api/v1/signup/', data).then( res => {
+        this.apiService.post('http://localhost:8000/api/v1/signup/', data).then( res => {
             navigate('Login');
         }).catch(err => {
-            console.warn(err.response.data);
+            console.warn(err);
         });
     }
 
@@ -99,3 +100,15 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+export default React.forwardRef((props, ref) => (
+    <ChatConsumer>
+        { chatContext =>
+            <APIConsumer>
+                { apiContext =>
+                    <SignUpScreen {...props} chatContext={chatContext} apiContext={apiContext} ref={ref} />
+                }
+            </APIConsumer>
+        }
+    </ChatConsumer>
+));

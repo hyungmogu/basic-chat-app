@@ -83,8 +83,6 @@ export default class App extends Component {
                 reject(err);
             });
         })
-
-
     }
 
     render() {

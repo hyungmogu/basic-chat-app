@@ -11,13 +11,17 @@ import {
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import axios from 'axios';
 
-import { ChatConsumer } from '../components/Context';
+import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
 import ChatBoxList from '../components/ChatBoxList';
 
 
 class ChatScreen extends Component {
+
+    chatService = this.props.chatContext.actions;
+    apiService = this.props.apiContext.actions;
+
     state = {
         loaded: false,
         messages: []
@@ -28,24 +32,17 @@ class ChatScreen extends Component {
 
     async componentDidMount() {
         await this.handleGetChatBoxes(
-            this.props.navigation.getParam('chatUser'),
-            this.props.context.user.authToken
+            this.props.navigation.getParam('chatUser')
         );
 
         this.props.navigation.setParams({
-            chatter: this.props.context.user,
+            chatter: this.props.chatContext.user,
             chattee: this.props.navigation.getParam('chatUser')
         });
     }
 
-    handleGetChatBoxes = (chattee, authToken) => {
-        let opts = {
-            headers: {
-                Authorization: `Token ${authToken}`
-            }
-        };
-
-        axios.get(`http://localhost:8000/api/v1/chats/${chattee.pk}`, opts).then(res => {
+    handleGetChatBoxes = (chattee) => {
+        this.apiService.get(`http://localhost:8000/api/v1/chats/${chattee.pk}`).then(res => {
             this.setState({
                 loaded: true,
                 messages: res.data
@@ -137,8 +134,7 @@ class ChatScreen extends Component {
                                     type={'secondary'}
                                     onPress={() => this.handleSubmit(
                                         this.textRef.current._lastNativeText,
-                                        this.props.navigation.getParam('chatUser'),
-                                        this.props.context.user.authToken
+                                        this.props.navigation.getParam('chatUser')
                                     )}>
                                         Submit
                                 </AppButton>
@@ -177,6 +173,17 @@ const styles = StyleSheet.create({
 
 export default React.forwardRef((props, ref) => (
     <ChatConsumer>
-      {context => <ChatScreen {...props} context={context} ref={ref} />}
+        { chatContext =>
+            <APIConsumer>
+                { apiContext =>
+                    <ChatScreen
+                        {...props}
+                        chatContext={chatContext}
+                        apiContext={apiContext}
+                        ref={ref}
+                    />
+                }
+            </APIConsumer>
+        }
     </ChatConsumer>
-  ));
+));

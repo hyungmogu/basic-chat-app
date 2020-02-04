@@ -20,7 +20,9 @@ class AddNewChatScreen extends Component {
 
         this.apiService.post('http://localhost:8000/api/v1/chats/', data).then( res => {
             addChatUser(res.data);
-            navigate('Chat');
+            navigate('Chat', {
+                chatUser: res.data
+            });
         }).catch(err => {
             console.warn(err.response.data.detail);
         });

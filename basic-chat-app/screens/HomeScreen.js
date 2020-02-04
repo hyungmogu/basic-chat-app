@@ -12,6 +12,9 @@ class HomeScreen extends Component {
         isLoaded: false
     }
 
+    chatService = this.props.chatContext.actions;
+    apiService = this.props.apiContext.actions;
+
     componentDidUpdate() {
         this.handleGetRooms(
             this.props.chatContext.user.authToken,

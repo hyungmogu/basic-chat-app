@@ -69,7 +69,7 @@ class Login(APIView):
 
         login(request, user)
         token, created = Token.objects.get_or_create(user=user)
-        user_serializer = UserSerializer(user)
+        user_serializer = UserPOSTSerializer(user)
 
         res_data = user_serializer.data
         res_data['auth_token'] = token.key
@@ -131,7 +131,7 @@ class Chats(APIView):
 
         request.user.chat_users.add(user_recipient)
 
-        res_data = user_recipient.pk
+        res_data = UserPOSTSerializer(user_recipient).data
 
         return Response(res_data, status=status.HTTP_201_CREATED)
 

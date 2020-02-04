@@ -29,7 +29,7 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
         data_json = json.loads(text_data)
 
         await self.channel_layer.group_send(
-            self.room_group_name,
+            self.chat_group_name,
             {
                 'type': 'send',
                 'data': data_json

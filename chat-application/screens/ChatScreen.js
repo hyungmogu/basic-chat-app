@@ -21,6 +21,7 @@ class ChatScreen extends Component {
     chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;å
     loaded = false;
+    timeout = 3000;
 
     state = {
         messages: []
@@ -28,10 +29,6 @@ class ChatScreen extends Component {
 
     textRef = React.createRef();
     scrollViewRef = React.createRef();
-
-    componentDidMount() {
-        this.connect
-    }
 
     async componentDidUpdate() {
         if (!this.authTokenExists(this.props.chatContext.user.authToken)) {
@@ -83,11 +80,18 @@ class ChatScreen extends Component {
         };
 
         this.webSocket.onclose = () => {
-            console.log('disconnected');
+            console.log('disconnected. Attempting to reconnect in 3 seconds...');
+            setTimeout(this.reconnectWebSocket, this.timeout);
         }
 
         this.webSocket.onerror = (err) => {
             console.log(err);
+        }
+    }
+
+    reconnectWebSocket = () => {
+        if (!this.websocket || this.websocket.readyState == WebSocket.CLOSED) {
+            this.connectWebSocket();
         }
     }
 

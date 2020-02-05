@@ -87,7 +87,8 @@ class LoginScreen extends Component {
                                         onChangeText={() => this.handleDisableLogin(
                                             this.emailRef.current._lastNativeText,
                                             this.passwordRef.current._lastNativeText
-                                        )}/>
+                                        )}
+                                    />
                                     <AppInput
                                         ref={this.passwordRef}
                                         secureTextEntry={true}
@@ -95,7 +96,8 @@ class LoginScreen extends Component {
                                         onChangeText={() => this.handleDisableLogin(
                                             this.emailRef.current._lastNativeText,
                                             this.passwordRef.current._lastNativeText
-                                        )}/>
+                                        )}
+                                    />
                                 </View>
                                 <View style={styles.buttonContainer}>
                                     <AppButton
@@ -159,7 +161,12 @@ export default React.forwardRef((props, ref) => (
         { chatContext =>
             <APIConsumer>
                 { apiContext =>
-                    <LoginScreen {...props} chatContext={chatContext} apiContext={apiContext} ref={ref} />
+                    <LoginScreen
+                        {...props}
+                        chatContext={chatContext}
+                        apiContext={apiContext}
+                        ref={ref}
+                    />
                 }
             </APIConsumer>
         }

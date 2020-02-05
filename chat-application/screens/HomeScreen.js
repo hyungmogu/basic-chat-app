@@ -10,6 +10,8 @@ class HomeScreen extends Component {
     chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;
 
+    defaultAvatar = 'https://hyungmogu-portfolio-site.s3-us-west-2.amazonaws.com/chat-application/user-icon.png';
+
     state = {
         isLoaded: false
     }
@@ -60,7 +62,7 @@ class HomeScreen extends Component {
                             key={index}
                             name={item.name}
                             latestMessage={item.latestText || 'Add New Message Here'}
-                            image={item.avatar || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg'}
+                            image={item.avatar || this.defaultAvatar}
                             onPress={() => navigate('Chat', {
                                 chatUser: item
                             })}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, SafeAreaView, Image, Text, Alert } from 'react-native';
-import { StackActions, NavigationActions } from 'react-navigation';
+import { StackActions, NavigationActions, ThemeColors } from 'react-navigation';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
@@ -9,6 +9,8 @@ class UserScreen extends Component {
 
     chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;
+
+    defaultAvatar = 'https://hyungmogu-portfolio-site.s3-us-west-2.amazonaws.com/chat-application/user-icon.png';
 
     handleLogout = (resetUserInfo, setRootNavigation, navigate) => {
         if (!this.props.chatContext.user.authToken) {
@@ -37,7 +39,7 @@ class UserScreen extends Component {
     render() {
         const {navigate} = this.props.navigation;
         let name = this.props.chatContext.user.name;
-        let avatar = this.props.chatContext.user.avatar || 'https://www.publicdomainpictures.net/pictures/200000/velka/plain-red-background.jpg';
+        let avatar = this.props.chatContext.user.avatar || this.defaultAvatar;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>

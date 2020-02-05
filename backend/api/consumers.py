@@ -53,10 +53,6 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
             }))
             return
 
-        print(serializer.data)
-        print('!!!!!!')
-
-
         chatbox = await self.create_chatbox(user, user_recipient, data['text'])
 
         res_data = ChatBoxSerializer(chatbox).data

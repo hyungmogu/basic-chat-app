@@ -44,6 +44,13 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
 
         serializer = ChatBoxSerializer(data=data)
 
+        if not serializer.is_valid():
+            await self.send(text_data=json.dumps({
+                'status': 400,
+                'detail': 'Invalid text input'
+            }))
+            return
+
         chatbox = self.create_chatbox(user, user_recipient, data['text'])
 
         await self.send(text_data=json.dumps(serializer.data))

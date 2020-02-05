@@ -73,6 +73,7 @@ class ChatScreen extends Component {
         }
 
         this.webSocket.onmessage = (res) => {
+            console.log(res);
             let data = JSON.parse(res.data);
             this.setState(prevState => {
                 return {

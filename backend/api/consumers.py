@@ -1,7 +1,9 @@
 import json
+from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
 
+from main.models import ChatBox as ChatBoxModel
 from main.serializers import ChatBoxSerializer
 
 class ChatBoxConsumer(AsyncWebsocketConsumer):
@@ -39,8 +41,8 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
     async def send_message(self, event):
         data = event['data']
 
-        user_recipient = self.get_user(self.chattee_pk)
-        user = self.get_user(self.chatter_pk)
+        user_recipient = await self.get_user(self.chattee_pk)
+        user = await self.get_user(self.chatter_pk)
 
         serializer = ChatBoxSerializer(data=data)
 
@@ -51,11 +53,20 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
             }))
             return
 
-        chatbox = self.create_chatbox(user, user_recipient, data['text'])
+        print(serializer.data)
+        print('!!!!!!')
 
-        await self.send(json.dumps(serializer.data))
 
-    async def create_chatbox(self, user, user_recipient, text):
+        chatbox = await self.create_chatbox(user, user_recipient, data['text'])
+
+        res_data = ChatBoxSerializer(chatbox).data
+
+        print(serializer.data)
+
+        await self.send(json.dumps(res_data))
+
+    @database_sync_to_async
+    def create_chatbox(self, user, user_recipient, text):
 
         chatbox = ChatBoxModel.objects.create(
             text=text,
@@ -65,7 +76,8 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
 
         return chatbox
 
-    async def get_user(self, user_pk):
+    @database_sync_to_async
+    def get_user(self, user_pk):
         User = get_user_model()
 
         user = None

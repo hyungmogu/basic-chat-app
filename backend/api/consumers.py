@@ -31,12 +31,12 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_send(
             self.chat_group_name,
             {
-                'type': 'send',
+                'type': 'send_message',
                 'data': data_json
             }
         )
 
-    async def send(self, event):
+    async def send_message(self, event):
         data = event['data']
 
         user_recipient = self.get_user(self.chattee_pk)
@@ -53,7 +53,7 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
 
         chatbox = self.create_chatbox(user, user_recipient, data['text'])
 
-        await self.send(text_data=json.dumps(serializer.data))
+        await self.send(json.dumps(serializer.data))
 
     async def create_chatbox(self, user, user_recipient, text):
 

@@ -19,7 +19,7 @@ import ChatBoxList from '../components/ChatBoxList';
 class ChatScreen extends Component {
 
     chatService = this.props.chatContext.actions;
-    apiService = this.props.apiContext.actions;å
+    apiService = this.props.apiContext.actions;
     loaded = false;
     timeout = 3000;
 
@@ -135,6 +135,7 @@ class ChatScreen extends Component {
     }
 
     componentWillUnmount() {
+        this.webSocket.onclose = null;
         this.webSocket.close();
       }
 

@@ -2,6 +2,7 @@ import json
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 
 from main.models import ChatBox as ChatBoxModel
 from main.serializers import ChatBoxSerializer
@@ -56,8 +57,6 @@ class ChatBoxConsumer(AsyncWebsocketConsumer):
         chatbox = await self.create_chatbox(user, user_recipient, data['text'])
 
         res_data = ChatBoxSerializer(chatbox).data
-
-        print(serializer.data)
 
         await self.send(json.dumps(res_data))
 

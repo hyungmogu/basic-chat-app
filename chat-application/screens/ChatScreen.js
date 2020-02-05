@@ -66,11 +66,10 @@ class ChatScreen extends Component {
         this.webSocket = new WebSocket(`ws://localhost:8000/api/v1/ws/chats/${chattee.pk}/`);
 
         this.webSocket.onopen = () => {
-            console.log('connected')
+            console.warn('connected')
         }
 
         this.webSocket.onmessage = (res) => {
-            console.log(res);
             let data = JSON.parse(res.data);
             this.setState(prevState => {
                 return {
@@ -80,12 +79,12 @@ class ChatScreen extends Component {
         };
 
         this.webSocket.onclose = () => {
-            console.log('disconnected. Attempting to reconnect in 3 seconds...');
+            console.warn('disconnected. Attempting to reconnect in 3 seconds...');
             setTimeout(this.reconnectWebSocket, this.timeout);
         }
 
         this.webSocket.onerror = (err) => {
-            console.log(err);
+            console.warn(err);
         }
     }
 

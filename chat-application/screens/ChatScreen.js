@@ -89,7 +89,7 @@ class ChatScreen extends Component {
     }
 
     reconnectWebSocket = () => {
-        if (!this.websocket || this.websocket.readyState == WebSocket.CLOSED) {
+        if (!this.webSocket || this.webSocket.readyState == WebSocket.CLOSED) {
             this.connectWebSocket();
         }
     }
@@ -151,7 +151,6 @@ class ChatScreen extends Component {
                             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                             enabled
                         >
-
                             <ScrollView
                                 style={styles.chatContainer}
                                 ref={this.scrollViewRef}

@@ -15,10 +15,14 @@ import AppButton from '../components/AppButton';
 
 class LoginScreen extends Component {
 
+    apiService = this.props.apiContext.actions;
+
     emailRef = React.createRef();
     passwordRef = React.createRef();
 
-    apiService = this.props.apiContext.actions;
+    state = {
+        loginDisabled: true
+    }
 
     handleLogin = (email, password, updateUserInfo, setRootNavigation, navigate) => {
         let data = {
@@ -32,6 +36,19 @@ class LoginScreen extends Component {
             navigate('Home');
         }).catch(err => {
             console.warn(err.response.data);
+        });
+    }
+
+    handleDisableLogin = (email, password) => {
+        if (email && password) {
+            this.setState({
+                loginDisabled: false
+            });
+            return;
+        }
+
+        this.setState({
+            loginDisabled: true
         });
     }
 
@@ -64,13 +81,27 @@ class LoginScreen extends Component {
                                     <Logo/>
                                 </View>
                                 <View style={styles.inputContainer}>
-                                    <AppInput ref={this.emailRef} placeholder={'Email'}/>
-                                    <AppInput ref={this.passwordRef} secureTextEntry={true} placeholder={'Password'}/>
+                                    <AppInput
+                                        ref={this.emailRef}
+                                        placeholder={'Email'}
+                                        onChangeText={() => this.handleDisableLogin(
+                                            this.emailRef.current._lastNativeText,
+                                            this.passwordRef.current._lastNativeText
+                                        )}/>
+                                    <AppInput
+                                        ref={this.passwordRef}
+                                        secureTextEntry={true}
+                                        placeholder={'Password'}
+                                        onChangeText={() => this.handleDisableLogin(
+                                            this.emailRef.current._lastNativeText,
+                                            this.passwordRef.current._lastNativeText
+                                        )}/>
                                 </View>
                                 <View style={styles.buttonContainer}>
                                     <AppButton
                                         type={"primary"}
                                         style={{marginBottom: 5}}
+                                        disabled={this.state.loginDisabled}
                                         onPress={() => this.handleLogin(
                                             this.emailRef.current._lastNativeText,
                                             this.passwordRef.current._lastNativeText,

@@ -5,6 +5,7 @@ const AppInput = React.forwardRef((props, ref) => {
     const {
         login,
         placeholder,
+        onChangeText,
         secureTextEntry
     } = props;
 
@@ -12,6 +13,7 @@ const AppInput = React.forwardRef((props, ref) => {
         <TextInput
             style={ login ? [styles.input, styles.inputLogin] : styles.input}
             secureTextEntry={secureTextEntry}
+            onChangeText={onChangeText}
             placeholder={placeholder}
             placeholderTextColor="black"
             ref={ref}

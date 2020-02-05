@@ -5,13 +5,16 @@ class AppButton extends Component {
     render() {
         const {
             type,
+            onPress,
+            disabled,
             style
         } = this.props;
 
         return (
             <TouchableOpacity
                 style={[styles.button, styles[type], style]}
-                onPress={this.props.onPress}
+                disabled={disabled}
+                onPress={onPress}
             >
                 <Text>{this.props.children}</Text>
             </TouchableOpacity>

@@ -84,7 +84,7 @@ class ChatScreen extends Component {
         }
 
         this.webSocket.onerror = (err) => {
-            console.warn(err);
+            console.warn (err);
         }
     }
 
@@ -133,6 +133,10 @@ class ChatScreen extends Component {
         this.webSocket.send(data);
         this.textRef.current.clear();
     }
+
+    componentWillUnmount() {
+        this.webSocket.close();
+      }
 
     render() {
         return (

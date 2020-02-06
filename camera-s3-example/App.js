@@ -4,7 +4,7 @@ import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dime
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
-import base64 from './base64';
+import axios from 'axios';
 
 export default class App extends Component {
     state = {
@@ -37,16 +37,13 @@ export default class App extends Component {
           return Alert('Error: Photo returned empty');
       }
 
-      // submit image to server via blob format
-      let blob = this.handleConvertBase64ToBlob(photo.uri);
-
       let data =  {
-        'image': blob
+        'image': photo.uri
       };
 
       let opts = {
         'headers': {
-          'Authorization': `Token <ADD AUTHTOKEN HERE>`
+          'Authorization': `Token f75a536535c0e1b7e732cd9a16fc40311922295d`
         },
         'content-type': 'multipart/form-data'
       }
@@ -57,29 +54,6 @@ export default class App extends Component {
       }).catch(err => {
         console.log(err);
       })
-  }
-
-  handleConvertBase64ToBlob = (dataURI) => {
-    // source: https://gist.github.com/fupslot/5015897
-
-    // convert base64 to raw binary data held in a string
-    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-    console.log(typeof dataURI);
-    let byteString = base64.atob(dataURI.split(',')[1]);
-
-    // separate out the mime component
-    let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-    // write the bytes of the string to an ArrayBuffer
-    let ab = new ArrayBuffer(byteString.length);
-    let ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-
-    // write the ArrayBuffer to a blob, and you're done
-    let bb = new Blob([ab]);
-    return bb;
   }
 
   render() {

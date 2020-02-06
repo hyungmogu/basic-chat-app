@@ -259,7 +259,9 @@ class ChatBox(GenericAPIView):
 class Photo(APIView):
     def post(self, request, format=None):
         print(request.data)
-
         # Add photo to amazon s3
 
         # send response back to user with status code 201, containing image url
+
+
+        return Response()

@@ -40,10 +40,18 @@ class UserScreen extends Component {
         this.props.navigation.dispatch(resetAction);
     }
 
+    setModalVisible(modalVisible) {
+        this.setState({
+            modalVisible: modalVisible
+        })
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         let name = this.props.chatContext.user.name;
         let avatar = this.props.chatContext.user.avatar || this.defaultAvatar;
+        let modalVisible = this.state.modalVisible;
+
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>

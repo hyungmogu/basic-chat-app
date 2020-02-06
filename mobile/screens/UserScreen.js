@@ -3,6 +3,7 @@ import { StyleSheet, View, SafeAreaView, Image, Text, Alert, Modal } from 'react
 import { StackActions, NavigationActions } from 'react-navigation';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
+import AppInput from '../components/AppInput';
 import AppButton from '../components/AppButton';
 
 class UserScreen extends Component {
@@ -11,6 +12,8 @@ class UserScreen extends Component {
     apiService = this.props.apiContext.actions;
 
     defaultAvatar = 'https://hyungmogu-portfolio-site.s3-us-west-2.amazonaws.com/chat-application/user-icon.png';
+
+    handleChangeName = React.createRef();
 
     state = {
         modalVisible: false
@@ -62,7 +65,9 @@ class UserScreen extends Component {
                         />
                         <Text style={styles.name}>{ name }</Text>
                         <AppButton>Change Profile Picture</AppButton>
-                        <AppButton>Change Name</AppButton>
+                        <AppButton onPress={() => {
+                            this.setModalVisible(true);
+                        }}>Change Name</AppButton>
                     </View>
                     <View style={styles.footerContainer}>
                         <AppButton
@@ -80,22 +85,31 @@ class UserScreen extends Component {
                 <Modal
                     animationType="slide"
                     transparent={false}
-                    visible={modalVisible}
+                    visible={this.state.modalVisible}
                     onRequestClose={() => {
-                    Alert.alert('Modal has been closed.');
+                        Alert.alert('Modal has been closed.');
                     }}>
-                    <View style={{ marginTop: 22 }}>
-                    <View>
-                        <Text>Hello World!</Text>
-
-                        <TouchableHighlight
-                        onPress={() => {
-                            setModalVisible(!modalVisible);
-                        }}>
-                        <Text>Hide Modal</Text>
-                        </TouchableHighlight>
-                    </View>
-                    </View>
+                    <SafeAreaView style={styles.safeViewContainer}>
+                        <View style={styles.container}>
+                            <Text>Change Name</Text>
+                            <AppInput ref={this.textRef} placeholder={'New Name'}/>
+                            <AppButton
+                                type={"primary"}
+                                style={{marginBottom: 5}}
+                                onPress={() => this.handleChangeName(
+                                    this.textRef.current._lastNativeText
+                                )}
+                            >
+                                Submit
+                            </AppButton>
+                            <AppButton
+                                type={"secondary"}
+                                onPress={() => this.setModalVisible(false)}
+                            >
+                                Close
+                            </AppButton>
+                        </View>
+                    </SafeAreaView>
                 </Modal>
             </SafeAreaView>
         );

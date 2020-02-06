@@ -55,6 +55,7 @@ class UserScreen extends Component {
 
         this.apiService.put('http://localhost:8000/api/v1/user/', data).then( res => {
             this.chatService.updateUserInfo({name});
+            this.setModalVisible(false);
         }).catch(err => {
             console.warn(err);
         });

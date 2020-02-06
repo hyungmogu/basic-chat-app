@@ -91,7 +91,12 @@ export default React.forwardRef((props, ref) => (
         { chatContext =>
             <APIConsumer>
                 { apiContext =>
-                    <HomeScreen {...props} chatContext={chatContext} apiContext={apiContext} ref={ref} />
+                    <HomeScreen
+                        {...props}
+                        chatContext={chatContext}
+                        apiContext={apiContext}
+                        ref={ref}
+                    />
                 }
             </APIConsumer>
         }

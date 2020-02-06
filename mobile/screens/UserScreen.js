@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { StyleSheet, View, SafeAreaView, Image, Text, Alert, Modal } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 
@@ -91,7 +92,9 @@ class UserScreen extends Component {
                     }}>
                     <SafeAreaView style={styles.safeViewContainer}>
                         <View style={styles.container}>
-                            <Text>Change Name</Text>
+                            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15}}>
+                                <Text style={{flex: 1, fontWeight: 'bold', textAlign: 'center'}}>Change Name</Text>
+                            </View>
                             <AppInput ref={this.textRef} placeholder={'New Name'}/>
                             <AppButton
                                 type={"primary"}

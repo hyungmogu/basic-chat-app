@@ -4,6 +4,7 @@ import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dime
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
+import * as base64 from 'base-64';
 
 export default class App extends Component {
     state = {

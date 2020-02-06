@@ -1,6 +1,25 @@
 # Chat Application
 
-## Starting Redis Server on localhost
+## Running server on localhost
+
+### Step 1 - install dependencies
+- Note. Installation is order dependent and .sh file will be provided later
+
+### Step 2 - Starting Redis Server on localhost
 ```
 docker run -p 6379:6379 -d redis:2.8
+```
+
+### Step 3 - Enter pipenv virtual environment
+
+$ chat-application/backend
+```
+python3 -m pipenv shell
+```
+
+### Step 4 - Start server
+
+$ chat-application/backend
+```
+python manage.py runserver
 ```

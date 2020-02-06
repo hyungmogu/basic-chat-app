@@ -30,13 +30,15 @@ export default class App extends Component {
     handleUpdateUserInfo = ({pk, name, auth_token, email, avatar}) => {
         let authToken = auth_token;
 
-        this.setState({
-            user: {
-                pk: pk,
-                name: name,
-                email: email,
-                avatar: avatar,
-                authToken: authToken
+        this.setState(prevState => {
+            return {
+                user: {
+                    pk: (pk ? pk : prevState.user.pk),
+                    name: (name ? name : prevState.user.name),
+                    email: (email ? email : prevState.user.email),
+                    avatar: (avatar ? avatar : prevState.user.avatar),
+                    authToken: (authToken ? authToken : prevState.user.authToken)
+                }
             }
         });
 

@@ -79,8 +79,11 @@ class UserScreen extends Component {
                         <Text style={styles.name}>{ name }</Text>
                         <AppButton>Change Profile Picture</AppButton>
                         <AppButton onPress={() => {
-                            this.setModalVisible(true);
-                        }}>Change Name</AppButton>
+                                this.setModalVisible(true);
+                            }}
+                        >
+                            Change Name
+                        </AppButton>
                     </View>
                     <View style={styles.footerContainer}>
                         <AppButton
@@ -104,8 +107,21 @@ class UserScreen extends Component {
                     }}>
                     <SafeAreaView style={styles.safeViewContainer}>
                         <View style={styles.container}>
-                            <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15}}>
-                                <Text style={{flex: 1, fontWeight: 'bold', textAlign: 'center'}}>Change Name</Text>
+                            <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    marginBottom: 15
+                                }}
+                            >
+                                <Text style={{
+                                        flex: 1,
+                                        fontWeight: 'bold',
+                                        textAlign: 'center'
+                                    }}
+                                >
+                                    Change Name
+                                </Text>
                             </View>
                             <AppInput ref={this.textRef} placeholder={'New Name'}/>
                             <AppButton
@@ -165,7 +181,12 @@ export default React.forwardRef((props, ref) => (
         { chatContext =>
             <APIConsumer>
                 { apiContext =>
-                    <UserScreen {...props} chatContext={chatContext} apiContext={apiContext} ref={ref} />
+                    <UserScreen
+                        {...props}
+                        chatContext={chatContext}
+                        apiContext={apiContext}
+                        ref={ref}
+                    />
                 }
             </APIConsumer>
         }

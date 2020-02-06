@@ -4,7 +4,7 @@ import { StyleSheet, SafeAreaView, View } from 'react-native';
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
-
+import Config from '../Config';
 
 class AddNewChatScreen extends Component {
 
@@ -18,7 +18,7 @@ class AddNewChatScreen extends Component {
             email: email || ''
         };
 
-        this.apiService.post('http://localhost:8000/api/v1/chats/', data).then( res => {
+        this.apiService.post(`${Config.host}/api/v1/chats/`, data).then( res => {
             addChatUser(res.data);
             navigate('Chat', {
                 chatUser: res.data

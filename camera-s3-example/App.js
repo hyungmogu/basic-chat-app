@@ -49,9 +49,6 @@ export default class App extends Component {
       let cameraWidth = Dimensions.get('window').width;
       let cameraHeight = cameraWidth / 0.75;
 
-      console.log(cameraWidth);
-      console.log(cameraHeight);
-
       if (!permission) {
           return (
               <SafeAreaView style={styles.container}>
@@ -62,7 +59,7 @@ export default class App extends Component {
 
       return (
           <SafeAreaView style={styles.container}>
-              <View styles={{flex: 1}}><Text>hello</Text></View>
+              <View style={{flex: 1, backgroundColor: 'black'}}></View>
               <Camera
                   style={{width: cameraWidth, height: cameraHeight}}
                   type={type} ref={ref => {this.camera = ref}}

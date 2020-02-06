@@ -6,6 +6,7 @@ import { StackActions, NavigationActions } from 'react-navigation';
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppInput from '../components/AppInput';
 import AppButton from '../components/AppButton';
+import Config from '../Config';
 
 class UserScreen extends Component {
 
@@ -27,7 +28,7 @@ class UserScreen extends Component {
             return;
         }
 
-        this.apiService.get('http://localhost:8000/api/v1/logout/').then( res => {
+        this.apiService.get(`${Config.host}/api/v1/logout/`).then( res => {
             resetUserInfo(res.data);
             setRootNavigation('Login');
             navigate('Login')
@@ -53,7 +54,7 @@ class UserScreen extends Component {
     handleChangeName(name) {
         let data = { name };
 
-        this.apiService.put('http://localhost:8000/api/v1/user/', data).then( res => {
+        this.apiService.put(`${Config.host}/api/v1/user/`, data).then( res => {
             this.chatService.updateUserInfo({name});
             this.setModalVisible(false);
         }).catch(err => {

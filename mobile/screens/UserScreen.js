@@ -32,7 +32,7 @@ class UserScreen extends Component {
             setRootNavigation('Login');
             navigate('Login')
         }).catch(err => {
-            Alert(err);
+            console.warn(err);
         });
     }
 
@@ -50,11 +50,21 @@ class UserScreen extends Component {
         })
     }
 
+    handleChangeName(name) {
+        let data = { name };
+
+        this.apiService.put('http://localhost:8000/api/v1/user/', data).then( res => {
+            this.chatService.handleUpdateUserInfo({name});
+        }).catch(err => {
+            console.warn(err);
+        });
+
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         let name = this.props.chatContext.user.name;
         let avatar = this.props.chatContext.user.avatar || this.defaultAvatar;
-        let modalVisible = this.state.modalVisible;
 
         return (
             <SafeAreaView style={styles.safeViewContainer}>

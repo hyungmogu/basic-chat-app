@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, SafeAreaView, Image, Text, Alert } from 'react-native';
-import { StackActions, NavigationActions, ThemeColors } from 'react-navigation';
+import { StyleSheet, View, SafeAreaView, Image, Text, Alert, Modal } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
@@ -11,6 +11,10 @@ class UserScreen extends Component {
     apiService = this.props.apiContext.actions;
 
     defaultAvatar = 'https://hyungmogu-portfolio-site.s3-us-west-2.amazonaws.com/chat-application/user-icon.png';
+
+    state = {
+        modalVisible: false
+    }
 
     handleLogout = (resetUserInfo, setRootNavigation, navigate) => {
         if (!this.props.chatContext.user.authToken) {

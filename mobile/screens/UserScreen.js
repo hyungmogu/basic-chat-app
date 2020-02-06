@@ -77,7 +77,13 @@ class UserScreen extends Component {
                             source={{uri: avatar}}
                         />
                         <Text style={styles.name}>{ name }</Text>
-                        <AppButton>Change Profile Picture</AppButton>
+                        <AppButton
+                            onPress={() => {
+                                navigate('Camera')
+                            }}
+                        >
+                            Change Profile Picture
+                        </AppButton>
                         <AppButton onPress={() => {
                                 this.setModalVisible(true);
                             }}

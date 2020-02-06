@@ -11,6 +11,7 @@ import HomeScreen from '../screens/HomeScreen';
 import AddNewChatScreen from '../screens/AddNewChatScreen';
 import UserScreen from '../screens/UserScreen';
 import ChatScreen from '../screens/ChatScreen';
+import CameraScreen from '../screens/CameraScreen';
 
 import HomeTitle from '../components/header/HomeTitle';
 import ChatTitle from '../components/header/ChatTitle';
@@ -45,6 +46,12 @@ const MainAppNavigation = createStackNavigator({
         navigationOptions: {
             headerShown: true,
             headerTitle: () => <ChatTitle/>
+        }
+    },
+    Camera: {
+        screen: CameraScreen,
+        navigationOptions: {
+            headerShown: false
         }
     }
 },

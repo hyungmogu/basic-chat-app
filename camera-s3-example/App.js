@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Alert } from 'react-native';
 
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
@@ -28,10 +28,12 @@ export default class App extends Component {
           return;
       }
 
-      let photo = await this.camera.takePictureAsync();
+      let photo = await this.camera.takePictureAsync({
+        base64:true
+      });
 
-      if (!photo || !photo.uri) {
-          return
+      if (!photo) {
+          return Alert('Error: Photo returned empty');
       }
 
       // submit image to server via blob format

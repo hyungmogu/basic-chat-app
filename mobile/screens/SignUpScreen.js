@@ -10,6 +10,7 @@ import { ChatConsumer, APIConsumer } from '../components/Context';
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
 import AppInput from '../components/AppInput';
+import Config from '../Config';
 
 class SignUpScreen extends Component {
 
@@ -28,7 +29,7 @@ class SignUpScreen extends Component {
             password2: password2 || ''
         };
 
-        this.apiService.post('http://localhost:8000/api/v1/signup/', data).then( res => {
+        this.apiService.post(`${Config.host}/api/v1/signup/`, data).then( res => {
             navigate('Login');
         }).catch(err => {
             console.warn(err);

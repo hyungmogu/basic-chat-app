@@ -13,7 +13,7 @@ class UserScreen extends Component {
     chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;
 
-    defaultAvatar = 'https://hyungmogu-portfolio-site.s3-us-west-2.amazonaws.com/chat-application/user-icon.png';
+    defaultAvatar = Config.defaultAvatar;
 
     textRef = React.createRef();
 

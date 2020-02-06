@@ -12,6 +12,8 @@ import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppInput from '../components/AppInput';
 import Logo from '../components/Logo';
 import AppButton from '../components/AppButton';
+import Config from '../Config';
+
 
 class LoginScreen extends Component {
 
@@ -30,7 +32,7 @@ class LoginScreen extends Component {
             password: password || ''
         };
 
-        this.apiService.post('http://localhost:8000/api/v1/login/', data).then( res => {
+        this.apiService.post(`${Config.host}/api/v1/login/`, data).then( res => {
             updateUserInfo(res.data);
             setRootNavigation('Home');
             navigate('Home');

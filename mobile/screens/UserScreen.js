@@ -69,6 +69,26 @@ class UserScreen extends Component {
                         </AppButton>
                     </View>
                 </View>
+                <Modal
+                    animationType="slide"
+                    transparent={false}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    }}>
+                    <View style={{ marginTop: 22 }}>
+                    <View>
+                        <Text>Hello World!</Text>
+
+                        <TouchableHighlight
+                        onPress={() => {
+                            setModalVisible(!modalVisible);
+                        }}>
+                        <Text>Hide Modal</Text>
+                        </TouchableHighlight>
+                    </View>
+                    </View>
+                </Modal>
             </SafeAreaView>
         );
     }

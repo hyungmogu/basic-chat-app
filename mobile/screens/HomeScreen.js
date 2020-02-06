@@ -4,6 +4,7 @@ import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import ChatMenuItem from '../components/ChatMenuItem';
 import AddNewButton from '../components/AddNewButton';
+import Config from '../Config';
 
 class HomeScreen extends Component {
 
@@ -35,7 +36,7 @@ class HomeScreen extends Component {
     }
 
     handleGetRooms = (authToken, addChatUsers) => {
-        this.apiService.get('http://localhost:8000/api/v1/chats/', authToken).then(res => {
+        this.apiService.get(`${Config.host}/api/v1/chats/`, authToken).then(res => {
             addChatUsers(res.data);
         }).catch(err => {
             console.warn(err.response.data.detail);

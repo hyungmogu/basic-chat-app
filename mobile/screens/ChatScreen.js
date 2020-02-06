@@ -64,7 +64,7 @@ class ChatScreen extends Component {
 
     connectWebSocket() {
         let chattee = this.props.navigation.getParam('chatUser');
-        this.webSocket = new WebSocket(`ws://localhost:8000/api/v1/ws/chats/${chattee.pk}/`);
+        this.webSocket = new WebSocket(`${Config.hostWs}/api/v1/ws/chats/${chattee.pk}/`);
 
         this.webSocket.onopen = () => {
             console.warn('connected')

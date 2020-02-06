@@ -23,7 +23,7 @@ export default class App extends Component {
   }
 
 
-  takePicture = async (addPhoto) => {
+  handleTakePicture = async () => {
       if (!this.camera) {
           return;
       }
@@ -37,9 +37,25 @@ export default class App extends Component {
       }
 
       // submit image to server via blob format
+      let blob = this.handleConvertBase64ToBlob(photo);
 
+      let data =  {
+        'image': blob
+      };
+
+      let opts = {
+        'headers': {
+          'Authorization': `Token <ADD AUTHTOKEN HERE>`
+        },
+        'content-type': 'multipart/form-data'
+      }
 
       // if submission successful, go back a page
+      axios.post('http://localhost:8000/api/v1/photo/', data, opts).then(_ => {
+        console.log('success');
+      }).catch(err => {
+        console.log(err);
+      })
   }
 
   render() {
@@ -80,7 +96,7 @@ export default class App extends Component {
                   <View style={styles.buttonContainer}>
                       <TouchableOpacity
                           style={styles.circleButton}
-                          onPress={() => this.takePicture(addPhoto)}
+                          onPress={() => this.handleTakePicture(addPhoto)}
                       >
                       </TouchableOpacity>
                   </View>

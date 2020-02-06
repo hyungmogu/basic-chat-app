@@ -54,7 +54,7 @@ class UserScreen extends Component {
         let data = { name };
 
         this.apiService.put('http://localhost:8000/api/v1/user/', data).then( res => {
-            this.chatService.handleUpdateUserInfo({name});
+            this.chatService.updateUserInfo({name});
         }).catch(err => {
             console.warn(err);
         });

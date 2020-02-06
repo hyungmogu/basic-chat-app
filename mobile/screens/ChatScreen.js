@@ -14,6 +14,7 @@ import { ChatConsumer, APIConsumer } from '../components/Context';
 import AppButton from '../components/AppButton';
 import AppTextArea from '../components/AppTextArea';
 import ChatBoxList from '../components/ChatBoxList';
+import Config from '../Config';
 
 
 class ChatScreen extends Component {
@@ -96,7 +97,7 @@ class ChatScreen extends Component {
 
 
     handleGetChatBoxes = (chattee) => {
-        this.apiService.get(`http://localhost:8000/api/v1/chats/${chattee.pk}`).then(res => {
+        this.apiService.get(`${Config.host}/api/v1/chats/${chattee.pk}`).then(res => {
             this.setState({
                 messages: res.data
             });
@@ -134,10 +135,15 @@ class ChatScreen extends Component {
         this.textRef.current.clear();
     }
 
+    scrollToBottom = (val) => {
+        console.log(val);
+        this.scrollViewRef.current.scrollToEnd({animated: false});
+    }
+
     componentWillUnmount() {
         this.webSocket.onclose = null;
         this.webSocket.close();
-      }
+    }
 
     render() {
         return (
@@ -155,9 +161,8 @@ class ChatScreen extends Component {
                             <ScrollView
                                 style={styles.chatContainer}
                                 ref={this.scrollViewRef}
-                                onContentSizeChange={()=>{
-                                    this.scrollViewRef.current.scrollToEnd({animated: false});
-                            }}>
+                                onContentSizeChange={(val) => this.scrollToBottom(val)}
+                            >
                                 <ChatBoxList
                                     messages={this.state.messages}
                                     toggleDateTime={this.handleToggleDateTime}

@@ -40,15 +40,33 @@ class SignUpScreen extends Component {
         const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.safeViewContainer}>
-                <KeyboardAvoidingView style={styles.container} behavior = "padding" enabled>
+                <KeyboardAvoidingView
+                    style={styles.container}
+                    behavior = "padding"
+                    enabled
+                >
                     <View style={styles.logoContainer}>
                         <Logo/>
                     </View>
                     <View style={styles.inputContainer}>
-                        <AppInput ref={this.nameRef} placeholder={'Name'}/>
-                        <AppInput ref={this.emailRef} placeholder={'Email'}/>
-                        <AppInput ref={this.passwordRef} placeholder={'Password'} secureTextEntry={true}/>
-                        <AppInput ref={this.password2Ref} placeholder={'Password Confirm'} secureTextEntry={true}/>
+                        <AppInput
+                            ref={this.nameRef}
+                            placeholder={'Name'}
+                        />
+                        <AppInput
+                            ref={this.emailRef}
+                            placeholder={'Email'}
+                        />
+                        <AppInput
+                            ref={this.passwordRef}
+                            placeholder={'Password'}
+                            secureTextEntry={true}
+                        />
+                        <AppInput
+                            ref={this.password2Ref}
+                            placeholder={'Password Confirm'}
+                            secureTextEntry={true}
+                        />
                     </View>
                     <View style={styles.buttonContainer}>
                         <AppButton
@@ -107,7 +125,12 @@ export default React.forwardRef((props, ref) => (
         { chatContext =>
             <APIConsumer>
                 { apiContext =>
-                    <SignUpScreen {...props} chatContext={chatContext} apiContext={apiContext} ref={ref} />
+                    <SignUpScreen
+                        {...props}
+                        chatContext={chatContext}
+                        apiContext={apiContext}
+                        ref={ref}
+                    />
                 }
             </APIConsumer>
         }

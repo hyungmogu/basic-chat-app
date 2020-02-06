@@ -33,12 +33,12 @@ export default class App extends Component {
         base64:true
       });
 
-      if (!photo) {
+      if (!photo || !photo.uri) {
           return Alert('Error: Photo returned empty');
       }
 
       // submit image to server via blob format
-      let blob = this.handleConvertBase64ToBlob(photo);
+      let blob = this.handleConvertBase64ToBlob(photo.uri);
 
       let data =  {
         'image': blob
@@ -64,7 +64,8 @@ export default class App extends Component {
 
     // convert base64 to raw binary data held in a string
     // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-    let byteString = atob(dataURI.split(',')[1]);
+    console.log(typeof dataURI);
+    let byteString = base64.atob(dataURI.split(',')[1]);
 
     // separate out the mime component
     let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]

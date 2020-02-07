@@ -44,19 +44,12 @@ class CameraScreen extends Component {
           'image': photo.uri
         };
 
-        let opts = {
-          'headers': {
-            'Authorization': `Token f75a536535c0e1b7e732cd9a16fc40311922295d`
-          },
-          'content-type': 'application/json'
-        }
-
         // if submission successful, go back a page
-        axios.post('http://localhost:8000/api/v1/photo/', data, opts).then( res => {
+        this.apiService.post('http://localhost:8000/api/v1/photo/', data).then( res => {
             updateUserInfo({avatar: res.data['image']})
             navigate.goBack(null);
         }).catch(err => {
-          console.log(err);
+            console.log(err);
         })
     }
 

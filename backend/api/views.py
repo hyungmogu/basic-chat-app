@@ -258,6 +258,7 @@ class ChatBox(GenericAPIView):
 
 class Photo(APIView):
     def post(self, request, format=None):
+        user = request.user
         bucket_name = 'hyungmogu-chat-application'
         file_path = 'usr/{}/avatar.jpg'.format(request.user.pk)
         image_base64 = request.data['image'].strip('data:image/gif;base64,')
@@ -268,6 +269,11 @@ class Photo(APIView):
         s3.Object(bucket_name, file_path).put(Body=base64.b64decode(image_base64))
 
         location = boto3.client('s3').get_bucket_location(Bucket=bucket_name)['LocationConstraint']
+
+        image_url = "https://{}.s3-{}.amazonaws.com/{}".format(bucket_name,location, file_path)
+
+        user.avatar = image_url
+        user.save()
 
         res_data = {
             'image': "https://{}.s3-{}.amazonaws.com/{}".format(bucket_name,location, file_path)

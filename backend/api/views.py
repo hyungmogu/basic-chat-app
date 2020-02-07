@@ -262,7 +262,7 @@ class Photo(APIView):
         file_path = 'usr/{}/avatar.jpg'.format(request.user.pk)
 
         s3 = boto3.resource('s3')
-        self.create_bucket(s3, self.bucket_name)
+        self.create_bucket(s3, bucket_name)
 
         s3.Object(bucket_name, file_path).put(Body=base64.b64decode(image_base64))
 

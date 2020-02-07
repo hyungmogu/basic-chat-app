@@ -1,4 +1,5 @@
 import boto3
+import base64
 from django.db.models import Q
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
@@ -256,17 +257,22 @@ class ChatBox(GenericAPIView):
 
 
 class Photo(APIView):
-
-    bucket_name = 'hyungmogu-chat-application'
-
     def post(self, request, format=None):
-        print(request.data)
-        # Add photo to amazon s3
+        bucket_name = 'hyungmogu-chat-application'
+        file_path = 'usr/{}/avatar.jpg'.format(request.user.pk)
+
         s3_resource = boto3.resource('s3')
         self.create_bucket(s3_recourse, self.bucket_name)
-        # send response back to user with status code 201, containing image url
 
-        return Response()
+        s3.Object(bucket_name, file_path).put(Body=base64.b64decode(image_base64))
+
+        location = boto3.client('s3').get_bucket_location(Bucket=bucket_name)['LocationConstraint']
+
+        res_data = {
+            'image': "https://{}.s3-{}.amazonaws.com/{}".format(bucket_name,location, file_path)
+        }
+
+        return Response(res_data, status=status.HTTP_201_CREATED)
 
     def create_bucket(self, s3, bucket_name):
         region = 'us-west-2'
@@ -276,4 +282,6 @@ class Photo(APIView):
 
         s3.create_bucket(Bucket=bucket_name, CreateBucketConfiguration={
             'LocationConstraint': 'us-west-2'})
+
+        print('Bucket created')
 

@@ -261,8 +261,8 @@ class Photo(APIView):
         bucket_name = 'hyungmogu-chat-application'
         file_path = 'usr/{}/avatar.jpg'.format(request.user.pk)
 
-        s3_resource = boto3.resource('s3')
-        self.create_bucket(s3_recourse, self.bucket_name)
+        s3 = boto3.resource('s3')
+        self.create_bucket(s3, self.bucket_name)
 
         s3.Object(bucket_name, file_path).put(Body=base64.b64decode(image_base64))
 

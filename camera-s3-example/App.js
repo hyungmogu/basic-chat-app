@@ -49,7 +49,7 @@ export default class App extends Component {
       }
 
       // if submission successful, go back a page
-      axios.post('http://localhost:8000/api/v1/photo/', data, opts).then(_ => {
+      axios.post('http://chat-application.hyungmogu.com/api/v1/photo/', data, opts).then(_ => {
         console.log('success');
       }).catch(err => {
         console.log(err);

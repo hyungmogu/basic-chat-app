@@ -25,11 +25,7 @@ SECRET_KEY = '2di8_xgl2!zax1s#pbin+2%qkh88t^oa!3lqn+a@4%r142ixk('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'basic-chat-app-env.us-west-2.elasticbeanstalk.com',
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

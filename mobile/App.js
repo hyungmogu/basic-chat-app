@@ -23,7 +23,8 @@ export default class App extends Component {
                 email: null,
                 avatar: null,
                 authToken: null
-            }
+            },
+            chatUsers: []
         })
     }
 

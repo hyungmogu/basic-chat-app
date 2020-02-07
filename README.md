@@ -3,7 +3,6 @@
 ## Running server on localhost
 
 ### Step 1 - install dependencies
-- Note. Installation is order dependent and .sh file will be provided later
 
 ### Step 2 - Starting Redis Server on localhost
 ```

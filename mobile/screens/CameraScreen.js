@@ -27,13 +27,13 @@ class CameraScreen extends Component {
     }
 
 
-    handleTakePicture = async () => {
+    handleTakePicture = async (updateUserInfo, navigate) => {
         if (!this.camera) {
             return;
         }
 
         let photo = await this.camera.takePictureAsync({
-          base64:true
+            base64:true
         });
 
         if (!photo || !photo.uri) {
@@ -52,17 +52,18 @@ class CameraScreen extends Component {
         }
 
         // if submission successful, go back a page
-        axios.post('http://localhost:8000/api/v1/photo/', data, opts).then(_ => {
-          console.log('success');
+        axios.post('http://localhost:8000/api/v1/photo/', data, opts).then( res => {
+            updateUserInfo({avatar: res.data['image']})
+            navigate.goBack(null);
         }).catch(err => {
           console.log(err);
         })
     }
 
     render() {
+        const {navigate} = this.props.navigation;
         let permission = this.state.hasPermission;
         let type = this.state.cameraType;
-        let addPhoto = this.handleAddPhoto;
         let flipCamera = this.handleFlipCamera;
 
         let cameraWidth = Dimensions.get('window').width;
@@ -97,7 +98,10 @@ class CameraScreen extends Component {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={styles.circleButton}
-                            onPress={() => this.handleTakePicture(addPhoto)}
+                            onPress={() => this.handleTakePicture(
+                                this.updateUserInfo,
+                                navigate
+                            )}
                         >
                         </TouchableOpacity>
                     </View>

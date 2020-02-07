@@ -45,7 +45,7 @@ export default class App extends Component {
         'headers': {
           'Authorization': `Token f75a536535c0e1b7e732cd9a16fc40311922295d`
         },
-        'content-type': 'multipart/form-data'
+        'content-type': 'application/json'
       }
 
       // if submission successful, go back a page

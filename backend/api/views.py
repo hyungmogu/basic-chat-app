@@ -1,3 +1,4 @@
+import boto3
 from django.db.models import Q
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
@@ -11,9 +12,7 @@ from rest_framework.authtoken.models import Token
 
 from accounts.serializers import UserSerializer, UserPOSTSerializer
 from main.serializers import ChatBoxSerializer
-
 from main.models import ChatBox as ChatBoxModel
-
 
 
 class User(GenericAPIView):
@@ -257,11 +256,24 @@ class ChatBox(GenericAPIView):
 
 
 class Photo(APIView):
+
+    bucket_name = 'hyungmogu-chat-application'
+
     def post(self, request, format=None):
         print(request.data)
         # Add photo to amazon s3
-
+        s3_resource = boto3.resource('s3')
+        self.create_bucket(s3_recourse, self.bucket_name)
         # send response back to user with status code 201, containing image url
 
-
         return Response()
+
+    def create_bucket(self, s3, bucket_name):
+        region = 'us-west-2'
+
+        if s3.Bucket(bucket_name).creation_date is not None:
+            return
+
+        s3.create_bucket(Bucket=bucket_name, CreateBucketConfiguration={
+            'LocationConstraint': 'us-west-2'})
+

@@ -5,7 +5,10 @@ import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 
-export default class CameraScreen extends Component {
+class CameraScreen extends Component {
+
+    apiService = this.apiContext.actions
+    chatService = this.chatContext.actions
 
     state = {
         photos: [],
@@ -24,28 +27,46 @@ export default class CameraScreen extends Component {
     }
 
 
-    takePicture = async (addPhoto) => {
+    handleTakePicture = async () => {
         if (!this.camera) {
             return;
         }
 
-        let photo = await this.camera.takePictureAsync();
+        let photo = await this.camera.takePictureAsync({
+          base64:true
+        });
 
         if (!photo || !photo.uri) {
-            return
+            return Alert('Error: Photo returned empty');
         }
 
-        addPhoto(photo);
+        let data =  {
+          'image': photo.uri
+        };
+
+        let opts = {
+          'headers': {
+            'Authorization': `Token f75a536535c0e1b7e732cd9a16fc40311922295d`
+          },
+          'content-type': 'application/json'
+        }
+
+        // if submission successful, go back a page
+        axios.post('http://localhost:8000/api/v1/photo/', data, opts).then(_ => {
+          console.log('success');
+        }).catch(err => {
+          console.log(err);
+        })
     }
 
     render() {
-        const {navigate} = this.props.navigation;
         let permission = this.state.hasPermission;
         let type = this.state.cameraType;
-        let photo = this.state.latestImage;
-        let photosPath = this.state.photosPath;
         let addPhoto = this.handleAddPhoto;
         let flipCamera = this.handleFlipCamera;
+
+        let cameraWidth = Dimensions.get('window').width;
+        let cameraHeight = cameraWidth / 0.75;
 
         if (!permission) {
             return (
@@ -57,8 +78,9 @@ export default class CameraScreen extends Component {
 
         return (
             <SafeAreaView style={styles.container}>
+                <View style={{flex: 1, backgroundColor: 'black'}}></View>
                 <Camera
-                    style={styles.camera}
+                    style={{width: cameraWidth, height: cameraHeight}}
                     type={type} ref={ref => {this.camera = ref}}
                 >
                 </Camera>
@@ -75,7 +97,7 @@ export default class CameraScreen extends Component {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={styles.circleButton}
-                            onPress={() => this.takePicture(addPhoto)}
+                            onPress={() => this.handleTakePicture(addPhoto)}
                         >
                         </TouchableOpacity>
                     </View>
@@ -84,10 +106,9 @@ export default class CameraScreen extends Component {
             </SafeAreaView>
         );
     }
-}
+  }
 
-
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     cameraFooter: {
         height: 100,
         padding: 15,
@@ -135,4 +156,22 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'white'
     }
-});
+  });
+
+
+  export default React.forwardRef((props, ref) => (
+    <ChatConsumer>
+        { chatContext =>
+            <APIConsumer>
+                { apiContext =>
+                    <CameraScreen
+                        {...props}
+                        chatContext={chatContext}
+                        apiContext={apiContext}
+                        ref={ref}
+                    />
+                }
+            </APIConsumer>
+        }
+    </ChatConsumer>
+));

@@ -284,11 +284,13 @@ class Photo(APIView):
     def create_bucket(self, s3, bucket_name):
         region = 'us-west-2'
 
+        print(s3.Bucket(bucket_name).creation_date)
+
         if s3.Bucket(bucket_name).creation_date is not None:
             return
 
         s3.create_bucket(Bucket=bucket_name, CreateBucketConfiguration={
-            'LocationConstraint': 'us-west-2'})
+            'LocationConstraint': region})
 
         print('Bucket created')
 

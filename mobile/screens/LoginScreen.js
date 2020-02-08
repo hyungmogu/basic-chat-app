@@ -6,6 +6,8 @@ import {
     KeyboardAvoidingView
 } from 'react-native';
 
+import axios from 'axios';
+
 import { StackActions, NavigationActions } from 'react-navigation';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
@@ -110,7 +112,7 @@ class LoginScreen extends Component {
                                             this.emailRef.current._lastNativeText,
                                             this.passwordRef.current._lastNativeText,
                                             updateUserInfo,
-                                            this.handleSetRootNavigation('Home'),
+                                            this.handleSetRootNavigation,
                                             navigate
                                         )}
                                     >

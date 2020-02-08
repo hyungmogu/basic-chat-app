@@ -13,23 +13,7 @@ class HomeScreen extends Component {
 
     defaultAvatar = Config.defaultAvatar;
 
-    state = {
-        isLoaded: false
-    }
-
     componentDidMount() {
-        if (!this.authTokenExists(this.props.chatContext.user.authToken)) {
-            return;
-        }
-
-        if (this.state.isLoaded) {
-            return;
-        }
-
-        this.setState({
-            isLoaded: true
-        });
-
         this.handleGetRooms(
             this.props.chatContext.user.authToken,
             this.chatService.addChatUsers
@@ -37,21 +21,11 @@ class HomeScreen extends Component {
     }
 
     handleGetRooms = (authToken, addChatUsers) => {
-        console.log('I am here');
         this.apiService.get(`${Config.host}/api/v1/chats/`, authToken).then(res => {
-            console.log('I am here 2 ');
             addChatUsers(res.data);
         }).catch(err => {
             console.warn(err.response.data.detail);
         })
-    }
-
-    authTokenExists(authToken) {
-        if(!authToken) {
-            return false;
-        }
-
-        return true;
     }
 
     render() {

@@ -19,7 +19,6 @@ docker run -p 6379:6379 -d redis:2.8
 ```
 
 ### Step 4 - Start server
-
 $ chat-application/backend (pipenv shell)
 ```
 python manage.py runserver

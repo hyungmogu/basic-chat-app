@@ -26,6 +26,13 @@ class CameraScreen extends Component {
         });
     }
 
+    handleFlipCamera = () => {
+        this.setState(prevState => {
+          return {
+            cameraType: prevState.cameraType === Camera.Constants.Type.front ? Camera.Constants.Type.back : Camera.Constants.Type.front
+          }
+        })
+    }
 
     handleTakePicture = async (updateUserInfo, navigate) => {
         if (!this.camera) {

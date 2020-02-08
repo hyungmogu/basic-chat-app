@@ -11,7 +11,7 @@ export default class ImageEditScreen extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <Image
-                    source={{uri: image}}
+                    source={{uri: image.uri}}
                     resizeMode={'contain'}
                     style={styles.image}
                 />

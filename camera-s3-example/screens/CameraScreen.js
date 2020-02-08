@@ -4,7 +4,6 @@ import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dime
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
-import axios from 'axios';
 
 export default class CameraScreen extends Component {
     state = {
@@ -23,6 +22,13 @@ export default class CameraScreen extends Component {
       });
   }
 
+  handleFlipCamera = () => {
+    this.setState(prevState => {
+      return {
+        cameraType: prevState.cameraType === Camera.Constants.Type.front ? Camera.Constants.Type.back : Camera.Constants.Type.front
+      }
+    })
+  }
 
   handleTakePicture = async (navigate) => {
       if (!this.camera) {
@@ -30,10 +36,10 @@ export default class CameraScreen extends Component {
       }
 
       let image = await this.camera.takePictureAsync({
-        base64:true
+          base64: true
       });
 
-      if (!image || !image.uri) {
+      if (!image) {
           return Alert('Error: Photo returned empty');
       }
 
@@ -44,7 +50,6 @@ export default class CameraScreen extends Component {
       const { navigate } = this.props.navigation;
       let permission = this.state.hasPermission;
       let type = this.state.cameraType;
-      let addPhoto = this.handleAddPhoto;
       let flipCamera = this.handleFlipCamera;
 
       let cameraWidth = Dimensions.get('window').width;

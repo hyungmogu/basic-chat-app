@@ -3,22 +3,24 @@
 ## Running server on localhost
 
 ### Step 1 - install dependencies
-
-### Step 2 - Starting Redis Server on localhost
 ```
-docker run -p 6379:6379 -d redis:2.8
+pipenv install -r requirements.txt
 ```
 
-### Step 3 - Enter pipenv virtual environment
-
+### Step 2 - Enter virtual environment
 $ chat-application/backend
 ```
 python3 -m pipenv shell
 ```
 
+### Step 3 - Start Redis Server
+```
+docker run -p 6379:6379 -d redis:2.8
+```
+
 ### Step 4 - Start server
 
-$ chat-application/backend
+$ chat-application/backend (pipenv shell)
 ```
 python manage.py runserver
 ```

@@ -21,27 +21,17 @@ class ChatScreen extends Component {
 
     chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;
-    loaded = false;
     timeout = 3000;
 
     state = {
-        messages: []
+        messages: [],
+        isLoaded: false
     };
 
     textRef = React.createRef();
     scrollViewRef = React.createRef();
 
-    async componentDidUpdate() {
-        if (!this.authTokenExists(this.props.chatContext.user.authToken)) {
-            return;
-        }
-
-        if (this.isLoaded) {
-            return;
-        }
-
-        this.isLoaded = true;
-
+    async componentDidMount() {
         await this.handleGetChatBoxes(
             this.props.navigation.getParam('chatUser')
         );
@@ -52,14 +42,6 @@ class ChatScreen extends Component {
         });
 
         this.connectWebSocket();
-    }
-
-    authTokenExists(authToken) {
-        if(!authToken) {
-            return false;
-        }
-
-        return true;
     }
 
     connectWebSocket() {
@@ -99,7 +81,7 @@ class ChatScreen extends Component {
     handleGetChatBoxes = (chattee) => {
         this.apiService.get(`${Config.host}/api/v1/chats/${chattee.pk}`).then(res => {
             this.setState({
-                messages: res.data
+                messages: res.data,
             });
         }).catch(err => {
             console.warn(err.response.data.detail);
@@ -135,7 +117,11 @@ class ChatScreen extends Component {
         this.textRef.current.clear();
     }
 
-    scrollToBottom = (val) => {
+    scrollToBottom = () => {
+        if (!this.state.isLoaded) {
+            return;
+        }
+
         this.scrollViewRef.current.scrollToEnd({animated: false});
     }
 
@@ -160,7 +146,6 @@ class ChatScreen extends Component {
                             <ScrollView
                                 style={styles.chatContainer}
                                 ref={this.scrollViewRef}
-                                onContentSizeChange={(val) => this.scrollToBottom(val)}
                             >
                                 <ChatBoxList
                                     messages={this.state.messages}

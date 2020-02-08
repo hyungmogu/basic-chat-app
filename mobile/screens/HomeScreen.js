@@ -14,6 +14,10 @@ class HomeScreen extends Component {
     defaultAvatar = Config.defaultAvatar;
 
     componentDidMount() {
+        if (!this.props.chatContext.user.authToken) {
+            return;
+        }
+
         this.handleGetRooms(
             this.props.chatContext.user.authToken,
             this.chatService.addChatUsers

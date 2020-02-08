@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import {
-    Dimensions, Image,
-    SafeAreaView, StyleSheet
-} from 'react-native';
+import { Image, StyleSheet } from 'react-native';
+
+import ImageEditor from '@react-native-community/image-editor';
+
+const DEFAULT_IMAGE_HEIGHT = 720;
+const DEFAULT_IMAGE_WIDTH = 1080;
 
 export default class ImageEditScreen extends Component {
 
     state = {
         photo: {
-            uri: `https://source.unsplash.com/2Ts5HnA67k8/${DEFAULT_IMAGE_WIDTH}x${DEFAULT_IMAGE_HEIGHT}`,
+            uri: this.props.navigation.state.params.image,
             height: DEFAULT_IMAGE_HEIGHT,
             width: DEFAULT_IMAGE_WIDTH,
         },

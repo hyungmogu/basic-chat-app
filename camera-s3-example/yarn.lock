@@ -1077,6 +1077,11 @@
     wcwidth "^1.0.1"
     ws "^1.1.0"
 
+"@react-native-community/image-editor@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/image-editor/-/image-editor-2.2.0.tgz#484d0a935d0c9120a81aac2bad58fc92e0a86352"
+  integrity sha512-cMCbGJBe/D5WqRqFkLmkPcotOx2FXFrA7/UoVzTWC0nBmtqqEa36Rpax2jTJkJrqNMqmbbuXPQiwKXBny0gMPw==
+
 "@react-native-community/masked-view@^0.1.5":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.6.tgz#c7f2ac187c1f25aa8c30d11baa8f4398eca3bb84"

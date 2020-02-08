@@ -6,7 +6,10 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+
 import ImageEditor from '@react-native-community/image-editor';
+
+import ImageCropper from '../components/ImageCropper';
 
 const DEFAULT_IMAGE_HEIGHT = 720;
 const DEFAULT_IMAGE_WIDTH = 1080;

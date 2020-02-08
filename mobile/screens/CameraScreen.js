@@ -52,7 +52,7 @@ class CameraScreen extends Component {
         };
 
         // if submission successful, go back a page
-        this.apiService.post('http://localhost:8000/api/v1/photo/', data).then( res => {
+        this.apiService.post(`${Config.host}/api/v1/photo/`, data).then( res => {
             updateUserInfo({avatar: res.data['image']})
             navigate.goBack(null);
         }).catch(err => {

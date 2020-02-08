@@ -18,7 +18,7 @@ export default class ImageEditScreen extends Component {
 
     state = {
         photo: {
-            uri: this.props.navigation.state.params.image,
+            uri: this.props.navigation.state.params.image.uri,
             height: DEFAULT_IMAGE_HEIGHT,
             width: DEFAULT_IMAGE_WIDTH,
         },

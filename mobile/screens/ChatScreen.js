@@ -114,6 +114,10 @@ class ChatScreen extends Component {
             text: text
         });
 
+        this.setState({
+            scrollOnInit: false
+        })
+
         this.webSocket.send(data);
         this.textRef.current.clear();
     }
@@ -128,7 +132,7 @@ class ChatScreen extends Component {
     }
 
     componentWillUnmount() {
-        this.webSocket.onclose = null;
+        this.webSocket.onclose = () => {};
         this.webSocket.close();
     }
 

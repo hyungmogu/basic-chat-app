@@ -35,10 +35,8 @@ class LoginScreen extends Component {
 
         this.apiService.post(`${Config.host}/api/v1/login/`, data).then( res => {
             updateUserInfo(res.data);
-            console.log('hello');
             setRootNavigation('Home');
             navigate('Home');
-            console.log('!!!!');
         }).catch(err => {
             console.warn(err.response.data);
         });

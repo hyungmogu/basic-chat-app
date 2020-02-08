@@ -136,7 +136,6 @@ class ChatScreen extends Component {
     }
 
     scrollToBottom = (val) => {
-        console.log(val);
         this.scrollViewRef.current.scrollToEnd({animated: false});
     }
 

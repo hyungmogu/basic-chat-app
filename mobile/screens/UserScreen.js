@@ -51,11 +51,11 @@ class UserScreen extends Component {
         })
     }
 
-    handleChangeName(name) {
+    handleChangeName(name, updateUserInfo) {
         let data = { name };
 
         this.apiService.put(`${Config.host}/api/v1/user/`, data).then( res => {
-            this.chatService.updateUserInfo({name});
+            updateUserInfo({name});
             this.setModalVisible(false);
         }).catch(err => {
             console.warn(err);
@@ -67,7 +67,7 @@ class UserScreen extends Component {
         const {navigate} = this.props.navigation;
         let name = this.props.chatContext.user.name;
         let avatar = this.props.chatContext.user.avatar || this.defaultAvatar;
-
+        console.log(avatar);
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>
@@ -134,7 +134,8 @@ class UserScreen extends Component {
                                 type={"primary"}
                                 style={{marginBottom: 5}}
                                 onPress={() => this.handleChangeName(
-                                    this.textRef.current._lastNativeText
+                                    this.textRef.current._lastNativeText,
+                                    this.chatService.updateUserInfo
                                 )}
                             >
                                 Submit

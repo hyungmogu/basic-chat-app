@@ -257,6 +257,7 @@ class ChatBox(GenericAPIView):
 
 
 class Photo(APIView):
+    permission_classes=(IsAuthenticated,)
     def post(self, request, format=None):
         user = request.user
         bucket_name = 'hyungmogu-chat-application'

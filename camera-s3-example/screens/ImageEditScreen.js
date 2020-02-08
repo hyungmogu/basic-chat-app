@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet } from 'react-native';
-
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from 'react-native';
 import ImageEditor from '@react-native-community/image-editor';
 
 const DEFAULT_IMAGE_HEIGHT = 720;

@@ -24,39 +24,24 @@ export default class CameraScreen extends Component {
   }
 
 
-  handleTakePicture = async () => {
+  handleTakePicture = async (navigate) => {
       if (!this.camera) {
           return;
       }
 
-      let photo = await this.camera.takePictureAsync({
+      let image = await this.camera.takePictureAsync({
         base64:true
       });
 
-      if (!photo || !photo.uri) {
+      if (!image || !image.uri) {
           return Alert('Error: Photo returned empty');
       }
 
-      let data =  {
-        'image': photo.uri
-      };
-
-      let opts = {
-        'headers': {
-          'Authorization': `Token f75a536535c0e1b7e732cd9a16fc40311922295d`
-        },
-        'content-type': 'application/json'
-      }
-
-      // if submission successful, go back a page
-      axios.post('http://chat-application.hyungmogu.com/api/v1/photo/', data, opts).then(_ => {
-        console.log('success');
-      }).catch(err => {
-        console.log(err);
-      })
+      navigate('ImageEdit', { image })
   }
 
   render() {
+      const { navigate } = this.props.navigation;
       let permission = this.state.hasPermission;
       let type = this.state.cameraType;
       let addPhoto = this.handleAddPhoto;
@@ -94,7 +79,7 @@ export default class CameraScreen extends Component {
                   <View style={styles.buttonContainer}>
                       <TouchableOpacity
                           style={styles.circleButton}
-                          onPress={() => this.handleTakePicture(addPhoto)}
+                          onPress={() => this.handleTakePicture(navigate)}
                       >
                       </TouchableOpacity>
                   </View>

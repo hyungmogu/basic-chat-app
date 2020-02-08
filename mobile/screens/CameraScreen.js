@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 
+import { ChatConsumer, APIConsumer } from '../components/Context';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';

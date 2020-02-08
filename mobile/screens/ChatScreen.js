@@ -21,11 +21,12 @@ class ChatScreen extends Component {
 
     chatService = this.props.chatContext.actions;
     apiService = this.props.apiContext.actions;
+
     timeout = 3000;
 
     state = {
         messages: [],
-        isLoaded: false
+        scrollOnInit: false
     };
 
     textRef = React.createRef();
@@ -118,11 +119,12 @@ class ChatScreen extends Component {
     }
 
     scrollToBottom = () => {
-        if (!this.state.isLoaded) {
-            return;
+        if (this.state.messages.length > 0 && !this.state.scrollOnInit) {
+            this.scrollViewRef.current.scrollToEnd({animated: false});
+            this.setState({
+                scrollOnInit: true
+            })
         }
-
-        this.scrollViewRef.current.scrollToEnd({animated: false});
     }
 
     componentWillUnmount() {
@@ -146,6 +148,7 @@ class ChatScreen extends Component {
                             <ScrollView
                                 style={styles.chatContainer}
                                 ref={this.scrollViewRef}
+                                onContentSizeChange={() => this.scrollToBottom()}
                             >
                                 <ChatBoxList
                                     messages={this.state.messages}

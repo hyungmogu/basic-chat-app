@@ -261,13 +261,13 @@ class Photo(APIView):
     def post(self, request, format=None):
         user = request.user
         bucket_name = 'hyungmogu-chat-application'
+        image_file = request.FILES.get('photo')
         file_path = 'usr/{}/avatar.jpeg'.format(request.user.pk)
-        image_base64 = request.data['image'].strip('data:image/gif;base64,')
 
         s3 = boto3.resource('s3')
         self.create_bucket(s3, bucket_name)
 
-        object_s3 = s3.Object(bucket_name, file_path).put(Body=base64.b64decode(image_base64 + '=' * (-len(image_base64) % 4)))
+        object_s3 = s3.Object(bucket_name, file_path).put(Body=image_file)
         object_acl = s3.ObjectAcl(bucket_name, s3.Object(bucket_name, file_path).key).put(ACL='public-read')
 
         location = boto3.client('s3').get_bucket_location(Bucket=bucket_name)['LocationConstraint']

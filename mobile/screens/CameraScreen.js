@@ -8,6 +8,8 @@ import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
 
+import axios from 'axios';
+
 class CameraScreen extends Component {
 
     apiService = this.props.apiContext.actions
@@ -47,7 +49,7 @@ class CameraScreen extends Component {
         let resizedPhoto = await ImageManipulator.manipulateAsync(
             photo.uri,
             [{ resize: { width: 200, height: 266.67 } }],
-            { compress: 0, format: "jpeg", base64: false }
+            { compress: 0, format: "jpeg", base64: true }
         );
 
         if (!resizedPhoto) {
@@ -68,7 +70,7 @@ class CameraScreen extends Component {
         }
 
         // if submission successful, go back a page
-        this.apiService.post(`${Config.host}/api/v1/photo/`, data, opts).then( res => {
+        axios.post(`${Config.host}/api/v1/photo/`, data, opts).then( res => {
             updateUserInfo({avatar: res.data['image']});
             this.props.navigation.goBack(null);
         }).catch(err => {

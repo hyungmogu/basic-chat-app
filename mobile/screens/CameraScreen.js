@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Platform } from 'react-native';
 
 import * as ImageManipulator from 'expo-image-manipulator';
 
@@ -37,7 +37,7 @@ class CameraScreen extends Component {
         })
     }
 
-    handleTakePicture = async (updateUserInfo, navigate) => {
+    handleTakePicture = async (updateUserInfo) => {
         if (!this.camera) {
             return;
         }
@@ -47,19 +47,28 @@ class CameraScreen extends Component {
         let resizedPhoto = await ImageManipulator.manipulateAsync(
             photo.uri,
             [{ resize: { width: 200, height: 266.67 } }],
-            { compress: 0, format: "png", base64: true }
+            { compress: 0, format: "jpeg", base64: false }
         );
 
         if (!resizedPhoto) {
             return Alert('Error: Photo returned empty');
         }
 
-        let data =  {
-          'image': resizedPhoto.base64
-        };
+        let data = new FormData();
+        data.append('photo', {
+            name: photo.fileName,
+            type: photo.type,
+            uri: Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+        });
+
+        let opts = {
+            header: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
 
         // if submission successful, go back a page
-        this.apiService.post(`${Config.host}/api/v1/photo/`, data).then( res => {
+        this.apiService.post(`${Config.host}/api/v1/photo/`, data, opts).then( res => {
             updateUserInfo({avatar: res.data['image']});
             this.props.navigation.goBack(null);
         }).catch(err => {

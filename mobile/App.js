@@ -42,8 +42,6 @@ export default class App extends Component {
                 }
             }
         });
-
-        console.log(this.state);
     }
 
     handleAddChatUser = (user) => {
@@ -88,8 +86,8 @@ export default class App extends Component {
         })
     }
 
-    handlePost = (url, data, authToken) => {
-        let httpRequest = axios.post(url, data);
+    handlePost = (url, data, opts, authToken) => {
+        let httpRequest = axios.post(url, data, opts);
 
         if (authToken || this.state.user.authToken) {
             let opts = {

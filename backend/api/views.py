@@ -261,7 +261,7 @@ class Photo(APIView):
     def post(self, request, format=None):
         user = request.user
         bucket_name = 'hyungmogu-chat-application'
-        file_path = 'usr/{}/avatar.jpg'.format(request.user.pk)
+        file_path = 'usr/{}/avatar.jpeg'.format(request.user.pk)
         image_base64 = request.data['image'].strip('data:image/gif;base64,')
 
         s3 = boto3.resource('s3')

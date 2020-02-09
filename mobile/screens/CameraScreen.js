@@ -44,12 +44,10 @@ class CameraScreen extends Component {
 
         let photo = await this.camera.takePictureAsync();
 
-        console.log(photo.uri);
-
         let resizedPhoto = await ImageManipulator.manipulateAsync(
             photo.uri,
             [{ resize: { width: 200, height: 266.67 } }],
-            { compress: 1, format: "jpeg", base64: true }
+            { compress: 0, format: "png", base64: true }
         );
 
         if (!resizedPhoto) {
@@ -59,8 +57,6 @@ class CameraScreen extends Component {
         let data =  {
           'image': resizedPhoto.base64
         };
-
-        console.log(data['image'].substring(data['image'].length - 10, data['image'].length));
 
         // if submission successful, go back a page
         this.apiService.post(`${Config.host}/api/v1/photo/`, data).then( res => {

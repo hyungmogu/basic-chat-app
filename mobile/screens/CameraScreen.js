@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import { Camera } from 'expo-camera';
@@ -8,8 +8,8 @@ import * as FileSystem from 'expo-file-system';
 
 class CameraScreen extends Component {
 
-    apiService = this.apiContext.actions
-    chatService = this.chatContext.actions
+    apiService = this.props.apiContext.actions
+    chatService = this.props.chatContext.actions
 
     state = {
         photos: [],

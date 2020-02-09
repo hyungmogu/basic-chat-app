@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
 
+import * as ImageManipulator from 'expo-image-manipulator';
+
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
@@ -40,22 +42,30 @@ class CameraScreen extends Component {
             return;
         }
 
-        let photo = await this.camera.takePictureAsync({
-            base64:true
-        });
+        let photo = await this.camera.takePictureAsync();
 
-        if (!photo || !photo.uri) {
+        console.log(photo.uri);
+
+        let resizedPhoto = await ImageManipulator.manipulateAsync(
+            photo.uri,
+            [{ resize: { width: 200, height: 266.67 } }],
+            { compress: 1, format: "jpeg", base64: true }
+        );
+
+        if (!resizedPhoto) {
             return Alert('Error: Photo returned empty');
         }
 
         let data =  {
-          'image': photo.uri
+          'image': resizedPhoto.base64
         };
+
+        console.log(data['image'].substring(data['image'].length - 10, data['image'].length));
 
         // if submission successful, go back a page
         this.apiService.post(`${Config.host}/api/v1/photo/`, data).then( res => {
-            updateUserInfo({avatar: res.data['image']})
-            navigate.goBack(null);
+            updateUserInfo({avatar: res.data['image']});
+            this.props.navigation.goBack(null);
         }).catch(err => {
             console.log(err);
         })
@@ -100,7 +110,7 @@ class CameraScreen extends Component {
                         <TouchableOpacity
                             style={styles.circleButton}
                             onPress={() => this.handleTakePicture(
-                                this.updateUserInfo,
+                                this.chatService.updateUserInfo,
                                 navigate
                             )}
                         >

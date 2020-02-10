@@ -1,5 +1,6 @@
 import boto3
 import base64
+import logging
 from django.db.models import Q
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
@@ -262,6 +263,15 @@ class Photo(APIView):
         user = request.user
         bucket_name = 'hyungmogu-chat-application'
         image_file = request.FILES.get('photo')
+
+        if (not image_file):
+            res_data = {
+                'detail': 'Image returned empty'
+            }
+
+            return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+
+        print(image_file)
         file_path = 'usr/{}/avatar.jpeg'.format(request.user.pk)
 
         s3 = boto3.resource('s3')

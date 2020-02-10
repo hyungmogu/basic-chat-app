@@ -5,6 +5,7 @@ import axios from 'axios';
 import { ChatProvider, APIProvider } from './components/Context';
 import AppNavigator from './navigation/AppNavigator';
 
+
 export default class App extends Component {
     state = {
         user: {
@@ -30,7 +31,6 @@ export default class App extends Component {
 
     handleUpdateUserInfo = ({pk, name, auth_token, email, avatar}) => {
         let authToken = auth_token;
-
         this.setState(prevState => {
             return {
                 user: {
@@ -86,13 +86,18 @@ export default class App extends Component {
         })
     }
 
-    handlePost = (url, data, opts, authToken) => {
-        let httpRequest = axios.post(url, data, opts);
+    handlePost = (url, data, csrf=false) => {
+        if (csrf) {
+            axios.defaults.xsrfCookieName = 'csrftoken'
+            axios.defaults.xsrfHeaderName = 'X-CSRFToken'
+        }
 
-        if (authToken || this.state.user.authToken) {
+        let httpRequest = axios.post(url, data);
+
+        if (this.state.user.authToken) {
             let opts = {
                 headers: {
-                    Authorization: `Token ${authToken || this.state.user.authToken}`
+                    Authorization: `Token ${this.state.user.authToken}`
                 }
             }
 

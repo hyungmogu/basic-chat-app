@@ -271,7 +271,7 @@ class Photo(APIView):
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        file_path = 'usr/{}/avatar.jpeg'.format(request.user.pk)
+        file_path = 'usr/{}/{}.jpeg'.format(request.user.pk, image_file.name)
 
         s3 = boto3.resource('s3')
         self.create_bucket(s3, bucket_name)

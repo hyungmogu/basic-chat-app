@@ -271,7 +271,6 @@ class Photo(APIView):
 
             return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-        print(image_file)
         file_path = 'usr/{}/avatar.jpeg'.format(request.user.pk)
 
         s3 = boto3.resource('s3')

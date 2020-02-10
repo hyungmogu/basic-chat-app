@@ -1,14 +1,14 @@
+import FormData from 'form-data';
 import React, { Component } from 'react';
 import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Platform } from 'react-native';
 
+import Cookies from 'js-cookie';
 import * as ImageManipulator from 'expo-image-manipulator';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 import * as FileSystem from 'expo-file-system';
-
-import axios from 'axios';
 
 class CameraScreen extends Component {
 
@@ -49,32 +49,33 @@ class CameraScreen extends Component {
         let resizedPhoto = await ImageManipulator.manipulateAsync(
             photo.uri,
             [{ resize: { width: 200, height: 266.67 } }],
-            { compress: 0, format: "jpeg", base64: true }
+            { compress: 0, format: "jpeg", base64: false }
         );
 
         if (!resizedPhoto) {
             return Alert('Error: Photo returned empty');
         }
 
+        let localUri = resizedPhoto.uri;
+        let filename = localUri.split('/').pop();
+
+        // Infer the type of the image
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+
         let data = new FormData();
         data.append('photo', {
-            name: photo.fileName,
-            type: photo.type,
-            uri: Platform.OS === "android" ? photo.uri : photo.uri.replace("file://", "")
+            name: filename,
+            type: type,
+            uri: Platform.OS === "android" ? localUri : localUri.replace("file://", "")
         });
 
-        let opts = {
-            header: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }
-
         // if submission successful, go back a page
-        axios.post(`${Config.host}/api/v1/photo/`, data, opts).then( res => {
+        this.apiService.post(`${Config.host}/api/v1/photo/`, data, true).then( res => {
             updateUserInfo({avatar: res.data['image']});
             this.props.navigation.goBack(null);
         }).catch(err => {
-            console.log(err);
+            console.warn(err);
         })
     }
 

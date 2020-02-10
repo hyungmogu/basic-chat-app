@@ -157,12 +157,13 @@ NOSE_ARGS = [
 
 
 # Channels
+REDIS_PUBLIC_IP = "34.218.244.149"
 ASGI_APPLICATION = "backend.routing.application"
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
+            "hosts": [(REDIS_PUBLIC_IP, 6379)],
         },
     },
 }

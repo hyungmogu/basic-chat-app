@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { StyleSheet, View, SafeAreaView, Image, Text, Alert, Modal } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Image, Text, Modal } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
@@ -67,7 +67,6 @@ class UserScreen extends Component {
         const {navigate} = this.props.navigation;
         let name = this.props.chatContext.user.name;
         let avatar = this.props.chatContext.user.avatar || this.defaultAvatar;
-        console.log(avatar);
         return (
             <SafeAreaView style={styles.safeViewContainer}>
                 <View style={styles.container}>

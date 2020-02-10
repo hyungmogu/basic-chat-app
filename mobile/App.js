@@ -70,7 +70,7 @@ export default class App extends Component {
         if (authToken || this.state.user.authToken) {
             let opts = {
                 headers: {
-                    Authorization: `Token ${authToken || this.state.user.authToken}`
+                    Authorization: `Token ${this.state.user.authToken}`
                 }
             }
 
@@ -86,7 +86,7 @@ export default class App extends Component {
         })
     }
 
-    handlePost = (url, data, csrf=false) => {
+    handlePost = (url, data, authToken, csrf=false) => {
         if (csrf) {
             axios.defaults.xsrfCookieName = 'csrftoken'
             axios.defaults.xsrfHeaderName = 'X-CSRFToken'

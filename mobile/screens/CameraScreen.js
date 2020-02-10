@@ -1,8 +1,7 @@
 import FormData from 'form-data';
 import React, { Component } from 'react';
-import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Platform } from 'react-native';
+import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Platform, Alert } from 'react-native';
 
-import Cookies from 'js-cookie';
 import * as ImageManipulator from 'expo-image-manipulator';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
@@ -53,7 +52,7 @@ class CameraScreen extends Component {
         );
 
         if (!resizedPhoto) {
-            return Alert('Error: Photo returned empty');
+            return Alert.alert('Error: Photo returned empty');
         }
 
         let localUri = resizedPhoto.uri;

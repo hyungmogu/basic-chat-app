@@ -157,7 +157,7 @@ NOSE_ARGS = [
 
 
 # Channels
-REDIS_PUBLIC_DNS = "redis-basicchatapp.v2ou8a.0001.usw2.cache.amazonaws.com"
+REDIS_PUBLIC_DNS = "ec2-54-189-178-55.us-west-2.compute.amazonaws.com"
 ASGI_APPLICATION = "backend.routing.application"
 CHANNEL_LAYERS = {
     'default': {

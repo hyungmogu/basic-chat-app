@@ -6,7 +6,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     Text,
-    SafeAreaView
+    SafeAreaView,
+    Platform
 } from 'react-native';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
@@ -57,10 +58,10 @@ const styles = StyleSheet.create({
         display: 'flex'
     },
     buttonContainer: {
-        height: 100,
+        height: 80,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 10
+        marginBottom: Platform.OS === 'ios' ? 15 : 0
     },
     button: {
         padding: 10

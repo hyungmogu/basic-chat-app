@@ -16,7 +16,10 @@ import { ChatConsumer, APIConsumer } from '../components/Context';
 
 class ImagePreviewScreen extends Component {
 
-    handleSendPhoto = async (photo) => {
+    apiService = this.props.apiContext.actions
+    chatService = this.props.chatContext.actions
+
+    handleSendPhoto = async (photo, updateUserInfo) => {
         let resizedPhoto = await ImageManipulator.manipulateAsync(
             photo,
             [{ resize: { width: 200, height: 266.67 } }],
@@ -50,6 +53,7 @@ class ImagePreviewScreen extends Component {
 
     render() {
         let photo = this.props.navigation.state.params.photo;
+        let updateUserInfo = this.chatService.updateUserInfo;
 
         return (
             <SafeAreaView style={styles.container}>
@@ -65,7 +69,7 @@ class ImagePreviewScreen extends Component {
                     <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => this.handleSendPhoto(photo)}
+                            onPress={() => this.handleSendPhoto(photo, updateUserInfo)}
                         >
                             <Text style={styles.buttonText}>Select Photo</Text>
                         </TouchableOpacity>

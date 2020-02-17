@@ -10,9 +10,43 @@ import {
     Platform
 } from 'react-native';
 
+import * as ImageManipulator from 'expo-image-manipulator';
+
 import { ChatConsumer, APIConsumer } from '../components/Context';
 
 class ImagePreviewScreen extends Component {
+
+    handleSendPhoto = async (photo) => {
+        let resizedPhoto = await ImageManipulator.manipulateAsync(
+            photo,
+            [{ resize: { width: 200, height: 266.67 } }],
+            { compress: 1, format: "jpeg", base64: false }
+        );
+
+        if (!resizedPhoto) {
+            return Alert.alert('Error: Photo returned empty');
+        }
+
+        let localUri = resizedPhoto.uri;
+        let filename = localUri.split('/').pop();
+
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+
+        let data = new FormData();
+        data.append('photo', {
+            name: filename,
+            type: type,
+            uri: Platform.OS === "android" ? localUri : localUri.replace("file://", "")
+        });
+
+        this.apiService.post(`${Config.host}/api/v1/photo/`, data, null, true).then( res => {
+            updateUserInfo({avatar: res.data['image']});
+            this.props.navigation.goBack(null);
+        }).catch(err => {
+            console.warn(err);
+        })
+    }
 
     render() {
         let photo = this.props.navigation.state.params.photo;
@@ -29,7 +63,10 @@ class ImagePreviewScreen extends Component {
                 <View style={styles.footerContainer}>
                     <View style={{flex:1}}></View>
                     <View style={styles.buttonContainer}>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => this.handleSendPhoto(photo)}
+                        >
                             <Text style={styles.buttonText}>Select Photo</Text>
                         </TouchableOpacity>
                         <TouchableOpacity

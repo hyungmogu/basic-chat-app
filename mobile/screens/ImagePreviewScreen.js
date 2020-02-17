@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import {
+    Dimensions, Image,
+    View, StyleSheet
+} from 'react-native';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
-import ChatMenuItem from '../components/ChatMenuItem';
-import AddNewButton from '../components/AddNewButton';
-import Config from '../Config';
 
 class ImagePreviewScreen extends Component {
 
     render() {
+        // let photo = this.props.navigation.state.params.photo;
+        let photo = 'https://hyungmogu-chat-application.s3-us-west-2.amazonaws.com/usr/2/avatar.jpeg';
+
         return (
             <View style={styles.container}>
                 <Image
@@ -22,12 +25,16 @@ class ImagePreviewScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-    safeViewContainer: {
-        flex: 1,
-        backgroundColor: 'white'
-    },
     container: {
-        flex: 1
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'black'
+    },
+    image: {
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height
     }
 });
 

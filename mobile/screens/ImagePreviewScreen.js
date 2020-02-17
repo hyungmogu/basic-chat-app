@@ -32,7 +32,10 @@ class ImagePreviewScreen extends Component {
                         <TouchableOpacity style={styles.button}>
                             <Text style={styles.buttonText}>Select Photo</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.button}>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => this.props.navigation.goBack()}
+                        >
                             <Text style={styles.buttonText}>Back</Text>
                         </TouchableOpacity>
                     </View>

@@ -12,6 +12,7 @@ import AddNewChatScreen from '../screens/AddNewChatScreen';
 import UserScreen from '../screens/UserScreen';
 import ChatScreen from '../screens/ChatScreen';
 import CameraScreen from '../screens/CameraScreen';
+import ImagePreviewScreen from '../screens/ImagePreviewScreen';
 
 import HomeTitle from '../components/header/HomeTitle';
 import ChatTitle from '../components/header/ChatTitle';
@@ -53,10 +54,16 @@ const MainAppNavigation = createStackNavigator({
         navigationOptions: {
             headerShown: false
         }
+    },
+    ImagePreview: {
+        screen: ImagePreviewScreen,
+        navigationOptions: {
+            headerShown: false
+        }
     }
 },
 {
-    initialRouteName: 'Login',
+    initialRouteName: 'ImagePreview',
     defaultNavigationOptions: {
         headerShown: false,
         headerTitleAlign: 'center',

@@ -38,7 +38,7 @@ class LoginScreen extends Component {
             setRootNavigation('Home');
             navigate('Home');
         }).catch(err => {
-            console.warn(err.response.data);
+            console.warn(err);
         });
     }
 

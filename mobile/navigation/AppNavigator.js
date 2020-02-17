@@ -63,7 +63,7 @@ const MainAppNavigation = createStackNavigator({
     }
 },
 {
-    initialRouteName: 'ImagePreview',
+    initialRouteName: 'Camera',
     defaultNavigationOptions: {
         headerShown: false,
         headerTitleAlign: 'center',

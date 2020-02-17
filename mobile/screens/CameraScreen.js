@@ -38,44 +38,15 @@ class CameraScreen extends Component {
         })
     }
 
-    handleTakePicture = async (updateUserInfo) => {
+    handleTakePicture = async (navigate) => {
         if (!this.camera) {
             return;
         }
 
         let photo = await this.camera.takePictureAsync();
 
-        let resizedPhoto = await ImageManipulator.manipulateAsync(
-            photo.uri,
-            [{ resize: { width: 200, height: 266.67 } }],
-            { compress: 1, format: "jpeg", base64: false }
-        );
-
-        if (!resizedPhoto) {
-            return Alert.alert('Error: Photo returned empty');
-        }
-
-        let localUri = resizedPhoto.uri;
-        let filename = localUri.split('/').pop();
-
-        // Infer the type of the image
-        let match = /\.(\w+)$/.exec(filename);
-        let type = match ? `image/${match[1]}` : `image`;
-
-        let data = new FormData();
-        data.append('photo', {
-            name: filename,
-            type: type,
-            uri: Platform.OS === "android" ? localUri : localUri.replace("file://", "")
-        });
-
-        // if submission successful, go back a page
-        this.apiService.post(`${Config.host}/api/v1/photo/`, data, null, true).then( res => {
-            updateUserInfo({avatar: res.data['image']});
-            this.props.navigation.goBack(null);
-        }).catch(err => {
-            console.warn(err);
-        })
+        navigate('ImagePreview', { photo });
+        return;
     }
 
     render() {
@@ -117,7 +88,6 @@ class CameraScreen extends Component {
                         <TouchableOpacity
                             style={styles.circleButton}
                             onPress={() => this.handleTakePicture(
-                                this.chatService.updateUserInfo,
                                 navigate
                             )}
                         >

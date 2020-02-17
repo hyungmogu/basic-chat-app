@@ -25,7 +25,7 @@ class ImagePreviewScreen extends Component {
                         style={styles.image}
                     />
                 </View>
-                <View style={{height: 50, position: 'absolute', bottom: 0, height: 80, alignItems: 'center'}}>
+                <View style={{height: 50, position: 'absolute', bottom: 20, height: 80, alignItems: 'center'}}>
                     <TouchableOpacity style={styles.button}>
                         <Text style={styles.buttonText}>Select Photo</Text>
                     </TouchableOpacity>
@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'black'
+    },
+    button: {
+        padding: 10
     },
     buttonText: {
         color: 'white'

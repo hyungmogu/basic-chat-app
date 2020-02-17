@@ -5,7 +5,8 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    Text
+    Text,
+    SafeAreaView
 } from 'react-native';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
@@ -17,7 +18,7 @@ class ImagePreviewScreen extends Component {
         let photo = 'https://hyungmogu-chat-application.s3-us-west-2.amazonaws.com/usr/2/avatar.jpeg';
 
         return (
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <View>
                     <Image
                         source={{uri: photo}}
@@ -25,15 +26,18 @@ class ImagePreviewScreen extends Component {
                         style={styles.image}
                     />
                 </View>
-                <View style={{height: 50, position: 'absolute', bottom: 20, height: 80, alignItems: 'center'}}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Select Photo</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Back</Text>
-                    </TouchableOpacity>
+                <View style={styles.footerContainer}>
+                    <View style={{flex:1}}></View>
+                    <View style={styles.buttonContainer}>
+                        <TouchableOpacity style={styles.button}>
+                            <Text style={styles.buttonText}>Select Photo</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.button}>
+                            <Text style={styles.buttonText}>Back</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 }
@@ -45,6 +49,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: 'black'
+    },
+    footerContainer: {
+        height: '100%',
+        width: '100%',
+        position: 'absolute',
+        justifyContent: 'flex-end',
+        display: 'flex'
+    },
+    buttonContainer: {
+        height: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 10
     },
     button: {
         padding: 10

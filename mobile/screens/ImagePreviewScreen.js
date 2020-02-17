@@ -45,7 +45,7 @@ class ImagePreviewScreen extends Component {
 
         this.apiService.post(`${Config.host}/api/v1/photo/`, data, null, true).then( res => {
             updateUserInfo({avatar: res.data['image']});
-            this.props.navigation.goBack(null);
+            this.props.navigation.navigate('User');
         }).catch(err => {
             console.warn(err);
         })

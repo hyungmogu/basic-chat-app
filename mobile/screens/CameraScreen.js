@@ -1,13 +1,17 @@
-import FormData from 'form-data';
 import React, { Component } from 'react';
-import { StatusBar, Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Platform, Alert } from 'react-native';
-
-import * as ImageManipulator from 'expo-image-manipulator';
+import {
+    StatusBar,
+    Text,
+    View,
+    SafeAreaView,
+    TouchableOpacity,
+    StyleSheet,
+    Dimensions
+} from 'react-native';
 
 import { ChatConsumer, APIConsumer } from '../components/Context';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
-import * as FileSystem from 'expo-file-system';
 
 class CameraScreen extends Component {
 
@@ -15,11 +19,8 @@ class CameraScreen extends Component {
     chatService = this.props.chatContext.actions
 
     state = {
-        photos: [],
         hasPermission: null,
-        cameraType: Camera.Constants.Type.front,
-        latestImage: null,
-        photosPath: `${FileSystem.documentDirectory}photos/`
+        cameraType: Camera.Constants.Type.front
     }
 
     async componentDidMount() {

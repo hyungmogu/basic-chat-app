@@ -45,7 +45,9 @@ class CameraScreen extends Component {
 
         let photo = await this.camera.takePictureAsync();
 
-        navigate('ImagePreview', { photo });
+        navigate('ImagePreview', {
+            photo: photo.uri
+        });
         return;
     }
 

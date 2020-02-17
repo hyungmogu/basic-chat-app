@@ -14,8 +14,7 @@ import { ChatConsumer, APIConsumer } from '../components/Context';
 class ImagePreviewScreen extends Component {
 
     render() {
-        // let photo = this.props.navigation.state.params.photo;
-        let photo = 'https://hyungmogu-chat-application.s3-us-west-2.amazonaws.com/usr/2/avatar.jpeg';
+        let photo = this.props.navigation.state.params.photo;
 
         return (
             <SafeAreaView style={styles.container}>

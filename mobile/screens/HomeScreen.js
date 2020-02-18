@@ -20,13 +20,13 @@ class HomeScreen extends Component {
 
         this.handleGetRooms(
             this.props.chatContext.user.authToken,
-            this.chatService.addChatUsers
+            this.chatService.loadChatUsers
         );
     }
 
-    handleGetRooms = (authToken, addChatUsers) => {
+    handleGetRooms = (authToken, loadChatUsers) => {
         this.apiService.get(`${Config.host}/api/v1/chats/`, authToken).then(res => {
-            addChatUsers(res.data);
+            loadChatUsers(res.data);
         }).catch(err => {
             console.warn(err.response.data.detail);
         })

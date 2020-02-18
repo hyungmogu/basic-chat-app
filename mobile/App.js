@@ -58,7 +58,7 @@ export default class App extends Component {
         })
     }
 
-    handleAddChatUsers = (users) => {
+    handleLoadChatUsers = (users) => {
         this.setState({
             chatUsers: users
         })
@@ -150,7 +150,7 @@ export default class App extends Component {
                     updateUserInfo: this.handleUpdateUserInfo,
                     resetUserInfo: this.handleResetUserInfo,
                     addChatUser: this.handleAddChatUser,
-                    addChatUsers: this.handleAddChatUsers
+                    loadChatUsers: this.handleLoadChatUsers
                 }
             }}>
                 <APIProvider

@@ -11,14 +11,13 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'name',
             'avatar',
-            'password',
-            'password2',
         )
 
 
 class UserPOSTSerializer(UserSerializer):
 
     class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + ('password', 'password2',)
         extra_kwargs = {
             'password': {'write_only': True},
             'password2': {'write_only': True}

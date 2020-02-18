@@ -13,6 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
             'avatar',
         )
 
+class ChatUsersSerializer (UserSerializer):
+    latest_text = serializers.CharField()
+    class Meta(UserSerializer.Meta):
+        fields = UserSerializer.Meta.fields + ('latest_text',)
 
 class UserPOSTSerializer(UserSerializer):
 

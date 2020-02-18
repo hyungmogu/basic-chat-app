@@ -24,7 +24,7 @@ class AddNewChatScreen extends Component {
                 chatUser: res.data
             });
         }).catch(err => {
-            console.warn(err.response.data.detail);
+            console.warn(err);
         });
     }
 

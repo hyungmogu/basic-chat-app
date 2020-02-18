@@ -81,11 +81,12 @@ class ChatScreen extends Component {
 
     handleGetChatBoxes = (chattee) => {
         this.apiService.get(`${Config.host}/api/v1/chats/${chattee.pk}`).then(res => {
+            console.log('In handleGetChatboxes');
             this.setState({
                 messages: res.data,
             });
         }).catch(err => {
-            console.warn(err.response.data.detail);
+            console.warn(err);
         })
     }
 

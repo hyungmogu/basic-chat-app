@@ -28,7 +28,7 @@ class HomeScreen extends Component {
         this.apiService.get(`${Config.host}/api/v1/chats/`, authToken).then(res => {
             loadChatUsers(res.data);
         }).catch(err => {
-            console.warn(err.response.data.detail);
+            console.warn(err);
         })
     }
 

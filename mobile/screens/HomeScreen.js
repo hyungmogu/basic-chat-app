@@ -43,7 +43,7 @@ class HomeScreen extends Component {
                         <ChatMenuItem
                             key={index}
                             name={item.name}
-                            latestMessage={item.latestText || 'Add New Message Here'}
+                            latestMessage={item.latest_text || 'Add New Message Here'}
                             image={item.avatar || this.defaultAvatar}
                             onPress={() => navigate('Chat', {
                                 chatUser: item

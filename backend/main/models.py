@@ -9,7 +9,7 @@ class ChatBox(models.Model):
 
     def __str__(self):
         datetime = self.timestamp.strftime('%Y-%m-%d %H:%M')
-        return "{} {}: {}".format(self.timestamp, self.msg_from.name, text)
+        return "{} {}: {}".format(self.timestamp, self.msg_from.name, self.text)
 
 
 

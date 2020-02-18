@@ -4,6 +4,7 @@ import logging
 from django.db.models import Q
 from django.contrib.auth import get_user_model, login, authenticate, logout
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Prefetch
 
 from rest_framework import status, permissions
 from rest_framework.permissions import IsAuthenticated
@@ -12,9 +13,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
-from accounts.serializers import UserSerializer, UserPOSTSerializer
+from accounts.serializers import UserSerializer, UserPOSTSerializer, ChatUsersSerializer
 from main.serializers import ChatBoxSerializer
 from main.models import ChatBox as ChatBoxModel
+
 
 
 class User(GenericAPIView):
@@ -99,7 +101,22 @@ class Chats(APIView):
     permission_classes=(IsAuthenticated,)
     def get(self, request, format=None):
         chat_users = request.user.chat_users.all()
-        res_data = UserSerializer(chat_users, many=True).data
+
+        for chat_user in chat_users:
+            latest_chatbox = (ChatBoxModel.objects
+                .filter((Q(msg_from=request.user)&Q(msg_to=chat_user))|
+                        (Q(msg_from=chat_user)&Q(msg_to=request.user)))
+                .order_by('-pk').first())
+
+            if latest_chatbox is None:
+                chat_user.latest_text = None
+            else:
+                text = latest_chatbox.text.replace('\n', ' ')
+                text = text.strip()
+
+                chat_user.latest_text = latest_chatbox.text[:20] if len(text) > 20 else latest_chatbox.text
+
+        res_data = ChatUsersSerializer(chat_users, many=True).data
 
         return Response(res_data)
 

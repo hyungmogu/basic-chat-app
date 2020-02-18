@@ -81,7 +81,7 @@ export default class App extends Component {
             httpRequest.then( res => {
                 resolve(res);
             }).catch(err => {
-                reject(err);
+                reject(err.response);
             });
         })
     }
@@ -108,7 +108,7 @@ export default class App extends Component {
             httpRequest.then( res => {
                 resolve(res);
             }).catch(err => {
-                reject(err);
+                reject(err.response);
             });
         })
     }
@@ -130,7 +130,7 @@ export default class App extends Component {
             httpRequest.then( res => {
                 resolve(res);
             }).catch(err => {
-                reject(err);
+                reject(err.response);
             });
         })
     }
